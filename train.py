@@ -39,7 +39,8 @@ NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
-GRID_SIZES = (16, 24, 32, 48, 64)
+GRID_SIZES = (16, 24, 32, 48)
+TRAINING_TIME = 900
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
@@ -485,7 +486,7 @@ print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degr
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-estimated_epochs = int(TIME_BUDGET / 0.45)
+estimated_epochs = int(TRAINING_TIME / 0.45)
 
 
 def lr_lambda(epoch: int) -> float:
@@ -498,7 +499,7 @@ def lr_lambda(epoch: int) -> float:
 
 scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
-print(f"\nTime budget: {TIME_BUDGET}s")
+print(f"\nTime budget: {TRAINING_TIME}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
 print(f"Loss: stochastic Frobenius ||MAv - v||^2 (polynomial)")
@@ -564,13 +565,13 @@ while True:
     smooth_loss = ema_beta * smooth_loss + (1 - ema_beta) * avg_loss
     debiased = smooth_loss / (1 - ema_beta ** (epoch + 1))
 
-    remaining = max(0, TIME_BUDGET - total_training_time)
+    remaining = max(0, TRAINING_TIME - total_training_time)
     current_lr = scheduler.get_last_lr()[0]
     print(f"\repoch {epoch:04d} | loss: {debiased:.4e} | best: {best_loss:.4e} | lr: {current_lr:.1e} | skip: {skipped_count} | dt: {dt*1000:.0f}ms | {remaining:.0f}s    ", end="", flush=True)
 
     epoch += 1
 
-    if epoch > 5 and total_training_time >= TIME_BUDGET:
+    if epoch > 5 and total_training_time >= TRAINING_TIME:
         break
 
 print()
