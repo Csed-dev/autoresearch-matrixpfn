@@ -1,12 +1,13 @@
 """
 MatrixPFN autoresearch training script.
-Run 4: SPAI Head — MPNN body + bilinear edge prediction.
-Predicts sparse G where M = D^-1(I+G). Loss: stochastic Frobenius ||MAv - v||^2.
-v1 best: 0.5832 (27.3% SS convergence). Goal: break the convergence ceiling.
+Run 7: Node-wise Polynomial Preconditioner — MPNN body predicts per-node
+polynomial coefficients c_k(i). Preconditioner: (M*r)_i = sum_k c_k(i) * [(D^-1 A)^k r]_i.
+Multi-hop fill-in by construction, no sparsity pattern limitation.
 
 Usage: uv run train.py
 """
 
+import math
 import time
 import random
 
@@ -33,7 +34,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 256
 HIDDEN_DIM = 512
-BILINEAR_RANK = 64
+POLY_DEGREE = 4
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
@@ -41,11 +42,9 @@ MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
-G_SCALE = 1.0
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-import math
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -59,7 +58,7 @@ DOMAIN_WEIGHTS = {
 }
 
 
-class SpaiConv(nn.Module):
+class MPNNConv(nn.Module):
 
     def __init__(self, node_dim: int, out_dim: int, edge_feat_dim: int):
         super().__init__()
@@ -80,37 +79,35 @@ class SpaiConv(nn.Module):
         return out
 
 
-class BilinearEdgeHead(nn.Module):
+class PolynomialHead(nn.Module):
 
-    def __init__(self, node_dim: int, edge_feat_dim: int, rank: int):
+    def __init__(self, node_dim: int, poly_degree: int):
         super().__init__()
-        self.W_L = nn.Linear(node_dim, rank, bias=False)
-        self.W_R = nn.Linear(node_dim, rank, bias=False)
-        self.edge_linear = nn.Linear(edge_feat_dim, 1, bias=True)
+        self.poly_degree = poly_degree
+        self.coeff_net = nn.Sequential(
+            nn.Linear(node_dim, node_dim),
+            nn.ReLU(),
+            nn.Linear(node_dim, poly_degree),
+        )
+        nn.init.zeros_(self.coeff_net[-1].weight)
+        nn.init.zeros_(self.coeff_net[-1].bias)
+        with torch.no_grad():
+            self.coeff_net[-1].bias[0] = 1.0
 
-        nn.init.xavier_uniform_(self.W_L.weight, gain=0.01)
-        nn.init.xavier_uniform_(self.W_R.weight, gain=0.01)
-        nn.init.zeros_(self.edge_linear.weight)
-        nn.init.zeros_(self.edge_linear.bias)
-
-    def forward(self, h: torch.Tensor, edge_index: torch.Tensor,
-                edge_features: torch.Tensor) -> torch.Tensor:
-        src, dst = edge_index
-        bilinear = (self.W_L(h[src]) * self.W_R(h[dst])).sum(dim=-1)
-        edge_bias = self.edge_linear(edge_features).squeeze(-1)
-        return G_SCALE * torch.tanh(bilinear + edge_bias)
+    def forward(self, h: torch.Tensor) -> torch.Tensor:
+        return self.coeff_net(h)
 
 
-class SpaiMPNN(nn.Module):
+class PolyMPNN(nn.Module):
 
     def __init__(self, num_layers: int, embed: int, hidden: int,
-                 edge_feat_dim: int, bilinear_rank: int):
+                 edge_feat_dim: int, poly_degree: int):
         super().__init__()
         self.num_layers = num_layers
         self.embed = embed
         self.hidden = hidden
         self.edge_feat_dim = edge_feat_dim
-        self.bilinear_rank = bilinear_rank
+        self.poly_degree = poly_degree
 
         self.node_encoder = nn.Sequential(
             nn.Linear(NUM_NODE_FEATURES, hidden),
@@ -122,16 +119,17 @@ class SpaiMPNN(nn.Module):
         self.skips = nn.ModuleList()
         self.norms = nn.ModuleList()
         for _ in range(num_layers):
-            self.convs.append(SpaiConv(embed, embed, edge_feat_dim))
+            self.convs.append(MPNNConv(embed, embed, edge_feat_dim))
             self.skips.append(nn.Linear(embed, embed))
             self.norms.append(nn.LayerNorm(embed))
 
-        self.edge_head = BilinearEdgeHead(embed, edge_feat_dim, bilinear_rank)
+        self.poly_head = PolynomialHead(embed, poly_degree)
 
         self.edge_index = None
         self.edge_features = None
         self.node_features = None
         self.D_inv = None
+        self.D_inv_A = None
         self.n = None
 
     def set_matrix(self, A: torch.Tensor):
@@ -174,6 +172,11 @@ class SpaiMPNN(nn.Module):
         self.n = n
         self.D_inv = 1.0 / diag
 
+        d_inv_values = self.D_inv[rows] * values
+        self.D_inv_A = torch.sparse_coo_tensor(
+            indices, d_inv_values, (n, n)
+        ).coalesce().to_sparse_csc()
+
     def forward(self) -> torch.Tensor:
         h = self.node_encoder(self.node_features)
 
@@ -184,65 +187,53 @@ class SpaiMPNN(nn.Module):
             h_new = F.relu(h_new)
             h = h_new
 
-        return self.edge_head(h, self.edge_index, self.edge_features)
+        return self.poly_head(h)
 
 
-class SpaiPreconditioner:
+class PolynomialPreconditioner:
 
-    def __init__(self, M_csc: torch.Tensor):
-        self.M = M_csc
+    def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
+                 D_inv: torch.Tensor):
+        self.coeffs = coeffs.double()
+        self.D_inv_A = D_inv_A
+        self.D_inv = D_inv
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
-        return self.M @ r
+        K = self.coeffs.shape[1]
+
+        d_inv_r = self.D_inv * r
+        power = d_inv_r
+        result = self.coeffs[:, 0] * power
+
+        for k in range(1, K):
+            power = self.D_inv_A @ power
+            result = result + self.coeffs[:, k] * power
+
+        return result
 
 
-def build_preconditioner(A: torch.Tensor, g_values: torch.Tensor,
-                         edge_index: torch.Tensor,
-                         D_inv: torch.Tensor) -> SpaiPreconditioner:
-    n = A.shape[0]
-    rows, cols = edge_index
-    device = A.device
-
-    diag_indices = torch.arange(n, device=device)
-    all_rows = torch.cat([diag_indices, rows])
-    all_cols = torch.cat([diag_indices, cols])
-    all_values = torch.cat([
-        torch.ones(n, dtype=torch.float64, device=device),
-        g_values.double(),
-    ])
-
-    IpG = torch.sparse_coo_tensor(
-        torch.stack([all_rows, all_cols]), all_values, (n, n)
-    ).coalesce()
-
-    M_values = IpG.values() * D_inv[IpG.indices()[0]]
-
-    M = torch.sparse_coo_tensor(
-        IpG.indices(), M_values, (n, n)
-    ).coalesce().to_sparse_csc()
-
-    return SpaiPreconditioner(M)
-
-
-def frobenius_loss(A: torch.Tensor, g_values: torch.Tensor,
-                   edge_index: torch.Tensor, D_inv: torch.Tensor,
-                   num_probes: int) -> torch.Tensor:
+def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
+                        D_inv_A: torch.Tensor, D_inv: torch.Tensor,
+                        num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
-    rows, cols = edge_index
+    K = coeffs.shape[1]
 
     v = torch.randn(n, num_probes, dtype=torch.float64, device=device)
     Av = A @ v
-    Av_f32 = Av.float()
 
-    Av_at_cols = Av_f32[cols]
-    weighted = g_values.unsqueeze(-1) * Av_at_cols
+    D_inv_unsq = D_inv.unsqueeze(-1)
+    d_inv_Av = D_inv_unsq * Av
 
-    GAv = torch.zeros(n, num_probes, dtype=torch.float32, device=device)
-    GAv.scatter_add_(0, rows.unsqueeze(-1).expand_as(weighted), weighted)
+    power = d_inv_Av.float()
+    coeffs_0 = coeffs[:, 0:1]
+    MAv = coeffs_0 * power
 
-    D_inv_f32 = D_inv.float().unsqueeze(-1)
-    MAv = D_inv_f32 * (Av_f32 + GAv)
+    D_inv_A_f32 = D_inv_A.float()
+    for k in range(1, K):
+        power = D_inv_A_f32 @ power
+        coeffs_k = coeffs[:, k:k+1]
+        MAv = MAv + coeffs_k * power
 
     v_f32 = v.float()
     residual = MAv - v_f32
@@ -250,36 +241,36 @@ def frobenius_loss(A: torch.Tensor, g_values: torch.Tensor,
     return per_probe.mean()
 
 
-def save_checkpoint(model: SpaiMPNN, path: str):
+def save_checkpoint(model: PolyMPNN, path: str):
     torch.save({
-        "model_type": "SpaiMPNN",
+        "model_type": "PolyMPNN",
         "config": {
             "num_layers": model.num_layers,
             "embed": model.embed,
             "hidden": model.hidden,
             "edge_feat_dim": model.edge_feat_dim,
-            "bilinear_rank": model.bilinear_rank,
+            "poly_degree": model.poly_degree,
         },
         "state_dict": model.state_dict(),
     }, path)
 
 
-def load_checkpoint(path: str, device: torch.device) -> SpaiMPNN:
+def load_checkpoint(path: str, device: torch.device) -> PolyMPNN:
     checkpoint = torch.load(path, map_location="cpu", weights_only=True)
     config = checkpoint["config"]
-    model = SpaiMPNN(
+    model = PolyMPNN(
         num_layers=config["num_layers"],
         embed=config["embed"],
         hidden=config["hidden"],
         edge_feat_dim=config["edge_feat_dim"],
-        bilinear_rank=config["bilinear_rank"],
+        poly_degree=config["poly_degree"],
     ).to(device)
     model.load_state_dict(checkpoint["state_dict"])
     return model
 
 
 @torch.no_grad()
-def evaluate_spai(model: SpaiMPNN, device: torch.device) -> dict:
+def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
     model.eval()
     solver = FGMRES(
         restart=FGMRES_RESTART,
@@ -314,8 +305,8 @@ def evaluate_spai(model: SpaiMPNN, device: torch.device) -> dict:
 
             try:
                 model.set_matrix(A)
-                g_values = model()
-                precond = build_preconditioner(A, g_values, model.edge_index, model.D_inv)
+                coeffs = model()
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -365,8 +356,8 @@ def evaluate_spai(model: SpaiMPNN, device: torch.device) -> dict:
 
         try:
             model.set_matrix(A)
-            g_values = model()
-            precond = build_preconditioner(A, g_values, model.edge_index, model.D_inv)
+            coeffs = model()
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -479,17 +470,17 @@ for domain, weight in DOMAIN_WEIGHTS.items():
     if domain in selected_generators:
         print(f"  {domain.value}: {weight:.0%}")
 
-model = SpaiMPNN(
+model = PolyMPNN(
     num_layers=NUM_LAYERS,
     embed=EMBED_DIM,
     hidden=HIDDEN_DIM,
     edge_feat_dim=NUM_EDGE_FEATURES,
-    bilinear_rank=BILINEAR_RANK,
+    poly_degree=POLY_DEGREE,
 ).to(device)
 
 num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-print(f"Model: SpaiMPNN ({num_params:,} params)")
-print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, rank={BILINEAR_RANK}")
+print(f"Model: PolyMPNN ({num_params:,} params)")
+print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degree={POLY_DEGREE}")
 
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
@@ -510,9 +501,9 @@ scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 print(f"\nTime budget: {TIME_BUDGET}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
-print(f"Loss: stochastic Frobenius ||MAv - v||^2")
-print(f"G bounded: tanh * {G_SCALE}, loss skip > {LOSS_SKIP_THRESHOLD}")
-print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay")
+print(f"Loss: stochastic Frobenius ||MAv - v||^2 (polynomial)")
+print(f"Poly degree: {POLY_DEGREE}, loss skip > {LOSS_SKIP_THRESHOLD}")
+print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay (min {MIN_LR_RATIO})")
 print()
 
 CHECKPOINT_PATH = "best_model.pt"
@@ -536,9 +527,9 @@ while True:
         ).coalesce().to_sparse_csc()
 
         model.set_matrix(A)
-        g_values = model()
+        coeffs = model()
 
-        loss = frobenius_loss(A, g_values, model.edge_index, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
@@ -589,7 +580,7 @@ print(f"Best loss: {best_loss:.4e}")
 print("\nEvaluating...")
 t_eval_start = time.time()
 eval_model = load_checkpoint(CHECKPOINT_PATH, device)
-results = evaluate_spai(eval_model, device)
+results = evaluate_poly(eval_model, device)
 t_eval_end = time.time()
 
 t_end = time.time()
