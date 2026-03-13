@@ -113,20 +113,40 @@ class PodManager:
         ]
 
     def get_available_gpus(self, min_memory_gb: int = 20) -> list[dict]:
-        gpus = runpod.get_gpus()
+        import requests
+
+        response = requests.post(
+            f"https://api.runpod.io/graphql?api_key={RUNPOD_API_KEY}",
+            json={"query": """
+                query { gpuTypes {
+                    id displayName memoryInGb
+                    secureCloud communityCloud
+                    lowestPrice(input: { gpuCount: 1 }) {
+                        uninterruptablePrice
+                    }
+                }}
+            """},
+        )
+        response.raise_for_status()
+        gpus = response.json()["data"]["gpuTypes"]
         available = []
         for g in gpus:
             mem = g.get("memoryInGb", 0)
             if mem < min_memory_gb:
                 continue
-            stock = g.get("stockStatus") or {}
-            if stock.get("stockStatus") in ("High", "Medium", "Low"):
-                available.append({
-                    "id": g["id"],
-                    "memory_gb": mem,
-                    "stock": stock.get("stockStatus", "Unknown"),
-                })
-        return sorted(available, key=lambda x: x["memory_gb"])
+            if not (g.get("secureCloud") or g.get("communityCloud")):
+                continue
+            price = (g.get("lowestPrice") or {}).get("uninterruptablePrice") or 0
+            if price == 0:
+                continue
+            available.append({
+                "id": g["id"],
+                "memory_gb": mem,
+                "price_per_hr": price,
+                "secure": bool(g.get("secureCloud")),
+                "community": bool(g.get("communityCloud")),
+            })
+        return sorted(available, key=lambda x: x["price_per_hr"])
 
     def _wait_ssh_ready(self, conn: PodConnection, retries: int = 10) -> None:
         for attempt in range(retries):
