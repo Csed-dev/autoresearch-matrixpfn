@@ -41,9 +41,10 @@ MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
-G_SCALE = 0.5
-LOSS_SKIP_THRESHOLD = 100.0
+G_SCALE = 1.0
+LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
+MIN_LR_RATIO = 0.1
 import math
 
 DOMAIN_WEIGHTS = {
@@ -500,7 +501,8 @@ def lr_lambda(epoch: int) -> float:
     if epoch < WARMUP_EPOCHS:
         return epoch / WARMUP_EPOCHS
     progress = (epoch - WARMUP_EPOCHS) / max(1, estimated_epochs - WARMUP_EPOCHS)
-    return 0.5 * (1.0 + math.cos(math.pi * min(progress, 1.0)))
+    cosine = 0.5 * (1.0 + math.cos(math.pi * min(progress, 1.0)))
+    return MIN_LR_RATIO + (1.0 - MIN_LR_RATIO) * cosine
 
 
 scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
