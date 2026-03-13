@@ -47,7 +47,7 @@ EVAL_MATRICES = [
     ("Brunetiere", "thermal"),
     ("HB", "orsirr_1"),
     ("HB", "orsreg_1"),
-    ("HB", "watt__1"),
+    ("HB", "watt_1"),
     ("HB", "saylr4"),
 ]
 
