@@ -3,7 +3,7 @@ import os
 RUNPOD_API_KEY = os.environ["RUNPOD_API_KEY"]
 WORKSPACE_DIR = "/workspace/autoresearch-matrixpfn"
 
-GPU_TYPE_DEFAULT = "NVIDIA L4"
+GPU_TYPE_DEFAULT = "NVIDIA RTX A5000"
 GPU_IMAGE = "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404"
 CONTAINER_DISK_GB = 20
 

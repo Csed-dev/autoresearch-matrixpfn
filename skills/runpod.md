@@ -106,9 +106,11 @@ Common choices for autoresearch:
 
 | GPU | VRAM | Use Case |
 |-----|------|----------|
-| NVIDIA L4 | 24GB | Default. Cheap, sufficient for MatrixPFN |
-| NVIDIA RTX 4090 | 24GB | Faster than L4, similar VRAM |
-| NVIDIA A100 80GB PCIe | 80GB | Large models, large batch sizes |
+| NVIDIA RTX A5000 | 24GB | Default. Cheapest 24GB option (~$0.16/hr) |
+| NVIDIA GeForce RTX 3090 | 24GB | Good alternative (~$0.22/hr) |
+| NVIDIA GeForce RTX 4090 | 24GB | Faster compute (~$0.34/hr) |
+| NVIDIA RTX A6000 | 48GB | Large models (~$0.33/hr) |
+| NVIDIA A100 80GB PCIe | 80GB | Maximum VRAM (~$1.19/hr) |
 
 ```python
 pod_id = pm.create_pod("big-run", gpu_type="NVIDIA RTX 4090")
@@ -123,7 +125,10 @@ If pod creation times out (2 min), the pod is auto-terminated. Check available G
 ```python
 gpus = pm.get_available_gpus(min_memory_gb=20)
 for g in gpus:
-    print(f"{g['id']:40s} {g['memory_gb']:>4}GB  stock: {g['stock']}")
+    gpu_id = g["id"]
+    mem = g["memory_gb"]
+    price = g["price_per_hr"]
+    print(f"{gpu_id:45s} {mem:>4}GB  ${price:.2f}/hr")
 ```
 
 Then retry with a different GPU type:
@@ -136,9 +141,11 @@ Update `orchestrator/config.py` GPU_TYPE_DEFAULT if the default GPU is persisten
 
 ## Cost Awareness
 
-- L4: ~$0.39/hr
-- RTX 4090: ~$0.44/hr
-- A100 80GB: ~$1.64/hr
-- A single experiment takes ~7 min = ~$0.05 on L4
+- RTX A5000: ~$0.16/hr (default)
+- RTX 3090: ~$0.22/hr
+- RTX A6000: ~$0.33/hr
+- RTX 4090: ~$0.34/hr
+- A100 80GB: ~$1.19/hr
+- A single experiment takes ~7 min = ~$0.02 on RTX A5000
 - Always terminate when done
 - Check for orphans: `pm.list_pods()`
