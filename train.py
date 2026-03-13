@@ -35,12 +35,16 @@ EMBED_DIM = 256
 HIDDEN_DIM = 512
 BILINEAR_RANK = 64
 NUM_PROBES = 8
-LEARNING_RATE = 1e-3
+LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
+G_SCALE = 0.5
+LOSS_SKIP_THRESHOLD = 100.0
+WARMUP_EPOCHS = 20
+import math
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -93,7 +97,7 @@ class BilinearEdgeHead(nn.Module):
         src, dst = edge_index
         bilinear = (self.W_L(h[src]) * self.W_R(h[dst])).sum(dim=-1)
         edge_bias = self.edge_linear(edge_features).squeeze(-1)
-        return bilinear + edge_bias
+        return G_SCALE * torch.tanh(bilinear + edge_bias)
 
 
 class SpaiMPNN(nn.Module):
@@ -489,10 +493,24 @@ print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, rank={BIL
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
+estimated_epochs = int(TIME_BUDGET / 0.45)
+
+
+def lr_lambda(epoch: int) -> float:
+    if epoch < WARMUP_EPOCHS:
+        return epoch / WARMUP_EPOCHS
+    progress = (epoch - WARMUP_EPOCHS) / max(1, estimated_epochs - WARMUP_EPOCHS)
+    return 0.5 * (1.0 + math.cos(math.pi * min(progress, 1.0)))
+
+
+scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+
 print(f"\nTime budget: {TIME_BUDGET}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
 print(f"Loss: stochastic Frobenius ||MAv - v||^2")
+print(f"G bounded: tanh * {G_SCALE}, loss skip > {LOSS_SKIP_THRESHOLD}")
+print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay")
 print()
 
 CHECKPOINT_PATH = "best_model.pt"
@@ -501,11 +519,13 @@ total_training_time = 0.0
 epoch = 0
 data_iter = iter(dataset)
 smooth_loss = 0.0
+skipped_count = 0
 
 while True:
     t0 = time.time()
     model.train()
     epoch_loss = 0.0
+    valid_count = 0
 
     for _ in range(MATRICES_PER_EPOCH):
         data = next(data_iter)
@@ -517,18 +537,27 @@ while True:
         g_values = model()
 
         loss = frobenius_loss(A, g_values, model.edge_index, model.D_inv, NUM_PROBES)
-        epoch_loss += loss.item()
+        loss_val = loss.item()
+
+        if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
+            skipped_count += 1
+            continue
+
+        epoch_loss += loss_val
+        valid_count += 1
 
         scaled_loss = loss / MATRICES_PER_EPOCH
         scaled_loss.backward()
 
-    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-    optimizer.step()
+    if valid_count > 0:
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        optimizer.step()
     optimizer.zero_grad()
+    scheduler.step()
 
-    avg_loss = epoch_loss / MATRICES_PER_EPOCH
+    avg_loss = epoch_loss / max(valid_count, 1)
 
-    if avg_loss < best_loss:
+    if avg_loss < best_loss and valid_count > 0:
         best_loss = avg_loss
         save_checkpoint(model, CHECKPOINT_PATH)
 
@@ -538,12 +567,13 @@ while True:
     if epoch > 5:
         total_training_time += dt
 
-    ema_beta = 0.9
+    ema_beta = 0.95
     smooth_loss = ema_beta * smooth_loss + (1 - ema_beta) * avg_loss
     debiased = smooth_loss / (1 - ema_beta ** (epoch + 1))
 
     remaining = max(0, TIME_BUDGET - total_training_time)
-    print(f"\repoch {epoch:04d} | loss: {debiased:.4e} | best: {best_loss:.4e} | dt: {dt*1000:.0f}ms | remaining: {remaining:.0f}s    ", end="", flush=True)
+    current_lr = scheduler.get_last_lr()[0]
+    print(f"\repoch {epoch:04d} | loss: {debiased:.4e} | best: {best_loss:.4e} | lr: {current_lr:.1e} | skip: {skipped_count} | dt: {dt*1000:.0f}ms | {remaining:.0f}s    ", end="", flush=True)
 
     epoch += 1
 
