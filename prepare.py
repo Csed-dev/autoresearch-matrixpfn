@@ -133,7 +133,6 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
         rtol=FGMRES_RTOL,
         timeout=FGMRES_TIMEOUT,
     )
-    jacobi = Jacobi()
 
     torch.manual_seed(99999)
     np.random.seed(99999)
@@ -159,18 +158,12 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
                 result = pfn.solve(A, b, restart=FGMRES_RESTART,
                                    max_iters=FGMRES_MAX_ITERS, rtol=FGMRES_RTOL,
                                    timeout=FGMRES_TIMEOUT, progress_bar=False)
-                normalized = result.iterations / FGMRES_MAX_ITERS if not result.converged else result.iterations / FGMRES_MAX_ITERS
-                gs_pfn_iters.append(normalized)
+                gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
             except Exception:
                 gs_pfn_iters.append(1.0)
 
             try:
-                diag_A = torch.zeros(batch.n, dtype=torch.float64, device=device)
-                A_coo = A.to_sparse_coo().coalesce()
-                idx = A_coo.indices()
-                diag_mask = idx[0] == idx[1]
-                diag_A[idx[0, diag_mask]] = A_coo.values()[diag_mask]
-                jacobi.set_matrix(diag_A)
+                jacobi = Jacobi(A)
                 jac_result = solver.solve(A, b, M=jacobi, progress_bar=False)
                 gs_jacobi_iters.append(jac_result.iterations / FGMRES_MAX_ITERS)
             except Exception:
@@ -215,12 +208,7 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
                 mat_pfn_iters.append(1.0)
 
             try:
-                diag_A = torch.zeros(n, dtype=torch.float64, device=device)
-                A_coo = A.to_sparse_coo().coalesce()
-                idx = A_coo.indices()
-                diag_mask = idx[0] == idx[1]
-                diag_A[idx[0, diag_mask]] = A_coo.values()[diag_mask]
-                jacobi.set_matrix(diag_A)
+                jacobi = Jacobi(A)
                 jac_result = solver.solve(A, b, M=jacobi, progress_bar=False)
                 mat_jac_iters.append(jac_result.iterations / FGMRES_MAX_ITERS)
             except Exception:

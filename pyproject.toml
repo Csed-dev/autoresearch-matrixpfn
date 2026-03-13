@@ -6,7 +6,3 @@ requires-python = ">=3.11"
 dependencies = [
     "matrixpfn>=0.1.13",
 ]
-
-[build-system]
-requires = ["uv_build>=0.10.6,<0.11.0"]
-build-backend = "uv_build"
