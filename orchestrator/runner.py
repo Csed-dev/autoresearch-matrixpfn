@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 from orchestrator.config import (
     EXPERIMENT_TIMEOUT_S,
-    REPO_SSH_URL,
     SETUP_TIMEOUT_S,
     WORKSPACE_DIR,
 )
@@ -32,34 +31,20 @@ class ExperimentRunner:
         self._conn = connection
 
     def setup_pod(self, branch: str = "main") -> None:
-        self._pm.ssh_run(
+        setup_script = self._pm.ssh_run(
             self._conn,
-            f"test -d {WORKSPACE_DIR}/.git"
-            f" || git clone {REPO_SSH_URL} {WORKSPACE_DIR}",
-            timeout=SETUP_TIMEOUT_S,
+            f"cat {WORKSPACE_DIR}/setup_pod.sh 2>/dev/null || echo '__MISSING__'",
+            timeout=10,
         )
-
+        if "__MISSING__" in setup_script:
+            self._pm.ssh_run(
+                self._conn,
+                f"git clone https://github.com/Csed-dev/autoresearch-matrixpfn.git {WORKSPACE_DIR}",
+                timeout=SETUP_TIMEOUT_S,
+            )
         self._pm.ssh_run(
             self._conn,
-            f"cd {WORKSPACE_DIR} && git fetch origin && git checkout {branch} && git reset --hard origin/{branch}",
-            timeout=60,
-        )
-
-        self._pm.ssh_run(
-            self._conn,
-            "command -v uv || pip install uv",
-            timeout=120,
-        )
-
-        self._pm.ssh_run(
-            self._conn,
-            f"cd {WORKSPACE_DIR} && uv sync",
-            timeout=SETUP_TIMEOUT_S,
-        )
-
-        self._pm.ssh_run(
-            self._conn,
-            f"cd {WORKSPACE_DIR} && uv run prepare.py",
+            f"bash {WORKSPACE_DIR}/setup_pod.sh {branch}",
             timeout=SETUP_TIMEOUT_S,
         )
 

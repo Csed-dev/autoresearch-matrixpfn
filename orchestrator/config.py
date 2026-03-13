@@ -1,14 +1,13 @@
 import os
 
 RUNPOD_API_KEY = os.environ["RUNPOD_API_KEY"]
-REPO_SSH_URL = "git@github.com:Csed-dev/autoresearch-matrixpfn.git"
 WORKSPACE_DIR = "/workspace/autoresearch-matrixpfn"
 
 GPU_TYPE_DEFAULT = "NVIDIA L4"
 GPU_IMAGE = "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404"
 CONTAINER_DISK_GB = 20
 
-POD_READY_TIMEOUT_S = 300
+POD_READY_TIMEOUT_S = 600
 POD_POLL_INTERVAL_S = 10
 SSH_CONNECT_TIMEOUT_S = 10
 SETUP_TIMEOUT_S = 600
