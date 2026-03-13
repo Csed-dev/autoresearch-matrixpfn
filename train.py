@@ -31,7 +31,7 @@ from prepare import (
 )
 
 SEED = 42
-NUM_LAYERS = 4
+NUM_LAYERS = 6
 EMBED_DIM = 192
 HIDDEN_DIM = 384
 POLY_DEGREE = 6
@@ -42,7 +42,7 @@ MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
-LOSS_CLAMP = 10.0
+LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
 
@@ -502,7 +502,7 @@ print(f"\nTime budget: {TIME_BUDGET}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
 print(f"Loss: stochastic Frobenius ||MAv - v||^2 (polynomial)")
-print(f"Poly degree: {POLY_DEGREE}, loss clamp: {LOSS_CLAMP}")
+print(f"Poly degree: {POLY_DEGREE}, loss skip > {LOSS_SKIP_THRESHOLD}")
 print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay (min {MIN_LR_RATIO})")
 print()
 
@@ -532,15 +532,14 @@ while True:
         loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
-        if not math.isfinite(loss_val):
+        if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
             skipped_count += 1
             continue
 
-        clamped_loss = torch.clamp(loss, max=LOSS_CLAMP)
         epoch_loss += loss_val
         valid_count += 1
 
-        scaled_loss = clamped_loss / MATRICES_PER_EPOCH
+        scaled_loss = loss / MATRICES_PER_EPOCH
         scaled_loss.backward()
 
     if valid_count > 0:
