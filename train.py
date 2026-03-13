@@ -31,7 +31,7 @@ from prepare import (
 )
 
 SEED = 42
-NUM_LAYERS = 6
+NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
 POLY_DEGREE = 6
@@ -94,8 +94,19 @@ class PolynomialHead(nn.Module):
         with torch.no_grad():
             self.coeff_net[-1].bias[0] = 1.0
 
-    def forward(self, h: torch.Tensor) -> torch.Tensor:
-        return self.coeff_net(h)
+        self.omega_net = nn.Sequential(
+            nn.Linear(node_dim, node_dim // 4),
+            nn.ReLU(),
+            nn.Linear(node_dim // 4, 1),
+        )
+        nn.init.zeros_(self.omega_net[-1].weight)
+        nn.init.constant_(self.omega_net[-1].bias, 0.0)
+
+    def forward(self, h: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        coeffs = self.coeff_net(h)
+        omega_logit = self.omega_net(h.mean(dim=0, keepdim=True))
+        omega = torch.sigmoid(omega_logit).squeeze()
+        return coeffs, omega
 
 
 class PolyMPNN(nn.Module):
@@ -177,7 +188,7 @@ class PolyMPNN(nn.Module):
             indices, d_inv_values, (n, n)
         ).coalesce().to_sparse_csc()
 
-    def forward(self) -> torch.Tensor:
+    def forward(self) -> tuple[torch.Tensor, torch.Tensor]:
         h = self.node_encoder(self.node_features)
 
         for i in range(self.num_layers):
@@ -192,9 +203,10 @@ class PolyMPNN(nn.Module):
 
 class PolynomialPreconditioner:
 
-    def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
-                 D_inv: torch.Tensor):
+    def __init__(self, coeffs: torch.Tensor, omega: torch.Tensor,
+                 D_inv_A: torch.Tensor, D_inv: torch.Tensor):
         self.coeffs = coeffs.double()
+        self.omega = omega.double()
         self.D_inv_A = D_inv_A
         self.D_inv = D_inv
 
@@ -206,15 +218,15 @@ class PolynomialPreconditioner:
         result = self.coeffs[:, 0] * power
 
         for k in range(1, K):
-            power = self.D_inv_A @ power
+            power = self.omega * (self.D_inv_A @ power)
             result = result + self.coeffs[:, k] * power
 
         return result
 
 
 def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
-                        D_inv_A: torch.Tensor, D_inv: torch.Tensor,
-                        num_probes: int) -> torch.Tensor:
+                        omega: torch.Tensor, D_inv_A: torch.Tensor,
+                        D_inv: torch.Tensor, num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
     K = coeffs.shape[1]
@@ -231,7 +243,7 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
 
     D_inv_A_f32 = D_inv_A.float()
     for k in range(1, K):
-        power = D_inv_A_f32 @ power
+        power = omega * (D_inv_A_f32 @ power)
         coeffs_k = coeffs[:, k:k+1]
         MAv = MAv + coeffs_k * power
 
@@ -305,8 +317,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
             try:
                 model.set_matrix(A)
-                coeffs = model()
-                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
+                coeffs, omega = model()
+                precond = PolynomialPreconditioner(coeffs, omega, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -356,8 +368,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
         try:
             model.set_matrix(A)
-            coeffs = model()
-            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
+            coeffs, omega = model()
+            precond = PolynomialPreconditioner(coeffs, omega, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -527,9 +539,9 @@ while True:
         ).coalesce().to_sparse_csc()
 
         model.set_matrix(A)
-        coeffs = model()
+        coeffs, omega = model()
 
-        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, omega, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
