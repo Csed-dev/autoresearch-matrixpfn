@@ -64,7 +64,11 @@ class PodManager:
                     self._wait_ssh_ready(conn)
                     return conn
             time.sleep(POD_POLL_INTERVAL_S)
-        raise TimeoutError(f"Pod {pod_id} not ready within {POD_READY_TIMEOUT_S}s")
+        self.terminate_pod(pod_id)
+        raise TimeoutError(
+            f"Pod {pod_id} not ready within {POD_READY_TIMEOUT_S}s — terminated. "
+            f"Check available GPUs with get_available_gpus() and try a different gpu_type."
+        )
 
     def ssh_run(
         self, conn: PodConnection, command: str, timeout: int = 120
@@ -107,6 +111,22 @@ class PodManager:
             )
             for p in pods
         ]
+
+    def get_available_gpus(self, min_memory_gb: int = 20) -> list[dict]:
+        gpus = runpod.get_gpus()
+        available = []
+        for g in gpus:
+            mem = g.get("memoryInGb", 0)
+            if mem < min_memory_gb:
+                continue
+            stock = g.get("stockStatus") or {}
+            if stock.get("stockStatus") in ("High", "Medium", "Low"):
+                available.append({
+                    "id": g["id"],
+                    "memory_gb": mem,
+                    "stock": stock.get("stockStatus", "Unknown"),
+                })
+        return sorted(available, key=lambda x: x["memory_gb"])
 
     def _wait_ssh_ready(self, conn: PodConnection, retries: int = 10) -> None:
         for attempt in range(retries):

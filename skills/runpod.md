@@ -118,17 +118,21 @@ pod_id = pm.create_pod("big-run", gpu_type="NVIDIA RTX 4090")
 
 ALWAYS terminate pods in a finally block. Orphaned pods burn money.
 
-If pod creation fails with capacity errors, try a different GPU type:
+If pod creation times out (2 min), the pod is auto-terminated. Check available GPUs and pick one with stock:
 
 ```python
-for gpu in ["NVIDIA L4", "NVIDIA RTX 4090", "NVIDIA RTX A5000"]:
-    try:
-        pod_id = pm.create_pod("exp", gpu_type=gpu)
-        break
-    except Exception as e:
-        print(f"{gpu} unavailable: {e}")
-        continue
+gpus = pm.get_available_gpus(min_memory_gb=20)
+for g in gpus:
+    print(f"{g['id']:40s} {g['memory_gb']:>4}GB  stock: {g['stock']}")
 ```
+
+Then retry with a different GPU type:
+
+```python
+pod_id = pm.create_pod("exp", gpu_type="NVIDIA RTX A5000")
+```
+
+Update `orchestrator/config.py` GPU_TYPE_DEFAULT if the default GPU is persistently unavailable.
 
 ## Cost Awareness
 

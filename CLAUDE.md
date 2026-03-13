@@ -126,3 +126,4 @@ Training on non-symmetric domains (DIFFUSION_ADVECTION, VARIABLE_ADVECTION, ENHA
 - If a run exceeds 15 minutes total, it is killed
 - ALWAYS terminate RunPod pods when done — orphaned pods burn money
 - Check `pm.list_pods()` before starting to clean up orphans
+- If pod creation times out (2 min), the pod is auto-terminated. Check `pm.get_available_gpus()` for GPUs with stock, then update `orchestrator/config.py` GPU_TYPE_DEFAULT or pass a different `gpu_type` to `create_pod()`
