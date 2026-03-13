@@ -53,6 +53,34 @@ EVAL_MATRICES = [
 
 SUITESPARSE_BASE_URL = "https://suitesparse-collection-website.herokuapp.com/MM"
 
+ILU_REFERENCE = {
+    "sherman1": {"conv_pct": 100.0, "norm_iter": 0.004},
+    "sherman3": {"conv_pct": 100.0, "norm_iter": 0.022},
+    "sherman4": {"conv_pct": 100.0, "norm_iter": 0.004},
+    "rdb1250": {"conv_pct": 100.0, "norm_iter": 0.064},
+    "pde2961": {"conv_pct": 100.0, "norm_iter": 0.024},
+    "epb0": {"conv_pct": 100.0, "norm_iter": 0.004},
+    "thermal": {"conv_pct": 100.0, "norm_iter": 0.004},
+    "orsirr_1": {"conv_pct": 100.0, "norm_iter": 0.006},
+    "orsreg_1": {"conv_pct": 100.0, "norm_iter": 0.006},
+    "watt_1": {"conv_pct": 100.0, "norm_iter": 0.002},
+    "saylr4": {"conv_pct": 100.0, "norm_iter": 0.008},
+}
+
+AMG_REFERENCE = {
+    "sherman1": {"conv_pct": 100.0, "norm_iter": 0.019},
+    "sherman3": {"conv_pct": 100.0, "norm_iter": 0.013},
+    "sherman4": {"conv_pct": 100.0, "norm_iter": 0.012},
+    "rdb1250": {"conv_pct": 100.0, "norm_iter": 0.028},
+    "pde2961": {"conv_pct": 100.0, "norm_iter": 0.015},
+    "epb0": {"conv_pct": 100.0, "norm_iter": 0.350},
+    "thermal": {"conv_pct": 100.0, "norm_iter": 0.008},
+    "orsirr_1": {"conv_pct": 100.0, "norm_iter": 0.008},
+    "orsreg_1": {"conv_pct": 100.0, "norm_iter": 0.008},
+    "watt_1": {"conv_pct": 100.0, "norm_iter": 0.002},
+    "saylr4": {"conv_pct": 100.0, "norm_iter": 0.081},
+}
+
 
 def download_matrix(group: str, name: str) -> Path:
     matrix_dir = SUITESPARSE_DIR / name
@@ -247,6 +275,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
         "suitesparse_conv_pct": ss_conv,
         "synthetic_details": synthetic_details,
         "suitesparse_details": ss_details,
+        "ilu_reference": ILU_REFERENCE,
+        "amg_reference": AMG_REFERENCE,
     }
 
 

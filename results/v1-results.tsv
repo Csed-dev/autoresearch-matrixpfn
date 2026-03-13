@@ -1,0 +1,24 @@
+commit	score	ss_conv	memory_gb	status	description
+baseline	0.593300	27.3	0.5	keep	Baseline: 8 Domains, embed=128, hidden=256, 8 Layers
+exp02	0.640700	27.3	0.5	discard	+SBM Domain
+exp03	0.609200	27.3	0.5	discard	+RANDOM_SPARSE Domain
+exp04	0.837800	16.4	0.5	discard	Advection-Domains boosted
+exp05	0.639900	27.3	0.5	discard	All 12 Domains
+exp06	0.815700	18.2	0.2	discard	Smaller model (embed=64, hidden=128)
+exp07	0.583300	27.3	0.8	keep	Larger model (embed=256, hidden=512, 6 Layers)
+exp08	0.588300	27.3	0.8	discard	Context pairs=8
+exp09	0.600300	27.3	0.9	discard	Context pairs=16
+exp10	0.586600	27.3	0.8	discard	12 Layers
+exp11	0.606600	27.3	0.4	discard	4 Layers
+exp12	0.622100	27.3	0.5	discard	lr=3e-4
+exp13	0.585700	27.3	0.5	discard	lr=3e-3
+exp14	0.612800	27.3	0.5	discard	Cosine LR schedule
+exp15	0.618800	27.3	1.0	discard	Grid size 48 added
+exp16	0.632500	27.3	0.5	discard	matrices_per_epoch=32
+exp17	0.644100	27.3	0.2	discard	Combo: small model + advection boost
+exp18	0.663700	27.3	0.2	discard	Combo: small model + SBM
+exp19	0.667300	27.3	0.2	discard	Combo: small model + cosine LR
+exp20	0.603300	27.3	0.2	discard	Combo: small model + context=8
+exp21	0.631600	27.3	0.2	discard	Combo: small model + advection + cosine
+exp22	0.583200	27.3	0.8	keep	Combo: large model + context=8
+exp23	0.613600	27.3	0.8	discard	Combo: large model + advection boost

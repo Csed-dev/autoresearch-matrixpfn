@@ -2,6 +2,10 @@
 MatrixPFN autoresearch training script.
 This is THE ONLY FILE the agent edits.
 
+Run 1: Scaled v1 baseline — larger model, bigger batch, more grids.
+Control experiment: how much does GPU utilization alone improve score?
+v1 best: 0.5832 (embed=256, hidden=512, 6 layers, context=8, 0.8 GB VRAM)
+
 Usage: uv run train.py
 """
 
@@ -21,14 +25,14 @@ from prepare import TIME_BUDGET, evaluate_score
 
 SEED = 42
 NUM_LAYERS = 8
-EMBED_DIM = 128
-HIDDEN_DIM = 256
-NUM_CONTEXT_PAIRS = 5
+EMBED_DIM = 256
+HIDDEN_DIM = 512
+NUM_CONTEXT_PAIRS = 8
 LEARNING_RATE = 1e-3
 WEIGHT_DECAY = 1e-4
-TRAINING_BATCH_SIZE = 16
+TRAINING_BATCH_SIZE = 64
 MATRICES_PER_EPOCH = 16
-GRID_SIZES = (16, 24, 32)
+GRID_SIZES = (16, 24, 32, 48)
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -192,13 +196,17 @@ print(f"best_loss:         {best_loss:.6e}")
 print(f"domains:           {len(selected_generators)}")
 
 print("\nSuiteSparse details:")
+ilu_ref = results.get("ilu_reference", {})
+amg_ref = results.get("amg_reference", {})
 for name, detail in results["suitesparse_details"].items():
     conv_pct = detail["pfn_conv_rate"] * 100
     pfn_iter = detail["pfn_mean_norm_iter"]
     jac_iter = detail["jacobi_mean_norm_iter"]
+    ilu_iter = ilu_ref.get(name, {}).get("norm_iter", -1)
+    amg_iter = amg_ref.get(name, {}).get("norm_iter", -1)
     n = detail["n"]
     status = "OK" if conv_pct > 50 else "FAIL"
-    print(f"  {name:<12s} (n={n:>5d}): {status:<4s} pfn={pfn_iter:.3f} jac={jac_iter:.3f} conv={conv_pct:.0f}%")
+    print(f"  {name:<12s} (n={n:>5d}): {status:<4s} pfn={pfn_iter:.3f} jac={jac_iter:.3f} ilu={ilu_iter:.3f} amg={amg_iter:.3f} conv={conv_pct:.0f}%")
 
 print("\nSynthetic details:")
 for grid, detail in results["synthetic_details"].items():
