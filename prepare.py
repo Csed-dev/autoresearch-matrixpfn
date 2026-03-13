@@ -167,6 +167,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
 
     synthetic_scores = []
     synthetic_jacobi_scores = []
+    synthetic_pfn_conv = []
+    synthetic_jacobi_conv = []
     synthetic_details = {}
 
     for gs in SYNTHETIC_EVAL_GRIDS:
@@ -174,6 +176,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
         gen = DiffusionGenerator((gs,), device)
         gs_pfn_iters = []
         gs_jacobi_iters = []
+        gs_pfn_conv = []
+        gs_jacobi_conv = []
 
         for i in range(NUM_SYNTHETIC_MATRICES):
             batch = gen.generate_batch(1, 5)
@@ -187,22 +191,28 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
                                    max_iters=FGMRES_MAX_ITERS, rtol=FGMRES_RTOL,
                                    timeout=FGMRES_TIMEOUT, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
+                gs_pfn_conv.append(result.converged)
             except Exception:
                 gs_pfn_iters.append(1.0)
+                gs_pfn_conv.append(False)
 
             try:
                 jacobi = Jacobi(A)
                 jac_result = solver.solve(A, b, M=jacobi, progress_bar=False)
                 gs_jacobi_iters.append(jac_result.iterations / FGMRES_MAX_ITERS)
+                gs_jacobi_conv.append(jac_result.converged)
             except Exception:
                 gs_jacobi_iters.append(1.0)
+                gs_jacobi_conv.append(False)
 
         pfn_mean = sum(gs_pfn_iters) / len(gs_pfn_iters)
         jac_mean = sum(gs_jacobi_iters) / len(gs_jacobi_iters)
         synthetic_scores.extend(gs_pfn_iters)
         synthetic_jacobi_scores.extend(gs_jacobi_iters)
+        synthetic_pfn_conv.extend(gs_pfn_conv)
+        synthetic_jacobi_conv.extend(gs_jacobi_conv)
 
-        pfn_conv = sum(1 for s in gs_pfn_iters if s < 1.0)
+        pfn_conv = sum(gs_pfn_conv)
         synthetic_details[f"{gs}x{gs}{ood_tag}"] = {
             "pfn_mean_norm_iter": pfn_mean,
             "jacobi_mean_norm_iter": jac_mean,
@@ -211,6 +221,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
 
     ss_scores = []
     ss_jacobi_scores = []
+    ss_pfn_conv = []
+    ss_jacobi_conv = []
     ss_details = {}
 
     for group, name in EVAL_MATRICES:
@@ -223,6 +235,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
         n = A.shape[0]
         mat_pfn_iters = []
         mat_jac_iters = []
+        mat_pfn_conv = []
+        mat_jac_conv = []
 
         for rhs_idx in range(NUM_RHS):
             b = torch.randn(n, dtype=torch.float64, device=device)
@@ -232,22 +246,28 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
                                    max_iters=FGMRES_MAX_ITERS, rtol=FGMRES_RTOL,
                                    timeout=FGMRES_TIMEOUT, progress_bar=False)
                 mat_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
+                mat_pfn_conv.append(result.converged)
             except Exception:
                 mat_pfn_iters.append(1.0)
+                mat_pfn_conv.append(False)
 
             try:
                 jacobi = Jacobi(A)
                 jac_result = solver.solve(A, b, M=jacobi, progress_bar=False)
                 mat_jac_iters.append(jac_result.iterations / FGMRES_MAX_ITERS)
+                mat_jac_conv.append(jac_result.converged)
             except Exception:
                 mat_jac_iters.append(1.0)
+                mat_jac_conv.append(False)
 
         pfn_mean = sum(mat_pfn_iters) / len(mat_pfn_iters)
         jac_mean = sum(mat_jac_iters) / len(mat_jac_iters)
-        pfn_conv = sum(1 for s in mat_pfn_iters if s < 1.0)
+        pfn_conv = sum(mat_pfn_conv)
 
         ss_scores.extend(mat_pfn_iters)
         ss_jacobi_scores.extend(mat_jac_iters)
+        ss_pfn_conv.extend(mat_pfn_conv)
+        ss_jacobi_conv.extend(mat_jac_conv)
         ss_details[name] = {
             "pfn_mean_norm_iter": pfn_mean,
             "jacobi_mean_norm_iter": jac_mean,
@@ -262,8 +282,8 @@ def evaluate_score(model_path: str, device: torch.device) -> dict:
 
     combined_score = 0.3 * synth_score + 0.7 * ss_score
 
-    synth_conv = sum(1 for s in synthetic_scores if s < 1.0) / len(synthetic_scores) * 100 if synthetic_scores else 0.0
-    ss_conv = sum(1 for s in ss_scores if s < 1.0) / len(ss_scores) * 100 if ss_scores else 0.0
+    synth_conv = sum(synthetic_pfn_conv) / len(synthetic_pfn_conv) * 100 if synthetic_pfn_conv else 0.0
+    ss_conv = sum(ss_pfn_conv) / len(ss_pfn_conv) * 100 if ss_pfn_conv else 0.0
 
     return {
         "score": combined_score,
