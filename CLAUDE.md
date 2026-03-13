@@ -121,7 +121,7 @@ Training on non-symmetric domains (DIFFUSION_ADVECTION, VARIABLE_ADVECTION, ENHA
 
 - Only modify `train.py`
 - No new dependencies beyond `pyproject.toml`
-- Single GPU (default: L4 24GB)
+- Single GPU. Choose the cheapest GPU that fits the workload. Use `pm.get_available_gpus()` to find current prices. Default: RTX A5000 (24GB, ~$0.16/hr). Only use expensive GPUs (A100, H100) when the model actually needs more VRAM or compute — an underutilized A100 wastes money. Check `nvidia-smi` during runs to verify GPU utilization justifies the cost.
 - Training runs exactly 5 minutes wall-clock
 - If a run exceeds 15 minutes total, it is killed
 - ALWAYS terminate RunPod pods when done — orphaned pods burn money
