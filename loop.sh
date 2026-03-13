@@ -6,15 +6,29 @@ cd "$(dirname "$0")"
 export PATH="$HOME/.local/bin:$PATH"
 
 RESULTS_FILE="results.tsv"
+LOGS_DIR="logs"
+mkdir -p "$LOGS_DIR"
 
 if [ ! -f "$RESULTS_FILE" ]; then
     printf "commit\tscore\tss_conv\tmemory_gb\tstatus\tdescription\n" > "$RESULTS_FILE"
 fi
 
 best_score="999.0"
+run_counter=0
+
+already_tried() {
+    local desc="$1"
+    grep -qF "$desc" "$RESULTS_FILE" 2>/dev/null
+}
 
 run_experiment() {
     local desc="$1"
+    run_counter=$((run_counter + 1))
+
+    if already_tried "$desc"; then
+        echo "SKIP: '$desc' already in results.tsv"
+        return 0
+    fi
 
     git add train.py
     local commit_hash
@@ -27,19 +41,23 @@ run_experiment() {
         commit_hash=$(git rev-parse --short HEAD)
     fi
 
-    echo "=== Running: $desc (commit: $commit_hash) ==="
+    local log_file="${LOGS_DIR}/run_$(printf '%03d' $run_counter)_${commit_hash}.log"
 
-    timeout 900 uv run train.py > run.log 2>&1 || true
+    echo "=== Run #${run_counter}: $desc (commit: $commit_hash) ==="
+    echo "=== Log: $log_file ==="
+
+    timeout 900 uv run train.py > "$log_file" 2>&1 || true
+
+    cp "$log_file" run.log
 
     local score ss_conv peak_vram status
-    score=$(grep "^score:" run.log | awk '{print $2}' || echo "")
-    ss_conv=$(grep "^suitesparse_conv:" run.log | awk '{print $2}' | tr -d '%' || echo "")
-    peak_vram=$(grep "^peak_vram_mb:" run.log | awk '{print $2}' || echo "")
+    score=$(grep "^score:" "$log_file" | awk '{print $2}' || echo "")
+    ss_conv=$(grep "^suitesparse_conv:" "$log_file" | awk '{print $2}' | tr -d '%' || echo "")
+    peak_vram=$(grep "^peak_vram_mb:" "$log_file" | awk '{print $2}' || echo "")
 
     if [ -z "$score" ]; then
         echo "CRASH — no score found"
-        tail -30 run.log
-        local mem_gb="0.0"
+        tail -30 "$log_file"
         printf "%s\t0.000000\t0.0\t0.0\tcrash\t%s\n" "$commit_hash" "$desc" >> "$RESULTS_FILE"
         git reset --hard HEAD~1 2>/dev/null || true
         return 1
@@ -71,30 +89,10 @@ run_experiment() {
     echo "==="
 }
 
-echo "=========================================="
-echo "autoresearch-matrixpfn loop starting"
-echo "=========================================="
-
-run_experiment "baseline: 8 domains, embed=128, hidden=256, 8 layers"
-
-EXPERIMENTS=(
-    "phase2-add-sbm|MatrixDomain.SBM: 0.08|reduce DIFFUSION to 0.15, add SBM"
-    "phase2-add-random-sparse|MatrixDomain.RANDOM_SPARSE: 0.08|reduce DIFFUSION to 0.15, add RANDOM_SPARSE"
-    "phase2-boost-advection|boost DIFFUSION_ADVECTION to 0.25, VARIABLE_DIFFUSION to 0.15|boost advection domains"
-    "phase3-smaller-model|embed=64,hidden=128|smaller model, more epochs"
-    "phase3-larger-model|embed=256,hidden=512,layers=6|larger model, fewer layers"
-    "phase3-more-context|context=8|more context pairs"
-    "phase4-lr-3e4|lr=3e-4|lower learning rate"
-    "phase4-cosine-lr|cosine schedule|cosine LR decay"
-    "phase4-larger-grid|grids=(16,24,32,48)|add grid 48"
-    "phase4-more-matrices|matrices_per_epoch=32|more diversity per step"
-)
-
 apply_experiment() {
     local name="$1"
     local train_file="train.py"
 
-    git checkout train.py 2>/dev/null || true
     git checkout HEAD -- train.py 2>/dev/null || true
 
     case "$name" in
@@ -139,28 +137,129 @@ apply_experiment() {
         phase4-more-matrices)
             sed -i 's/MATRICES_PER_EPOCH = 16/MATRICES_PER_EPOCH = 32/' "$train_file"
             ;;
+        combo-small-boost-advection)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 64/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 128/' "$train_file"
+            sed -i 's/DIFFUSION_ADVECTION: 0.15/DIFFUSION_ADVECTION: 0.25/' "$train_file"
+            sed -i 's/VARIABLE_DIFFUSION: 0.10/VARIABLE_DIFFUSION: 0.15/' "$train_file"
+            sed -i 's/DIFFUSION: 0.20/DIFFUSION: 0.10/' "$train_file"
+            sed -i 's/GRAPH_LAPLACIAN: 0.10/GRAPH_LAPLACIAN: 0.05/' "$train_file"
+            ;;
+        combo-small-sbm)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 64/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 128/' "$train_file"
+            sed -i 's/MatrixDomain.DIFFUSION: 0.20/MatrixDomain.DIFFUSION: 0.15/' "$train_file"
+            sed -i '/ENHANCED_ADVECTION: 0.10,/a\    MatrixDomain.SBM: 0.08,' "$train_file"
+            sed -i 's/ENHANCED_ADVECTION: 0.10/ENHANCED_ADVECTION: 0.07/' "$train_file"
+            ;;
+        combo-small-cosine)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 64/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 128/' "$train_file"
+            sed -i '/optimizer = torch.optim.Adam/a\scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=700, eta_min=1e-5)' "$train_file"
+            sed -i '/optimizer.zero_grad()/a\    scheduler.step()' "$train_file"
+            ;;
+        combo-small-context8)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 64/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 128/' "$train_file"
+            sed -i 's/NUM_CONTEXT_PAIRS = 5/NUM_CONTEXT_PAIRS = 8/' "$train_file"
+            ;;
+        combo-small-advection-cosine)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 64/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 128/' "$train_file"
+            sed -i 's/DIFFUSION_ADVECTION: 0.15/DIFFUSION_ADVECTION: 0.25/' "$train_file"
+            sed -i 's/VARIABLE_DIFFUSION: 0.10/VARIABLE_DIFFUSION: 0.15/' "$train_file"
+            sed -i 's/DIFFUSION: 0.20/DIFFUSION: 0.10/' "$train_file"
+            sed -i 's/GRAPH_LAPLACIAN: 0.10/GRAPH_LAPLACIAN: 0.05/' "$train_file"
+            sed -i '/optimizer = torch.optim.Adam/a\scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=700, eta_min=1e-5)' "$train_file"
+            sed -i '/optimizer.zero_grad()/a\    scheduler.step()' "$train_file"
+            ;;
+        combo-large-context8)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 256/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 512/' "$train_file"
+            sed -i 's/NUM_LAYERS = 8/NUM_LAYERS = 6/' "$train_file"
+            sed -i 's/NUM_CONTEXT_PAIRS = 5/NUM_CONTEXT_PAIRS = 8/' "$train_file"
+            ;;
+        combo-large-advection)
+            sed -i 's/EMBED_DIM = 128/EMBED_DIM = 256/' "$train_file"
+            sed -i 's/HIDDEN_DIM = 256/HIDDEN_DIM = 512/' "$train_file"
+            sed -i 's/NUM_LAYERS = 8/NUM_LAYERS = 6/' "$train_file"
+            sed -i 's/DIFFUSION_ADVECTION: 0.15/DIFFUSION_ADVECTION: 0.25/' "$train_file"
+            sed -i 's/VARIABLE_DIFFUSION: 0.10/VARIABLE_DIFFUSION: 0.15/' "$train_file"
+            sed -i 's/DIFFUSION: 0.20/DIFFUSION: 0.10/' "$train_file"
+            sed -i 's/GRAPH_LAPLACIAN: 0.10/GRAPH_LAPLACIAN: 0.05/' "$train_file"
+            ;;
+        phase4-lr-3e3)
+            sed -i 's/LEARNING_RATE = 1e-3/LEARNING_RATE = 3e-3/' "$train_file"
+            ;;
+        phase3-layers-12)
+            sed -i 's/NUM_LAYERS = 8/NUM_LAYERS = 12/' "$train_file"
+            ;;
+        phase3-layers-4)
+            sed -i 's/NUM_LAYERS = 8/NUM_LAYERS = 4/' "$train_file"
+            ;;
+        phase3-context-16)
+            sed -i 's/NUM_CONTEXT_PAIRS = 5/NUM_CONTEXT_PAIRS = 16/' "$train_file"
+            ;;
+        phase2-all-domains)
+            sed -i 's/DOMAIN_WEIGHTS = {/DOMAIN_WEIGHTS = {\n    MatrixDomain.SBM: 0.05,\n    MatrixDomain.RANDOM_SPARSE: 0.05,\n    MatrixDomain.ENHANCED_DIFFUSION: 0.05,\n    MatrixDomain.VARIABLE_ADVECTION: 0.05,/' "$train_file"
+            sed -i 's/DIFFUSION: 0.20/DIFFUSION: 0.10/' "$train_file"
+            sed -i 's/ELASTICITY: 0.15/ELASTICITY: 0.08/' "$train_file"
+            sed -i 's/STOKES: 0.10/STOKES: 0.07/' "$train_file"
+            sed -i 's/DIFFUSION_ADVECTION: 0.15/DIFFUSION_ADVECTION: 0.10/' "$train_file"
+            sed -i 's/VARIABLE_DIFFUSION: 0.10/VARIABLE_DIFFUSION: 0.08/' "$train_file"
+            sed -i 's/SPECTRAL_STRESS: 0.10/SPECTRAL_STRESS: 0.07/' "$train_file"
+            sed -i 's/GRAPH_LAPLACIAN: 0.10/GRAPH_LAPLACIAN: 0.05/' "$train_file"
+            sed -i 's/ENHANCED_ADVECTION: 0.10/ENHANCED_ADVECTION: 0.05/' "$train_file"
+            ;;
     esac
 }
 
+echo "=========================================="
+echo "autoresearch-matrixpfn loop starting"
+echo "=========================================="
+
+EXPERIMENTS=(
+    "baseline|baseline: 8 domains, embed=128, hidden=256, 8 layers"
+    "phase2-add-sbm|phase2: add SBM domain"
+    "phase2-add-random-sparse|phase2: add RANDOM_SPARSE domain"
+    "phase2-boost-advection|phase2: boost advection domains"
+    "phase2-all-domains|phase2: all 12 domains"
+    "phase3-smaller-model|phase3: smaller model embed=64 hidden=128"
+    "phase3-larger-model|phase3: larger model embed=256 hidden=512 layers=6"
+    "phase3-more-context|phase3: context pairs=8"
+    "phase3-context-16|phase3: context pairs=16"
+    "phase3-layers-12|phase3: 12 layers"
+    "phase3-layers-4|phase3: 4 layers"
+    "phase4-lr-3e4|phase4: lr=3e-4"
+    "phase4-lr-3e3|phase4: lr=3e-3"
+    "phase4-cosine-lr|phase4: cosine LR schedule"
+    "phase4-larger-grid|phase4: add grid size 48"
+    "phase4-more-matrices|phase4: matrices_per_epoch=32"
+    "combo-small-boost-advection|combo: small model + boost advection"
+    "combo-small-sbm|combo: small model + SBM"
+    "combo-small-cosine|combo: small model + cosine LR"
+    "combo-small-context8|combo: small model + context=8"
+    "combo-small-advection-cosine|combo: small model + boost advection + cosine LR"
+    "combo-large-context8|combo: large model + context=8"
+    "combo-large-advection|combo: large model + boost advection"
+)
+
 for exp_line in "${EXPERIMENTS[@]}"; do
-    IFS='|' read -r exp_name exp_detail exp_desc <<< "$exp_line"
+    IFS='|' read -r exp_name exp_desc <<< "$exp_line"
     echo ""
-    echo ">>> Applying experiment: $exp_name ($exp_desc)"
-    apply_experiment "$exp_name"
-    run_experiment "$exp_name: $exp_desc" || true
+    echo ">>> Experiment: $exp_name"
+    if [ "$exp_name" != "baseline" ]; then
+        apply_experiment "$exp_name"
+    fi
+    run_experiment "$exp_desc" || true
 done
 
 echo ""
-echo "Phase 1-4 complete. Starting combinatorial experiments..."
-
-best_commit=$(awk -F'\t' '$5=="keep" {print $1}' "$RESULTS_FILE" | tail -1)
-if [ -n "$best_commit" ]; then
-    echo "Best commit so far: $best_commit"
-fi
-
-echo ""
 echo "=========================================="
-echo "ALL EXPERIMENTS COMPLETE"
+echo "ALL PREDEFINED EXPERIMENTS COMPLETE"
 echo "=========================================="
 echo "Final results:"
 cat "$RESULTS_FILE"
+echo ""
+echo "Best score: $best_score"
+echo "Logs saved in: $LOGS_DIR/"
