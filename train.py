@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 39: Neumann-basis K=10. K=8 got 0.368 with sherman3 at 60% conv.
-K=10 might fully resolve sherman3 and further improve other matrices.
+Run 40: Neumann-basis K=12. K=10 got 0.348, sherman3 fully converges!
+K=12 for more Neumann terms — might crack saylr4 or improve epb0.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 10
+POLY_DEGREE = 12
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
