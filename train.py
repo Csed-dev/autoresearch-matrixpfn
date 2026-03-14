@@ -37,11 +37,10 @@ HIDDEN_DIM = 384
 POLY_DEGREE = 6
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
-WEIGHT_DECAY = 5e-4
+WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
-TRAINING_TIME = 600
-DROPOUT = 0.15
+TRAINING_TIME = 300
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
@@ -126,7 +125,6 @@ class PolyMPNN(nn.Module):
             self.norms.append(nn.LayerNorm(embed))
 
         self.poly_head = PolynomialHead(embed, poly_degree)
-        self.dropout = nn.Dropout(DROPOUT)
 
         self.edge_index = None
         self.edge_features = None
@@ -187,7 +185,7 @@ class PolyMPNN(nn.Module):
             h_new = self.convs[i](h, self.edge_index, self.edge_features, self.n)
             h_new = h_new + self.skips[i](h)
             h_new = self.norms[i](h_new)
-            h_new = self.dropout(F.relu(h_new))
+            h_new = F.relu(h_new)
             h = h_new
 
         return self.poly_head(h)
@@ -205,12 +203,18 @@ class PolynomialPreconditioner:
         K = self.coeffs.shape[1]
 
         d_inv_r = self.D_inv * r
-        power = d_inv_r
-        result = self.coeffs[:, 0] * power
+        T_prev = d_inv_r
+        T_curr = self.D_inv_A @ d_inv_r
 
-        for k in range(1, K):
-            power = self.D_inv_A @ power
-            result = result + self.coeffs[:, k] * power
+        result = self.coeffs[:, 0] * T_prev
+        if K > 1:
+            result = result + self.coeffs[:, 1] * T_curr
+
+        for k in range(2, K):
+            T_next = 2.0 * (self.D_inv_A @ T_curr) - T_prev
+            result = result + self.coeffs[:, k] * T_next
+            T_prev = T_curr
+            T_curr = T_next
 
         return result
 
@@ -228,15 +232,19 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
     D_inv_unsq = D_inv.unsqueeze(-1)
     d_inv_Av = D_inv_unsq * Av
 
-    power = d_inv_Av.float()
-    coeffs_0 = coeffs[:, 0:1]
-    MAv = coeffs_0 * power
-
     D_inv_A_f32 = D_inv_A.float()
-    for k in range(1, K):
-        power = D_inv_A_f32 @ power
-        coeffs_k = coeffs[:, k:k+1]
-        MAv = MAv + coeffs_k * power
+    T_prev = d_inv_Av.float()
+    T_curr = D_inv_A_f32 @ T_prev
+
+    MAv = coeffs[:, 0:1] * T_prev
+    if K > 1:
+        MAv = MAv + coeffs[:, 1:2] * T_curr
+
+    for k in range(2, K):
+        T_next = 2.0 * (D_inv_A_f32 @ T_curr) - T_prev
+        MAv = MAv + coeffs[:, k:k+1] * T_next
+        T_prev = T_curr
+        T_curr = T_next
 
     v_f32 = v.float()
     residual = MAv - v_f32
