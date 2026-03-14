@@ -1,8 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Best config: Neumann K=256, 2 GNN layers (64/128). Score 0.160, 10/11 SS conv.
-PFN beats ILU on pde2961 (0.013 vs 0.024), beats AMG on epb0 (0.040 vs 0.350).
-63K params. Plateau confirmed: K=384, 600s training, model size all tested.
+Run 58: Weighted-Jacobi Neumann basis — J_omega = I - omega*D^{-1}A with omega=2/3.
+Standard Jacobi splitting (omega=1) has rho(J)≈1 for thermal. Weighted Jacobi
+with omega=2/3 is the optimal relaxation for Laplacian-type matrices, giving
+rho(J_omega) < rho(J). Could recover thermal while keeping Neumann gains.
 
 Usage: uv run train.py
 """
@@ -45,7 +46,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-# TIME_BUDGET from prepare.py (300s)
+JACOBI_OMEGA = 2.0 / 3.0  # Weighted Jacobi relaxation
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -202,14 +203,15 @@ class PolynomialPreconditioner:
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
         K = self.coeffs.shape[1]
+        omega = JACOBI_OMEGA
 
-        d_inv_r = self.D_inv * r
-        power = d_inv_r  # J^0 * D^{-1} * r = D^{-1} * r
+        d_inv_r = omega * self.D_inv * r
+        power = d_inv_r  # J_omega^0 * omega*D^{-1} * r
         result = self.coeffs[:, 0] * power
 
         for k in range(1, K):
-            # J * power = power - D^{-1}A @ power
-            power = power - self.D_inv_A @ power
+            # J_omega * power = power - omega * D^{-1}A @ power
+            power = power - omega * (self.D_inv_A @ power)
             result = result + self.coeffs[:, k] * power
 
         return result
@@ -225,8 +227,9 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
     v = torch.randn(n, num_probes, dtype=torch.float64, device=device)
     Av = A @ v
 
+    omega = JACOBI_OMEGA
     D_inv_unsq = D_inv.unsqueeze(-1)
-    d_inv_Av = D_inv_unsq * Av
+    d_inv_Av = omega * D_inv_unsq * Av
 
     power = d_inv_Av.float()
     coeffs_0 = coeffs[:, 0:1]
@@ -234,8 +237,8 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
 
     D_inv_A_f32 = D_inv_A.float()
     for k in range(1, K):
-        # J * power = power - D^{-1}A @ power
-        power = power - D_inv_A_f32 @ power
+        # J_omega * power = power - omega * D^{-1}A @ power
+        power = power - omega * (D_inv_A_f32 @ power)
         coeffs_k = coeffs[:, k:k+1]
         MAv = MAv + coeffs_k * power
 
