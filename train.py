@@ -1,9 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 27: Higher LR (5e-4) + 32 matrices/epoch for better gradient quality.
-Hypothesis: Run 10's 3e-4 LR with 16 mat/epoch may be suboptimal — the
-polynomial coefficients for converging matrices (0.5-0.6 norm iter) could
-be improved with stronger optimization signal.
+Run 28: LR=5e-4 with 16 mat/epoch (vs Run 27's 32 mat/epoch).
+Run 27 got 0.498 but only 573 epochs due to 2x mat/epoch overhead.
+Same higher LR but more epochs should help.
 
 Usage: uv run train.py
 """
@@ -39,7 +38,7 @@ POLY_DEGREE = 6
 NUM_PROBES = 8
 LEARNING_RATE = 5e-4
 WEIGHT_DECAY = 1e-4
-MATRICES_PER_EPOCH = 32
+MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 TRAINING_TIME = 300
 NUM_NODE_FEATURES = 3
