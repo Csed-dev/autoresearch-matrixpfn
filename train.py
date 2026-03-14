@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Best config: Weighted-Jacobi Neumann K=256, omega=0.8, 2 layers (64/128).
-Score 0.096, 10/11 SS conv. PFN beats ILU on pde2961, beats AMG on thermal+epb0.
-63K params. Original score was 0.482 — now 5x better.
+Run 61: omega=0.85. Fine-tuning omega in the sweet spot.
+Run 59 (0.8): 0.096. Testing if 0.85 is slightly better.
 
 Usage: uv run train.py
 """
@@ -45,7 +44,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-JACOBI_OMEGA = 0.8  # Weighted Jacobi relaxation — optimal (tested 0.667, 0.75, 0.8)
+JACOBI_OMEGA = 0.85  # Testing slightly higher omega
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
