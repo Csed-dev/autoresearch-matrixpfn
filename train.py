@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 44: Neumann-basis K=32. K=24 got 0.260, still improving.
-Testing where the plateau is.
+Run 45: Neumann-basis K=48. K=32 got 0.236, 10/11 conv.
+Pushing K further to find plateau.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 32
+POLY_DEGREE = 48
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
