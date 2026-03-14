@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 30: Polynomial with 16 probes (vs Run 10's 8 probes). More probes =
-lower-variance gradient estimates for the stochastic Frobenius loss.
-Could improve optimization quality, especially for harder matrices.
+Run 31: Seed variation test — exact Run 10 config with SEED=0.
+Testing if Run 10's 0.482 depends on seed or is robust.
 
 Usage: uv run train.py
 """
@@ -30,12 +29,12 @@ from prepare import (
     load_suitesparse_matrix,
 )
 
-SEED = 42
+SEED = 0
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
 POLY_DEGREE = 6
-NUM_PROBES = 16
+NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
