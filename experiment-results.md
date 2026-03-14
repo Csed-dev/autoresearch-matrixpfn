@@ -344,4 +344,69 @@ Model: PolyMPNN (63,232 params)
 | Phase 4: Architecture search (Runs 23-34) | 0.482 | 7/11 | 12 failed experiments, confirmed power basis ceiling |
 | Phase 5a: Neumann basis (Runs 35-57) | 0.160 | 9/11 (+thermal lost) | 3x score improvement, 3 new matrices |
 | Phase 5b: Weighted Jacobi (Runs 58-63) | 0.0948 | 10/11 | thermal recovered via omega=0.9 |
-| **Phase 5c: High-K (Runs 66-67)** | **0.048** | **11/11** | **🎉 ALL MATRICES SOLVED! 10x total improvement** |
+| **Phase 5c: High-K (Runs 66-67)** | **0.048** | **11/11** | **ALL MATRICES SOLVED! 10x total improvement** |
+
+## Phase 6: Ablation & Analysis (Runs 68-69)
+
+| Run | Config | Score | SS Conv | Key Finding |
+|-----|--------|-------|---------|-------------|
+| 68 | Global features (7 node, 3 edge), K=256 | 0.0949 | 90.9% (10/11) | No improvement — GNN ignores global features |
+| Ablation | GNN vs fixed c_k=1, K=256 omega=0.9 | — | 10/11 vs 10/11 | **GNN bringt NICHTS. Fixed c_k=1 ist minimal besser** |
+| Scale | K=256 on 12 matrices n=10K-50K | 1/6 conv | — | Only structural (sme3Da) converges OOD |
+| saylr4 | Eigenvalue analysis | — | — | rho(J)=1.000 for all omega (negative diagonal) |
+
+### Key Finding 26: THE GNN IS UNNECESSARY
+
+**Ablation result (K=256, omega=0.9):**
+
+```
+Matrix       GNN    Fixed   Delta
+sherman1     0.037  0.037   0.000
+sherman3     0.077  0.078  +0.002
+sherman4     0.017  0.013  -0.003  ← Fixed BETTER
+rdb1250      0.047  0.043  -0.003  ← Fixed BETTER
+pde2961      0.013  0.013   0.000
+epb0         0.042  0.038  -0.003  ← Fixed BETTER
+thermal      0.013  0.010  -0.003  ← Fixed BETTER
+orsirr_1     0.077  0.077   0.000
+orsreg_1     0.073  0.073   0.000
+watt_1       0.017  0.017   0.000
+saylr4       FAIL   FAIL    0.000
+SS mean:     0.1283 0.1273  -0.001
+Conv:        10/11  10/11   same
+```
+
+The GNN provides ZERO benefit. The fixed Neumann series (c_k=1 for all k and all nodes) is marginally better. The GNN slightly WORSENS 4 matrices (sherman4, rdb1250, epb0, thermal by 0.003 each).
+
+**Implications:**
+- MatrixPFN v2.2 is effectively a classical Neumann-series preconditioner with omega=0.9
+- The ML component (63K parameter GNN) is overhead with no benefit
+- The true contribution is algorithmic: Neumann basis + weighted Jacobi splitting + high K
+- This is a standard iterative methods result, not a machine learning result
+
+### Key Finding 27: saylr4 Has Negative Diagonal
+
+saylr4 spectral analysis:
+- ALL 3564 diagonal entries are negative
+- Matrix is symmetric and strictly diagonally dominant (DD min=1.0)
+- rho(J_omega) = 1.000 for ALL omega in (0, 1] — Neumann series oscillates, never converges
+- K=512 achieves 20% convergence through numerical effects
+- K=1024 achieves 100% convergence (Run 67, pfn=0.447)
+
+### Key Finding 28: OOD Generalization Is Poor
+
+Scale test (K=256, 12 matrices n=10K-50K):
+- 4 skipped (zero diagonal entries)
+- sme3Da (structural, n=12504): pfn=0.007 — EXCELLENT
+- igbt3 (semiconductor): FAIL
+- ex19 (CFD): FAIL
+- Si5H12 (quantum chem): pfn=0.903 — near convergence
+- t3dl_a (model reduction): FAIL
+- c-62 (optimization): pfn=0.923 — near convergence
+
+Only 1/6 testable matrices converge. The preconditioner generalizes to structural problems but not to semiconductor, CFD, quantum chem.
+
+### Key Finding 29: Global Features Don't Help
+
+Run 68 (7 node features including diag_CV, density, mean_DD, size indicator + 3 edge features):
+Score 0.0949 vs 0.0948 without global features. The GNN cannot leverage global information because (a) the GNN contributes nothing anyway (Finding 26), and (b) global constants don't differentiate between nodes.

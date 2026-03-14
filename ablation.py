@@ -1,4 +1,4 @@
-"""Quick ablation: GNN vs fixed Neumann c_k=1. Uses saylr4-only eval for speed."""
+"""Quick ablation: GNN vs fixed Neumann c_k=1. Uses K=32 for speed."""
 import numpy as np
 import torch
 from matrixpfn.precond.jacobi import Jacobi
