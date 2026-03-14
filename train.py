@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 37: Neumann-basis + higher DIFFUSION weight (35%) to recover thermal.
-Runs 35/36 (Neumann) got 0.400/0.388 but thermal always fails.
-thermal is a diffusion-type matrix — more DIFFUSION training might help.
+Run 38: Neumann-basis + K=8. Higher poly degree was bad with power basis
+(Run 9: 0.602) due to diverging powers. With Neumann basis, J^k decays
+naturally, so K=8 should train stably.
 
 Usage: uv run train.py
 """
@@ -34,7 +34,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 6
+POLY_DEGREE = 8
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
@@ -47,12 +47,12 @@ WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
 
 DOMAIN_WEIGHTS = {
-    MatrixDomain.DIFFUSION: 0.35,
-    MatrixDomain.ELASTICITY: 0.10,
-    MatrixDomain.STOKES: 0.08,
-    MatrixDomain.DIFFUSION_ADVECTION: 0.12,
+    MatrixDomain.DIFFUSION: 0.20,
+    MatrixDomain.ELASTICITY: 0.15,
+    MatrixDomain.STOKES: 0.10,
+    MatrixDomain.DIFFUSION_ADVECTION: 0.15,
     MatrixDomain.VARIABLE_DIFFUSION: 0.10,
-    MatrixDomain.SPECTRAL_STRESS: 0.05,
+    MatrixDomain.SPECTRAL_STRESS: 0.10,
     MatrixDomain.GRAPH_LAPLACIAN: 0.10,
     MatrixDomain.ENHANCED_ADVECTION: 0.10,
 }
