@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 36: Neumann-basis polynomial + seed=0. Run 35 (seed=42) got 0.400 but
-lost thermal. Testing seed variation to see if thermal is recoverable.
+Run 37: Neumann-basis + higher DIFFUSION weight (35%) to recover thermal.
+Runs 35/36 (Neumann) got 0.400/0.388 but thermal always fails.
+thermal is a diffusion-type matrix — more DIFFUSION training might help.
 
 Usage: uv run train.py
 """
@@ -29,7 +30,7 @@ from prepare import (
     load_suitesparse_matrix,
 )
 
-SEED = 0
+SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
@@ -46,12 +47,12 @@ WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
 
 DOMAIN_WEIGHTS = {
-    MatrixDomain.DIFFUSION: 0.20,
-    MatrixDomain.ELASTICITY: 0.15,
-    MatrixDomain.STOKES: 0.10,
-    MatrixDomain.DIFFUSION_ADVECTION: 0.15,
+    MatrixDomain.DIFFUSION: 0.35,
+    MatrixDomain.ELASTICITY: 0.10,
+    MatrixDomain.STOKES: 0.08,
+    MatrixDomain.DIFFUSION_ADVECTION: 0.12,
     MatrixDomain.VARIABLE_DIFFUSION: 0.10,
-    MatrixDomain.SPECTRAL_STRESS: 0.10,
+    MatrixDomain.SPECTRAL_STRESS: 0.05,
     MatrixDomain.GRAPH_LAPLACIAN: 0.10,
     MatrixDomain.ENHANCED_ADVECTION: 0.10,
 }
