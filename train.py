@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Best config: Weighted-Jacobi Neumann K=256, omega=0.9, 2 layers (64/128).
-Score 0.0948, 10/11 SS conv. 63K params.
+Run 67: K=1024 for saylr4. K=512 (Run 66) got saylr4 at 20% conv (pfn=0.928).
+K=1024 might push it to full convergence. ~30 epochs expected.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 256
+POLY_DEGREE = 1024
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
