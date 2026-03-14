@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 59: Weighted-Jacobi omega=0.8 (vs Run 58's 0.667). Higher omega means
-less damping — better for matrices where Jacobi nearly converges. Could
-improve pde2961/sherman4 scores which slightly degraded at omega=2/3.
+Run 60: omega=0.75. Run 58 (0.667): 0.098, Run 59 (0.8): 0.096.
+Testing 0.75 as compromise.
 
 Usage: uv run train.py
 """
@@ -45,7 +44,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-JACOBI_OMEGA = 0.8  # Weighted Jacobi relaxation
+JACOBI_OMEGA = 0.75  # Weighted Jacobi relaxation
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
