@@ -1,8 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Best config: Neumann K=256, 2 GNN layers (64/128). Score 0.160, 10/11 SS conv.
-PFN beats ILU on pde2961 (0.013 vs 0.024), beats AMG on epb0 (0.040 vs 0.350).
-63K params, 151 epochs in 300s budget.
+Run 57: Best config (K=256, 2 layers, 64/128) with 600s training budget.
+300s gives 151 epochs. 600s should give ~300 epochs. With Neumann init
+(already near optimal), longer training might improve fine-tuning of
+per-node coefficients without the overfitting seen with power basis.
 
 Usage: uv run train.py
 """
@@ -45,6 +46,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
+TIME_BUDGET = 600  # Override prepare.py's 300s
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -488,7 +490,7 @@ print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degr
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-estimated_epochs = int(TIME_BUDGET / 1.2)  # ~250 epochs at K=128
+estimated_epochs = int(TIME_BUDGET / 2.0)  # ~300 epochs at K=256, 600s
 
 
 def lr_lambda(epoch: int) -> float:
