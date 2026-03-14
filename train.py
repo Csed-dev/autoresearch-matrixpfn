@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 48: Neumann-basis K=128. K=96 got 0.179 with 318 epochs.
-PFN beats ILU on pde2961! Testing K=128 for plateau.
+Run 49: Neumann K=128 + smaller model (128/256) for more epochs.
+Run 48 (K=128, 192/384) got 0.171 with only 266 epochs.
+Smaller model = faster epochs = more training with same K.
 
 Usage: uv run train.py
 """
@@ -31,8 +32,8 @@ from prepare import (
 
 SEED = 42
 NUM_LAYERS = 4
-EMBED_DIM = 192
-HIDDEN_DIM = 384
+EMBED_DIM = 128
+HIDDEN_DIM = 256
 POLY_DEGREE = 128
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
