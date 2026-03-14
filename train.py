@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 46: Neumann-basis K=64. K=48 got 0.205! epb0=0.098 beats AMG by 3.6x.
-469 epochs — nearing compute limit. K=64 to find plateau.
+Run 47: Neumann-basis K=96. K=64 got 0.192 with 393 epochs.
+Testing whether 96 SpMV/step still leaves enough epochs for training.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 64
+POLY_DEGREE = 96
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
