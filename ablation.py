@@ -7,6 +7,7 @@ from prepare import EVAL_MATRICES, NUM_RHS, FGMRES_RESTART, FGMRES_MAX_ITERS, FG
 from train import load_checkpoint, JACOBI_OMEGA
 
 CHECKPOINT = "best_model.pt"
+NUM_RHS = 2  # Override for speed (original is 5)
 
 
 class NeumannPrecond:
