@@ -1,9 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 29: Low-rank preconditioner — GNN predicts K-dim vectors per node.
-M = D^{-1}(I + V*V^T) where V is n x K. Application: O(nK), no SpMV.
-Fundamentally different from polynomial: captures long-range correlations
-via the V*V^T outer product, not limited to powers of D^{-1}A.
+Run 30: Polynomial with 16 probes (vs Run 10's 8 probes). More probes =
+lower-variance gradient estimates for the stochastic Frobenius loss.
+Could improve optimization quality, especially for harder matrices.
 
 Usage: uv run train.py
 """
@@ -35,13 +34,12 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-LOWRANK_DIM = 16
-NUM_PROBES = 8
+POLY_DEGREE = 6
+NUM_PROBES = 16
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
-TRAINING_TIME = 300
 NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
@@ -81,34 +79,35 @@ class MPNNConv(nn.Module):
         return out
 
 
-class LowRankHead(nn.Module):
+class PolynomialHead(nn.Module):
 
-    def __init__(self, node_dim: int, rank: int):
+    def __init__(self, node_dim: int, poly_degree: int):
         super().__init__()
-        self.rank = rank
-        self.v_net = nn.Sequential(
+        self.poly_degree = poly_degree
+        self.coeff_net = nn.Sequential(
             nn.Linear(node_dim, node_dim),
             nn.ReLU(),
-            nn.Linear(node_dim, rank),
+            nn.Linear(node_dim, poly_degree),
         )
-        # Small init so M starts close to D^{-1} (Jacobi)
-        nn.init.normal_(self.v_net[-1].weight, std=0.01)
-        nn.init.zeros_(self.v_net[-1].bias)
+        nn.init.zeros_(self.coeff_net[-1].weight)
+        nn.init.zeros_(self.coeff_net[-1].bias)
+        with torch.no_grad():
+            self.coeff_net[-1].bias[0] = 1.0
 
     def forward(self, h: torch.Tensor) -> torch.Tensor:
-        return self.v_net(h)
+        return self.coeff_net(h)
 
 
 class PolyMPNN(nn.Module):
 
     def __init__(self, num_layers: int, embed: int, hidden: int,
-                 edge_feat_dim: int, rank: int):
+                 edge_feat_dim: int, poly_degree: int):
         super().__init__()
         self.num_layers = num_layers
         self.embed = embed
         self.hidden = hidden
         self.edge_feat_dim = edge_feat_dim
-        self.rank = rank
+        self.poly_degree = poly_degree
 
         self.node_encoder = nn.Sequential(
             nn.Linear(NUM_NODE_FEATURES, hidden),
@@ -124,12 +123,13 @@ class PolyMPNN(nn.Module):
             self.skips.append(nn.Linear(embed, embed))
             self.norms.append(nn.LayerNorm(embed))
 
-        self.lowrank_head = LowRankHead(embed, rank)
+        self.poly_head = PolynomialHead(embed, poly_degree)
 
         self.edge_index = None
         self.edge_features = None
         self.node_features = None
         self.D_inv = None
+        self.D_inv_A = None
         self.n = None
 
     def set_matrix(self, A: torch.Tensor):
@@ -172,6 +172,11 @@ class PolyMPNN(nn.Module):
         self.n = n
         self.D_inv = 1.0 / diag
 
+        d_inv_values = self.D_inv[rows] * values
+        self.D_inv_A = torch.sparse_coo_tensor(
+            indices, d_inv_values, (n, n)
+        ).coalesce().to_sparse_csc()
+
     def forward(self) -> torch.Tensor:
         h = self.node_encoder(self.node_features)
 
@@ -182,40 +187,53 @@ class PolyMPNN(nn.Module):
             h_new = F.relu(h_new)
             h = h_new
 
-        return self.lowrank_head(h)
+        return self.poly_head(h)
 
 
-class LowRankPreconditioner:
+class PolynomialPreconditioner:
 
-    def __init__(self, V: torch.Tensor, D_inv: torch.Tensor):
-        self.V = V.double()  # (n, rank)
+    def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
+                 D_inv: torch.Tensor):
+        self.coeffs = coeffs.double()
+        self.D_inv_A = D_inv_A
         self.D_inv = D_inv
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
-        # M*r = D^{-1}*r + V*(V^T*r)
+        K = self.coeffs.shape[1]
+
         d_inv_r = self.D_inv * r
-        Vt_r = self.V.T @ r  # (rank,)
-        correction = self.V @ Vt_r  # (n,)
-        return d_inv_r + correction
+        power = d_inv_r
+        result = self.coeffs[:, 0] * power
+
+        for k in range(1, K):
+            power = self.D_inv_A @ power
+            result = result + self.coeffs[:, k] * power
+
+        return result
 
 
-def lowrank_frobenius_loss(A: torch.Tensor, V: torch.Tensor,
-                           D_inv: torch.Tensor,
-                           num_probes: int) -> torch.Tensor:
+def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
+                        D_inv_A: torch.Tensor, D_inv: torch.Tensor,
+                        num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
+    K = coeffs.shape[1]
 
     v = torch.randn(n, num_probes, dtype=torch.float64, device=device)
     Av = A @ v
 
     D_inv_unsq = D_inv.unsqueeze(-1)
-    # M*Av = D^{-1}*Av + V*(V^T*Av)
     d_inv_Av = D_inv_unsq * Av
-    Av_f32 = Av.float()
-    V_f32 = V  # already float from model
-    Vt_Av = V_f32.T @ Av_f32  # (rank, num_probes)
-    correction = V_f32 @ Vt_Av  # (n, num_probes)
-    MAv = d_inv_Av.float() + correction
+
+    power = d_inv_Av.float()
+    coeffs_0 = coeffs[:, 0:1]
+    MAv = coeffs_0 * power
+
+    D_inv_A_f32 = D_inv_A.float()
+    for k in range(1, K):
+        power = D_inv_A_f32 @ power
+        coeffs_k = coeffs[:, k:k+1]
+        MAv = MAv + coeffs_k * power
 
     v_f32 = v.float()
     residual = MAv - v_f32
@@ -225,13 +243,13 @@ def lowrank_frobenius_loss(A: torch.Tensor, V: torch.Tensor,
 
 def save_checkpoint(model: PolyMPNN, path: str):
     torch.save({
-        "model_type": "LowRankMPNN",
+        "model_type": "PolyMPNN",
         "config": {
             "num_layers": model.num_layers,
             "embed": model.embed,
             "hidden": model.hidden,
             "edge_feat_dim": model.edge_feat_dim,
-            "rank": model.rank,
+            "poly_degree": model.poly_degree,
         },
         "state_dict": model.state_dict(),
     }, path)
@@ -245,14 +263,14 @@ def load_checkpoint(path: str, device: torch.device) -> PolyMPNN:
         embed=config["embed"],
         hidden=config["hidden"],
         edge_feat_dim=config["edge_feat_dim"],
-        rank=config["rank"],
+        poly_degree=config["poly_degree"],
     ).to(device)
     model.load_state_dict(checkpoint["state_dict"])
     return model
 
 
 @torch.no_grad()
-def evaluate_lowrank(model: PolyMPNN, device: torch.device) -> dict:
+def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
     model.eval()
     solver = FGMRES(
         restart=FGMRES_RESTART,
@@ -287,8 +305,8 @@ def evaluate_lowrank(model: PolyMPNN, device: torch.device) -> dict:
 
             try:
                 model.set_matrix(A)
-                V = model()
-                precond = LowRankPreconditioner(V, model.D_inv)
+                coeffs = model()
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -338,8 +356,8 @@ def evaluate_lowrank(model: PolyMPNN, device: torch.device) -> dict:
 
         try:
             model.set_matrix(A)
-            V = model()
-            precond = LowRankPreconditioner(V, model.D_inv)
+            coeffs = model()
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -457,17 +475,17 @@ model = PolyMPNN(
     embed=EMBED_DIM,
     hidden=HIDDEN_DIM,
     edge_feat_dim=NUM_EDGE_FEATURES,
-    rank=LOWRANK_DIM,
+    poly_degree=POLY_DEGREE,
 ).to(device)
 
 num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-print(f"Model: LowRankMPNN ({num_params:,} params)")
-print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, rank={LOWRANK_DIM}")
+print(f"Model: PolyMPNN ({num_params:,} params)")
+print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degree={POLY_DEGREE}")
 
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-estimated_epochs = int(TRAINING_TIME / 0.45)
+estimated_epochs = int(TIME_BUDGET / 0.45)
 
 
 def lr_lambda(epoch: int) -> float:
@@ -480,11 +498,11 @@ def lr_lambda(epoch: int) -> float:
 
 scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
-print(f"\nTime budget: {TRAINING_TIME}s")
+print(f"\nTime budget: {TIME_BUDGET}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
-print(f"Loss: stochastic Frobenius ||MAv - v||^2 (low-rank)")
-print(f"Low-rank dim: {LOWRANK_DIM}, loss skip > {LOSS_SKIP_THRESHOLD}")
+print(f"Loss: stochastic Frobenius ||MAv - v||^2 (polynomial)")
+print(f"Poly degree: {POLY_DEGREE}, loss skip > {LOSS_SKIP_THRESHOLD}")
 print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay (min {MIN_LR_RATIO})")
 print()
 
@@ -509,9 +527,9 @@ while True:
         ).coalesce().to_sparse_csc()
 
         model.set_matrix(A)
-        V = model()
+        coeffs = model()
 
-        loss = lowrank_frobenius_loss(A, V, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
@@ -546,13 +564,13 @@ while True:
     smooth_loss = ema_beta * smooth_loss + (1 - ema_beta) * avg_loss
     debiased = smooth_loss / (1 - ema_beta ** (epoch + 1))
 
-    remaining = max(0, TRAINING_TIME - total_training_time)
+    remaining = max(0, TIME_BUDGET - total_training_time)
     current_lr = scheduler.get_last_lr()[0]
     print(f"\repoch {epoch:04d} | loss: {debiased:.4e} | best: {best_loss:.4e} | lr: {current_lr:.1e} | skip: {skipped_count} | dt: {dt*1000:.0f}ms | {remaining:.0f}s    ", end="", flush=True)
 
     epoch += 1
 
-    if epoch > 5 and total_training_time >= TRAINING_TIME:
+    if epoch > 5 and total_training_time >= TIME_BUDGET:
         break
 
 print()
@@ -562,7 +580,7 @@ print(f"Best loss: {best_loss:.4e}")
 print("\nEvaluating...")
 t_eval_start = time.time()
 eval_model = load_checkpoint(CHECKPOINT_PATH, device)
-results = evaluate_lowrank(eval_model, device)
+results = evaluate_poly(eval_model, device)
 t_eval_end = time.time()
 
 t_end = time.time()
