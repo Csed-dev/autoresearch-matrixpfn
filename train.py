@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 47: Neumann-basis K=96. K=64 got 0.192 with 393 epochs.
-Testing whether 96 SpMV/step still leaves enough epochs for training.
+Run 48: Neumann-basis K=128. K=96 got 0.179 with 318 epochs.
+PFN beats ILU on pde2961! Testing K=128 for plateau.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 96
+POLY_DEGREE = 128
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
