@@ -1,9 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 25: Operator-scaled polynomial — scale D^{-1}A by 1/||D^{-1}A||_inf so all
-powers are bounded (||B||_inf <= 1). This prevents numerical overflow that causes
-the GNN to learn c_k≈0 for k>0. The scaling is encoded as a node feature so the
-GNN can adapt coefficients accordingly. Back to standard K=6 polynomial, no omega.
+Run 26: More training domains + DIRECTED_POWER_LAW, VARIABLE_ADVECTION, RANDOM_SPARSE.
+All eval matrices are non-SPD, so adding more non-symmetric/hard domains could improve
+generalization. Back to Run 10 architecture (no scaling, no omega).
 
 Usage: uv run train.py
 """
@@ -42,21 +41,24 @@ WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 TRAINING_TIME = 300
-NUM_NODE_FEATURES = 4
+NUM_NODE_FEATURES = 3
 NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
 
 DOMAIN_WEIGHTS = {
-    MatrixDomain.DIFFUSION: 0.20,
-    MatrixDomain.ELASTICITY: 0.15,
+    MatrixDomain.DIFFUSION: 0.12,
+    MatrixDomain.ELASTICITY: 0.10,
     MatrixDomain.STOKES: 0.10,
-    MatrixDomain.DIFFUSION_ADVECTION: 0.15,
-    MatrixDomain.VARIABLE_DIFFUSION: 0.10,
-    MatrixDomain.SPECTRAL_STRESS: 0.10,
-    MatrixDomain.GRAPH_LAPLACIAN: 0.10,
-    MatrixDomain.ENHANCED_ADVECTION: 0.10,
+    MatrixDomain.DIFFUSION_ADVECTION: 0.12,
+    MatrixDomain.VARIABLE_DIFFUSION: 0.08,
+    MatrixDomain.SPECTRAL_STRESS: 0.08,
+    MatrixDomain.GRAPH_LAPLACIAN: 0.08,
+    MatrixDomain.ENHANCED_ADVECTION: 0.08,
+    MatrixDomain.VARIABLE_ADVECTION: 0.08,
+    MatrixDomain.DIRECTED_POWER_LAW: 0.08,
+    MatrixDomain.RANDOM_SPARSE: 0.08,
 }
 
 
@@ -131,7 +133,7 @@ class PolyMPNN(nn.Module):
         self.edge_features = None
         self.node_features = None
         self.D_inv = None
-        self.scaled_D_inv_A = None
+        self.D_inv_A = None
         self.n = None
 
     def set_matrix(self, A: torch.Tensor):
@@ -158,20 +160,10 @@ class PolyMPNN(nn.Module):
 
         gamma = row_norms.max().item()
 
-        self.D_inv = 1.0 / diag
-
-        # Compute D^{-1}A row norms for scaling
-        d_inv_row_norms = torch.zeros(n, dtype=values.dtype, device=values.device)
-        d_inv_values_all = self.D_inv[rows] * values
-        d_inv_row_norms.scatter_add_(0, rows, d_inv_values_all.abs())
-        op_norm = d_inv_row_norms.max().item()
-        self.op_scale = 1.0 / max(op_norm, 1.0)  # scale so ||B||_inf <= 1
-
         self.node_features = torch.stack([
             diag / gamma,
             diag.abs() / row_norms,
             row_norms / gamma,
-            d_inv_row_norms / max(op_norm, 1e-12),  # local spectral info
         ], dim=-1).float()
 
         diag_at_row = diag[rows].abs()
@@ -182,11 +174,11 @@ class PolyMPNN(nn.Module):
 
         self.edge_index = indices
         self.n = n
+        self.D_inv = 1.0 / diag
 
-        # Scaled operator B = (1/||D^{-1}A||_inf) * D^{-1}A
-        scaled_d_inv_values = self.op_scale * self.D_inv[rows] * values
-        self.scaled_D_inv_A = torch.sparse_coo_tensor(
-            indices, scaled_d_inv_values, (n, n)
+        d_inv_values = self.D_inv[rows] * values
+        self.D_inv_A = torch.sparse_coo_tensor(
+            indices, d_inv_values, (n, n)
         ).coalesce().to_sparse_csc()
 
     def forward(self) -> torch.Tensor:
@@ -204,10 +196,10 @@ class PolyMPNN(nn.Module):
 
 class PolynomialPreconditioner:
 
-    def __init__(self, coeffs: torch.Tensor, scaled_D_inv_A: torch.Tensor,
+    def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
                  D_inv: torch.Tensor):
         self.coeffs = coeffs.double()
-        self.scaled_D_inv_A = scaled_D_inv_A
+        self.D_inv_A = D_inv_A
         self.D_inv = D_inv
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
@@ -218,14 +210,14 @@ class PolynomialPreconditioner:
         result = self.coeffs[:, 0] * power
 
         for k in range(1, K):
-            power = self.scaled_D_inv_A @ power
+            power = self.D_inv_A @ power
             result = result + self.coeffs[:, k] * power
 
         return result
 
 
 def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
-                        scaled_D_inv_A: torch.Tensor, D_inv: torch.Tensor,
+                        D_inv_A: torch.Tensor, D_inv: torch.Tensor,
                         num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
@@ -237,12 +229,12 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
     D_inv_unsq = D_inv.unsqueeze(-1)
     d_inv_Av = D_inv_unsq * Av
 
-    B_f32 = scaled_D_inv_A.float()
+    D_inv_A_f32 = D_inv_A.float()
     power = d_inv_Av.float()
     MAv = coeffs[:, 0:1] * power
 
     for k in range(1, K):
-        power = B_f32 @ power
+        power = D_inv_A_f32 @ power
         MAv = MAv + coeffs[:, k:k+1] * power
 
     v_f32 = v.float()
@@ -316,7 +308,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
             try:
                 model.set_matrix(A)
                 coeffs = model()
-                precond = PolynomialPreconditioner(coeffs, model.scaled_D_inv_A, model.D_inv)
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -367,7 +359,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
         try:
             model.set_matrix(A)
             coeffs = model()
-            precond = PolynomialPreconditioner(coeffs, model.scaled_D_inv_A, model.D_inv)
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -539,7 +531,7 @@ while True:
         model.set_matrix(A)
         coeffs = model()
 
-        loss = poly_frobenius_loss(A, coeffs, model.scaled_D_inv_A, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
