@@ -1,9 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 58: Weighted-Jacobi Neumann basis — J_omega = I - omega*D^{-1}A with omega=2/3.
-Standard Jacobi splitting (omega=1) has rho(J)≈1 for thermal. Weighted Jacobi
-with omega=2/3 is the optimal relaxation for Laplacian-type matrices, giving
-rho(J_omega) < rho(J). Could recover thermal while keeping Neumann gains.
+Run 59: Weighted-Jacobi omega=0.8 (vs Run 58's 0.667). Higher omega means
+less damping — better for matrices where Jacobi nearly converges. Could
+improve pde2961/sherman4 scores which slightly degraded at omega=2/3.
 
 Usage: uv run train.py
 """
@@ -46,7 +45,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-JACOBI_OMEGA = 2.0 / 3.0  # Weighted Jacobi relaxation
+JACOBI_OMEGA = 0.8  # Weighted Jacobi relaxation
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
