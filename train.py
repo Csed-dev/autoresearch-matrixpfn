@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 33: Run 10 config + EMA (exponential moving average) of model weights.
-EMA with decay=0.999 smooths the loss landscape, making thermal convergence
-more robust across seeds. Eval uses EMA weights instead of best-loss checkpoint.
+Run 7: Node-wise Polynomial Preconditioner — MPNN body predicts per-node
+polynomial coefficients c_k(i). Preconditioner: (M*r)_i = sum_k c_k(i) * [(D^-1 A)^k r]_i.
+Multi-hop fill-in by construction, no sparsity pattern limitation.
 
 Usage: uv run train.py
 """
@@ -45,7 +45,6 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-EMA_DECAY = 0.999
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
@@ -486,11 +485,6 @@ print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degr
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-# EMA model for smoother eval
-import copy
-ema_model = copy.deepcopy(model)
-ema_model.eval()
-
 estimated_epochs = int(TIME_BUDGET / 0.45)
 
 
@@ -551,10 +545,6 @@ while True:
     if valid_count > 0:
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
-        # Update EMA weights
-        with torch.no_grad():
-            for p_ema, p_model in zip(ema_model.parameters(), model.parameters()):
-                p_ema.mul_(EMA_DECAY).add_(p_model, alpha=1.0 - EMA_DECAY)
     optimizer.zero_grad()
     scheduler.step()
 
@@ -562,7 +552,7 @@ while True:
 
     if avg_loss < best_loss and valid_count > 0:
         best_loss = avg_loss
-        save_checkpoint(ema_model, CHECKPOINT_PATH)  # Save EMA weights
+        save_checkpoint(model, CHECKPOINT_PATH)
 
     t1 = time.time()
     dt = t1 - t0

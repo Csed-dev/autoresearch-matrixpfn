@@ -156,6 +156,52 @@ The SPAI and polynomial architectures are incompatible in naive combinations. Th
 
 Run 20: dropout=0.15, weight_decay=5e-4 at 300s — score 0.484, identical to Run 10 (0.482). Regularization is neutral at 300s because the model isn't overfitting yet. Test at 600s (Run 21) to see if it prevents the overfitting observed at 900s.
 
+### Phase 4: Architecture & Hyperparameter Exploration (Runs 23-33)
+
+| Run | Config | Score | SS Conv | Key Finding |
+|-----|--------|-------|---------|-------------|
+| 23 | Per-node damped poly, omega init=0.5, 300s | 0.528 | 54.5% (6/11) | Omega too aggressive, thermal lost |
+| 24 | Per-node damped poly, omega init=0.95, 300s | 0.530 | 54.5% (6/11) | Still worse — omega changes poly basis unhelpfully |
+| 25 | Operator-scaled poly (||D^{-1}A||_inf), 300s | 0.512 | 63.6% (7/11) | Same 7/11 but worse individual scores |
+| 26 | 11 training domains (added 3 non-sym), 300s | 0.533 | 54.5% (6/11) | Extra domains dilute training, thermal lost |
+| 27 | LR=5e-4, 32 mat/epoch, 300s | 0.498 | 63.6% (7/11) | Only 573 epochs due to 2x overhead |
+| 28 | LR=5e-4, 16 mat/epoch, 300s | 0.534 | 54.5% (6/11) | 1260 epochs — overfitting, thermal lost |
+| 29 | Low-rank M=D^{-1}+V*V^T, rank=16, 300s | 0.729 | 27.3% (3/11) | Fundamentally wrong — V*V^T is symmetric PSD |
+| 30 | 16 probes (2x Run 10), 300s | 0.532 | 54.5% (6/11) | More probes = fewer effective epochs, thermal lost |
+| 31 | Seed=0 (exact Run 10 config), 300s | 0.485 | 63.6% (7/11) | Robust — same 7/11, thermal=0.050 |
+| 32 | Seed=137 (exact Run 10 config), 300s | 0.533 | 54.5% (6/11) | thermal FAILS with this seed — fragile |
+| 33 | EMA decay=0.999 of model weights, 300s | 0.623 | 52.7% (5.8/11) | Over-smoothing destroys sharp coefficients |
+
+### Key Findings (Phase 4)
+
+**10. Per-Node Damping Does Not Help**
+
+Runs 23-24: predicting per-node omega in (0,1) to damp (D^{-1}A)^k powers. Even with omega initialized near 1.0 (sigmoid(3)≈0.95), the damping changes the polynomial basis without adding expressiveness. The GNN already controls magnitude through coefficients c_k. Damping adds a redundant degree of freedom that confuses optimization.
+
+**11. Operator Scaling Is Mathematically Redundant**
+
+Run 25: scaling D^{-1}A by 1/||D^{-1}A||_inf produces bounded powers but the scaling is absorbed by the polynomial coefficients. The GNN can already learn c_k/s^k directly. The extra node feature (local D^{-1}A row norm) doesn't help because this info is already captured by existing features.
+
+**12. Training Domain Distribution Matters Critically**
+
+Run 26: adding 3 more non-symmetric domains (11 total) degraded from 7/11 to 6/11. The original 8-domain mix has a specific balance where DIFFUSION (20%) provides the clearest learning signal. Diluting with more domains reduces the epochs spent on Diffusion-like matrices, which is what thermal needs.
+
+**13. The Polynomial Ceiling Is Architecture-Fundamental**
+
+Runs 23-33 tested: damping (2 variants), scaling, more domains, higher LR, more probes, low-rank, EMA, seed variation. NONE improved on Run 10. The polynomial p(D^{-1}A) architecture has a hard ceiling at 7/11 (with thermal fragile) and score ~0.482.
+
+**14. thermal Convergence Is Seed-Dependent**
+
+Seed variation (Runs 10, 31, 32): thermal converges with seeds 42 and 0, but FAILS with seed 137. This means 7/11 is not robust — the true robust ceiling is 6/11 + thermal-sometimes. The polynomial coefficients for thermal sit on a knife edge in parameter space.
+
+**15. Low-Rank Preconditioner Is Structurally Wrong**
+
+Run 29: M = D^{-1} + V*V^T produces a symmetric PSD correction, but all eval matrices are non-symmetric. The low-rank correction cannot capture the asymmetric structure of the inverse. Score 0.729, only 3/11 converge — worse than Jacobi on some matrices.
+
+**16. EMA Over-Smooths Polynomial Coefficients**
+
+Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial preconditioner requires precise coefficients — even small perturbations can make thermal/sherman1 diverge. Weight averaging is counterproductive for this architecture.
+
 ## Best Configuration (Run 10)
 
 ```
