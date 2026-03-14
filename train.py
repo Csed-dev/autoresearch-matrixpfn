@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 51: Neumann K=128 + tiny model (64/128). Testing if minimal GNN
-still works — the polynomial dominates, GNN just needs to predict
-reasonable per-node coefficients.
+Run 53: Neumann K=128 + tiny model (64/128) + correct LR schedule.
+Run 51 had estimated_epochs=667 but actual=251 — LR barely decayed.
+Fixing to estimated_epochs=250 for proper cosine annealing.
 
 Usage: uv run train.py
 """
@@ -488,7 +488,7 @@ print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degr
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
-estimated_epochs = int(TIME_BUDGET / 0.45)
+estimated_epochs = int(TIME_BUDGET / 1.2)  # ~250 epochs at K=128
 
 
 def lr_lambda(epoch: int) -> float:
