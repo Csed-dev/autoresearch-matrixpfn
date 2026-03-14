@@ -1,8 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Run 23: Per-node damped polynomial — GNN predicts K coefficients + 1 damping
-factor omega_i per node. Polynomial uses damped powers: power_k = omega * (D^-1 A @ power_{k-1}).
-Damping prevents divergence for matrices with spectral radius >> 1.
+Run 24: Per-node damped polynomial v2 — omega init at 0.95 (near identity).
+GNN predicts K coefficients + 1 damping factor omega_i per node.
+Polynomial uses damped powers: power_k = omega * (D^-1 A @ power_{k-1}).
+Higher omega init so model starts like Run 10 and only damps where needed.
 
 Usage: uv run train.py
 """
@@ -95,7 +96,7 @@ class PolynomialHead(nn.Module):
         nn.init.zeros_(self.coeff_net[-1].bias)
         with torch.no_grad():
             self.coeff_net[-1].bias[0] = 1.0  # c_0 = 1 (Jacobi init)
-            self.coeff_net[-1].bias[poly_degree] = 0.0  # omega raw = 0 -> sigmoid = 0.5
+            self.coeff_net[-1].bias[poly_degree] = 3.0  # omega raw = 3 -> sigmoid ≈ 0.95
 
     def forward(self, h: torch.Tensor) -> torch.Tensor:
         out = self.coeff_net(h)
