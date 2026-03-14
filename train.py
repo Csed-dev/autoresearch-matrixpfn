@@ -1,9 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Run 24: Per-node damped polynomial v2 — omega init at 0.95 (near identity).
-GNN predicts K coefficients + 1 damping factor omega_i per node.
-Polynomial uses damped powers: power_k = omega * (D^-1 A @ power_{k-1}).
-Higher omega init so model starts like Run 10 and only damps where needed.
+Run 25: Operator-scaled polynomial — scale D^{-1}A by 1/||D^{-1}A||_inf so all
+powers are bounded (||B||_inf <= 1). This prevents numerical overflow that causes
+the GNN to learn c_k≈0 for k>0. The scaling is encoded as a node feature so the
+GNN can adapt coefficients accordingly. Back to standard K=6 polynomial, no omega.
 
 Usage: uv run train.py
 """
@@ -42,7 +42,7 @@ WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
 TRAINING_TIME = 300
-NUM_NODE_FEATURES = 3
+NUM_NODE_FEATURES = 4
 NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
@@ -86,23 +86,18 @@ class PolynomialHead(nn.Module):
     def __init__(self, node_dim: int, poly_degree: int):
         super().__init__()
         self.poly_degree = poly_degree
-        # Predict K coefficients + 1 damping factor
         self.coeff_net = nn.Sequential(
             nn.Linear(node_dim, node_dim),
             nn.ReLU(),
-            nn.Linear(node_dim, poly_degree + 1),
+            nn.Linear(node_dim, poly_degree),
         )
         nn.init.zeros_(self.coeff_net[-1].weight)
         nn.init.zeros_(self.coeff_net[-1].bias)
         with torch.no_grad():
-            self.coeff_net[-1].bias[0] = 1.0  # c_0 = 1 (Jacobi init)
-            self.coeff_net[-1].bias[poly_degree] = 3.0  # omega raw = 3 -> sigmoid ≈ 0.95
+            self.coeff_net[-1].bias[0] = 1.0
 
     def forward(self, h: torch.Tensor) -> torch.Tensor:
-        out = self.coeff_net(h)
-        coeffs = out[:, :self.poly_degree]
-        omega = torch.sigmoid(out[:, self.poly_degree])  # in (0, 1)
-        return coeffs, omega
+        return self.coeff_net(h)
 
 
 class PolyMPNN(nn.Module):
@@ -136,7 +131,7 @@ class PolyMPNN(nn.Module):
         self.edge_features = None
         self.node_features = None
         self.D_inv = None
-        self.D_inv_A = None
+        self.scaled_D_inv_A = None
         self.n = None
 
     def set_matrix(self, A: torch.Tensor):
@@ -163,10 +158,20 @@ class PolyMPNN(nn.Module):
 
         gamma = row_norms.max().item()
 
+        self.D_inv = 1.0 / diag
+
+        # Compute D^{-1}A row norms for scaling
+        d_inv_row_norms = torch.zeros(n, dtype=values.dtype, device=values.device)
+        d_inv_values_all = self.D_inv[rows] * values
+        d_inv_row_norms.scatter_add_(0, rows, d_inv_values_all.abs())
+        op_norm = d_inv_row_norms.max().item()
+        self.op_scale = 1.0 / max(op_norm, 1.0)  # scale so ||B||_inf <= 1
+
         self.node_features = torch.stack([
             diag / gamma,
             diag.abs() / row_norms,
             row_norms / gamma,
+            d_inv_row_norms / max(op_norm, 1e-12),  # local spectral info
         ], dim=-1).float()
 
         diag_at_row = diag[rows].abs()
@@ -177,14 +182,14 @@ class PolyMPNN(nn.Module):
 
         self.edge_index = indices
         self.n = n
-        self.D_inv = 1.0 / diag
 
-        d_inv_values = self.D_inv[rows] * values
-        self.D_inv_A = torch.sparse_coo_tensor(
-            indices, d_inv_values, (n, n)
+        # Scaled operator B = (1/||D^{-1}A||_inf) * D^{-1}A
+        scaled_d_inv_values = self.op_scale * self.D_inv[rows] * values
+        self.scaled_D_inv_A = torch.sparse_coo_tensor(
+            indices, scaled_d_inv_values, (n, n)
         ).coalesce().to_sparse_csc()
 
-    def forward(self):
+    def forward(self) -> torch.Tensor:
         h = self.node_encoder(self.node_features)
 
         for i in range(self.num_layers):
@@ -194,17 +199,15 @@ class PolyMPNN(nn.Module):
             h_new = F.relu(h_new)
             h = h_new
 
-        coeffs, omega = self.poly_head(h)
-        return coeffs, omega
+        return self.poly_head(h)
 
 
 class PolynomialPreconditioner:
 
-    def __init__(self, coeffs: torch.Tensor, omega: torch.Tensor,
-                 D_inv_A: torch.Tensor, D_inv: torch.Tensor):
+    def __init__(self, coeffs: torch.Tensor, scaled_D_inv_A: torch.Tensor,
+                 D_inv: torch.Tensor):
         self.coeffs = coeffs.double()
-        self.omega = omega.double()
-        self.D_inv_A = D_inv_A
+        self.scaled_D_inv_A = scaled_D_inv_A
         self.D_inv = D_inv
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
@@ -215,15 +218,15 @@ class PolynomialPreconditioner:
         result = self.coeffs[:, 0] * power
 
         for k in range(1, K):
-            power = self.omega * (self.D_inv_A @ power)
+            power = self.scaled_D_inv_A @ power
             result = result + self.coeffs[:, k] * power
 
         return result
 
 
 def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
-                        omega: torch.Tensor, D_inv_A: torch.Tensor,
-                        D_inv: torch.Tensor, num_probes: int) -> torch.Tensor:
+                        scaled_D_inv_A: torch.Tensor, D_inv: torch.Tensor,
+                        num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
     K = coeffs.shape[1]
@@ -234,13 +237,12 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
     D_inv_unsq = D_inv.unsqueeze(-1)
     d_inv_Av = D_inv_unsq * Av
 
-    D_inv_A_f32 = D_inv_A.float()
-    omega_unsq = omega.unsqueeze(-1)  # (n, 1) for broadcasting
+    B_f32 = scaled_D_inv_A.float()
     power = d_inv_Av.float()
     MAv = coeffs[:, 0:1] * power
 
     for k in range(1, K):
-        power = omega_unsq * (D_inv_A_f32 @ power)
+        power = B_f32 @ power
         MAv = MAv + coeffs[:, k:k+1] * power
 
     v_f32 = v.float()
@@ -313,8 +315,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
             try:
                 model.set_matrix(A)
-                coeffs, omega = model()
-                precond = PolynomialPreconditioner(coeffs, omega, model.D_inv_A, model.D_inv)
+                coeffs = model()
+                precond = PolynomialPreconditioner(coeffs, model.scaled_D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -364,8 +366,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
         try:
             model.set_matrix(A)
-            coeffs, omega = model()
-            precond = PolynomialPreconditioner(coeffs, omega, model.D_inv_A, model.D_inv)
+            coeffs = model()
+            precond = PolynomialPreconditioner(coeffs, model.scaled_D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -535,9 +537,9 @@ while True:
         ).coalesce().to_sparse_csc()
 
         model.set_matrix(A)
-        coeffs, omega = model()
+        coeffs = model()
 
-        loss = poly_frobenius_loss(A, coeffs, omega, model.D_inv_A, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.scaled_D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
