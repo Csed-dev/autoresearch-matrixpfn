@@ -226,6 +226,7 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 49 | Neumann K=128, 128/256 | 0.171 | 81.8% (10/11) | Same score with 332K params (vs 732K) |
 | 50 | Neumann K=96, 128/256 | 0.179 | 81.8% (10/11) | Same as Run 47 — model size irrelevant |
 | 51 | **Neumann K=128, 64/128** | **0.170** | **81.8% (10/11)** | **88K params! GNN nearly irrelevant** |
+| 52 | Dual-basis power K=6 + Neumann K=64 | 0.195 | 81.8% (10/11) | Bases interfere — thermal still fails, Neumann degraded |
 
 ### Key Findings (Phase 5)
 
@@ -271,6 +272,10 @@ PFN beats Jacobi on ALL converging matrices (by 6-18x). **Beats ILU on pde2961.*
 **21. GNN Model Size Is Nearly Irrelevant**
 
 Runs 48-51: tested 192/384 (732K), 128/256 (332K), and 64/128 (88K) with K=128. All achieve score ~0.170-0.171. The polynomial degree (128 Neumann terms) dominates — the GNN only provides minor per-node coefficient adjustments from the Neumann series baseline (all c_k=1). An 88K parameter model matches a 732K parameter model.
+
+**22. Dual-Basis Cannot Recover thermal**
+
+Run 52: combined power basis (K=6, for thermal) with Neumann basis (K=64). Score 0.195, thermal still FAIL. The two bases interfere during optimization — the shared GNN backbone can't optimize for both simultaneously. The Neumann terms dominate the loss, starving the power terms of gradient signal. thermal is permanently sacrificed for the Neumann gains.
 
 ## Best Configuration (Run 51)
 
