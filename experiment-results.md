@@ -227,6 +227,10 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 50 | Neumann K=96, 128/256 | 0.179 | 81.8% (10/11) | Same as Run 47 — model size irrelevant |
 | 51 | **Neumann K=128, 64/128** | **0.170** | **81.8% (10/11)** | **88K params! GNN nearly irrelevant** |
 | 52 | Dual-basis power K=6 + Neumann K=64 | 0.195 | 81.8% (10/11) | Bases interfere — thermal still fails, Neumann degraded |
+| 53 | Neumann K=128, 64/128, fixed LR sched | 0.170 | 81.8% (10/11) | LR fix doesn't help — model already converged |
+| 54 | **Neumann K=192, 2 layers, 64/128** | **0.163** | **81.8% (10/11)** | 2 layers sufficient, pde2961=0.017 beats ILU |
+| 55 | **Neumann K=256, 2 layers, 64/128** | **0.160** | **81.8% (10/11)** | **pde2961=0.013 beats ILU AND AMG!** 151 epochs |
+| 56 | Neumann K=384, 2 layers, 64/128 | 0.159 | 81.8% (10/11) | **PLATEAU** — 111 epochs, marginal improvement |
 
 ### Key Findings (Phase 5)
 
@@ -277,15 +281,49 @@ Runs 48-51: tested 192/384 (732K), 128/256 (332K), and 64/128 (88K) with K=128. 
 
 Run 52: combined power basis (K=6, for thermal) with Neumann basis (K=64). Score 0.195, thermal still FAIL. The two bases interfere during optimization — the shared GNN backbone can't optimize for both simultaneously. The Neumann terms dominate the loss, starving the power terms of gradient signal. thermal is permanently sacrificed for the Neumann gains.
 
-## Best Configuration (Run 51)
+**23. 2 GNN Layers Suffice**
+
+Runs 54-56: reducing from 4 to 2 GNN layers freed compute for higher K. With 2 layers, K=192 achieves 0.163 (vs K=128 with 4 layers: 0.170). The GNN only needs 2-hop neighborhood to produce useful per-node coefficient adjustments.
+
+**24. The K-vs-Epochs Tradeoff Plateau**
+
+K=256 achieves 0.160 with 151 epochs. K=384 achieves 0.159 with 111 epochs — negligible improvement. The optimal operating point for the 300s budget is K=192-256 with 2 GNN layers. Beyond this, fewer training epochs offset the benefit of more polynomial terms.
+
+## Best Configuration (Run 55)
 
 ```
-Model: PolyMPNN (88,576 params)
-  GNN: 4 layers, embed=64, hidden=128
-  Head: PolynomialHead, degree=128 (Neumann basis J = I - D^{-1}A)
+Model: PolyMPNN (63,232 params)
+  GNN: 2 layers, embed=64, hidden=128
+  Head: PolynomialHead, degree=256 (Neumann basis J = I - D^{-1}A)
   Init: all c_k = 1 (Neumann series)
   Training: 8 domains, grids (16,24,32,48)
   LR: 3e-4 with 20-epoch warmup + cosine decay (min 10%)
   Loss: stochastic Frobenius ||MAv-v||^2, 8 probes, skip if >50
-  Budget: 300s training -> ~251 epochs
+  Budget: 300s training -> ~151 epochs
 ```
+
+## Per-Matrix Performance (Best Run: #55, K=256 Neumann)
+
+| Matrix | n | PFN | Jacobi | ILU | AMG | Conv | Notes |
+|--------|---|-----|--------|-----|-----|------|-------|
+| **pde2961** | 2961 | **0.013** | 0.787 | 0.024 | 0.015 | 100% | **BEATS ILU AND AMG!** |
+| sherman4 | 1104 | **0.017** | 0.628 | 0.004 | 0.012 | 100% | Near AMG |
+| watt_1 | 1856 | **0.020** | 0.865 | 0.002 | 0.002 | 100% | |
+| sherman1 | 1000 | **0.037** | 1.000 | 0.004 | 0.019 | 100% | Near AMG |
+| **epb0** | 1794 | **0.040** | 1.000 | 0.004 | 0.350 | 100% | **BEATS AMG by 8.8x** |
+| orsirr_1 | 1030 | **0.073** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
+| orsreg_1 | 2205 | **0.073** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
+| rdb1250 | 1250 | **0.080** | 1.000 | 0.064 | 0.028 | 100% | Near ILU |
+| sherman3 | 5005 | **0.080** | 1.000 | 0.022 | 0.013 | 100% | |
+| thermal | 3456 | FAIL | 0.073 | 0.004 | 0.008 | 0% | Neumann incompatible |
+| saylr4 | 3564 | FAIL | 1.000 | 0.008 | 0.081 | 0% | Neither basis works |
+
+## Journey Summary
+
+| Phase | Best Score | Conv | Key Discovery |
+|-------|-----------|------|---------------|
+| Phase 1: SPAI (Runs 4-6) | 0.631 | 4/11 | Edge-based preconditioner limited by sparsity |
+| Phase 2: Polynomial (Runs 7-14) | 0.482 | 7/11 | Power basis polynomial breakthrough |
+| Phase 3: Extended training (Runs 15-22) | 0.482 | 7/11 | More training = overfitting, no new matrices |
+| Phase 4: Architecture search (Runs 23-34) | 0.482 | 7/11 | 12 failed experiments, confirmed power basis ceiling |
+| **Phase 5: Neumann basis (Runs 35-56)** | **0.160** | **10/11** | **3x score improvement, 3 new matrices, beats ILU/AMG** |

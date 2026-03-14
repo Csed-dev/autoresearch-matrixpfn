@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 56: Neumann K=384, 2 layers (64/128). K=256 got 0.160 with 151 epochs.
-Marginal returns diminishing. Testing K=384 to find the ceiling.
+Best config: Neumann K=256, 2 GNN layers (64/128). Score 0.160, 10/11 SS conv.
+PFN beats ILU on pde2961 (0.013 vs 0.024), beats AMG on epb0 (0.040 vs 0.350).
+63K params, 151 epochs in 300s budget.
 
 Usage: uv run train.py
 """
@@ -33,7 +34,7 @@ SEED = 42
 NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 384
+POLY_DEGREE = 256
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
