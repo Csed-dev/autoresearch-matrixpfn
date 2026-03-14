@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 61: omega=0.85. Fine-tuning omega in the sweet spot.
-Run 59 (0.8): 0.096. Testing if 0.85 is slightly better.
+Run 62: omega=0.9. Run 61 (0.85): 0.0955 — new best!
+Testing if omega=0.9 continues the upward trend or loses thermal.
 
 Usage: uv run train.py
 """
@@ -44,7 +44,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-JACOBI_OMEGA = 0.85  # Testing slightly higher omega
+JACOBI_OMEGA = 0.9  # Testing omega=0.9
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
