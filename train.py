@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 31: Seed variation test — exact Run 10 config with SEED=0.
-Testing if Run 10's 0.482 depends on seed or is robust.
+Run 32: Seed variation test 2 — SEED=137.
+Run 31 (seed=0) got 0.485, very close to Run 10 (seed=42, 0.482).
+Testing another seed for completeness.
 
 Usage: uv run train.py
 """
@@ -29,7 +30,7 @@ from prepare import (
     load_suitesparse_matrix,
 )
 
-SEED = 0
+SEED = 137
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
