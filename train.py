@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Best config: Weighted-Jacobi Neumann K=256, omega=0.9, 2 layers (64/128).
-Score 0.0948, 10/11 SS conv. 63K params. 5.1x improvement from Run 10.
+Run 65: Add ENHANCED_DIFFUSION + SBM domains. With Neumann K=256, the model
+is much more robust. Extra domains might help saylr4 without hurting others.
 
 Usage: uv run train.py
 """
@@ -47,14 +47,17 @@ MIN_LR_RATIO = 0.1
 JACOBI_OMEGA = 0.9  # Optimal — thermal breaks at 0.95, worse at <0.9
 
 DOMAIN_WEIGHTS = {
-    MatrixDomain.DIFFUSION: 0.20,
-    MatrixDomain.ELASTICITY: 0.15,
-    MatrixDomain.STOKES: 0.10,
-    MatrixDomain.DIFFUSION_ADVECTION: 0.15,
-    MatrixDomain.VARIABLE_DIFFUSION: 0.10,
-    MatrixDomain.SPECTRAL_STRESS: 0.10,
-    MatrixDomain.GRAPH_LAPLACIAN: 0.10,
-    MatrixDomain.ENHANCED_ADVECTION: 0.10,
+    MatrixDomain.DIFFUSION: 0.15,
+    MatrixDomain.ELASTICITY: 0.10,
+    MatrixDomain.STOKES: 0.08,
+    MatrixDomain.DIFFUSION_ADVECTION: 0.12,
+    MatrixDomain.VARIABLE_DIFFUSION: 0.08,
+    MatrixDomain.SPECTRAL_STRESS: 0.08,
+    MatrixDomain.GRAPH_LAPLACIAN: 0.08,
+    MatrixDomain.ENHANCED_ADVECTION: 0.08,
+    MatrixDomain.ENHANCED_DIFFUSION: 0.08,
+    MatrixDomain.SBM: 0.08,
+    MatrixDomain.RANDOM_SPARSE: 0.07,
 }
 
 
