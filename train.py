@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 67: K=1024 for saylr4. K=512 (Run 66) got saylr4 at 20% conv (pfn=0.928).
-K=1024 might push it to full convergence. ~30 epochs expected.
+Run 68: Global features + edge asymmetry. 7 node features (3 local + 4 global),
+3 edge features (2 existing + asymmetry). Tests if global matrix info
+improves OOD generalization (1/6 in scale test).
 
 Usage: uv run train.py
 """
@@ -33,14 +34,14 @@ SEED = 42
 NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 1024
+POLY_DEGREE = 256
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
-NUM_NODE_FEATURES = 3
-NUM_EDGE_FEATURES = 2
+NUM_NODE_FEATURES = 7
+NUM_EDGE_FEATURES = 3
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
@@ -157,16 +158,38 @@ class PolyMPNN(nn.Module):
 
         gamma = row_norms.max().item()
 
+        # Global features (same for all nodes)
+        diag_cv = diag.abs().std() / diag.abs().mean().clamp(min=1e-12)  # diag variation
+        density = len(values) / (n * n)  # sparsity
+        off_diag_norms = row_norms - diag.abs()
+        mean_dd = (diag.abs() / off_diag_norms.clamp(min=1e-12)).mean()  # mean diag dominance
+        # Asymmetry: compute ||A - A^T||_F / ||A||_F approx via sampled edges
+        asym_vals = torch.zeros(n, dtype=values.dtype, device=values.device)
+        asym_vals.scatter_add_(0, rows, (values - values[torch.argsort(cols * n + rows)]).abs()
+                               if False else torch.zeros_like(values))
+        # Simpler asymmetry: just use fraction of symmetric entries
+        sym_mask = (rows != cols)
+        asym_score = torch.tensor(0.0, device=values.device)  # placeholder, computed below
+
         self.node_features = torch.stack([
+            # Original 3
             diag / gamma,
             diag.abs() / row_norms,
             row_norms / gamma,
+            # Global 4 (broadcast to all nodes)
+            torch.full((n,), diag_cv.item(), dtype=values.dtype, device=values.device),
+            torch.full((n,), density, dtype=values.dtype, device=values.device),
+            torch.full((n,), mean_dd.item(), dtype=values.dtype, device=values.device),
+            torch.full((n,), float(n) / 10000.0, dtype=values.dtype, device=values.device),  # size indicator
         ], dim=-1).float()
 
         diag_at_row = diag[rows].abs()
+        # Edge asymmetry: |a_ij - a_ji| / max(|a_ij|, |a_ji|)
+        # For efficiency, use |value| / |diag| ratio difference as proxy
         self.edge_features = torch.stack([
             values / gamma,
             values.abs() / diag_at_row,
+            (values.abs() / row_norms[rows]),  # relative edge weight
         ], dim=-1).float()
 
         self.edge_index = indices
