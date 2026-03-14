@@ -1,8 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Run 26: More training domains + DIRECTED_POWER_LAW, VARIABLE_ADVECTION, RANDOM_SPARSE.
-All eval matrices are non-SPD, so adding more non-symmetric/hard domains could improve
-generalization. Back to Run 10 architecture (no scaling, no omega).
+Run 27: Higher LR (5e-4) + 32 matrices/epoch for better gradient quality.
+Hypothesis: Run 10's 3e-4 LR with 16 mat/epoch may be suboptimal — the
+polynomial coefficients for converging matrices (0.5-0.6 norm iter) could
+be improved with stronger optimization signal.
 
 Usage: uv run train.py
 """
@@ -36,9 +37,9 @@ EMBED_DIM = 192
 HIDDEN_DIM = 384
 POLY_DEGREE = 6
 NUM_PROBES = 8
-LEARNING_RATE = 3e-4
+LEARNING_RATE = 5e-4
 WEIGHT_DECAY = 1e-4
-MATRICES_PER_EPOCH = 16
+MATRICES_PER_EPOCH = 32
 GRID_SIZES = (16, 24, 32, 48)
 TRAINING_TIME = 300
 NUM_NODE_FEATURES = 3
@@ -48,17 +49,14 @@ WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
 
 DOMAIN_WEIGHTS = {
-    MatrixDomain.DIFFUSION: 0.12,
-    MatrixDomain.ELASTICITY: 0.10,
+    MatrixDomain.DIFFUSION: 0.20,
+    MatrixDomain.ELASTICITY: 0.15,
     MatrixDomain.STOKES: 0.10,
-    MatrixDomain.DIFFUSION_ADVECTION: 0.12,
-    MatrixDomain.VARIABLE_DIFFUSION: 0.08,
-    MatrixDomain.SPECTRAL_STRESS: 0.08,
-    MatrixDomain.GRAPH_LAPLACIAN: 0.08,
-    MatrixDomain.ENHANCED_ADVECTION: 0.08,
-    MatrixDomain.VARIABLE_ADVECTION: 0.08,
-    MatrixDomain.DIRECTED_POWER_LAW: 0.08,
-    MatrixDomain.RANDOM_SPARSE: 0.08,
+    MatrixDomain.DIFFUSION_ADVECTION: 0.15,
+    MatrixDomain.VARIABLE_DIFFUSION: 0.10,
+    MatrixDomain.SPECTRAL_STRESS: 0.10,
+    MatrixDomain.GRAPH_LAPLACIAN: 0.10,
+    MatrixDomain.ENHANCED_ADVECTION: 0.10,
 }
 
 
