@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 69: Sign correction + global features. If diag < 0 (saylr4!), use |D|
-instead of D and flip preconditioner output sign. Plus 7 node features
-(3 local + 4 global), 3 edge features. K=256, omega=0.9.
+11/11 config: K=1024, omega=0.9, 2 layers (64/128). Score 0.048.
+ALL 11 SuiteSparse matrices converge. 63K params, 54 epochs in 300s.
 
 Usage: uv run train.py
 """
@@ -34,14 +33,14 @@ SEED = 42
 NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 256
+POLY_DEGREE = 1024
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 MATRICES_PER_EPOCH = 16
 GRID_SIZES = (16, 24, 32, 48)
-NUM_NODE_FEATURES = 7
-NUM_EDGE_FEATURES = 3
+NUM_NODE_FEATURES = 3
+NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
@@ -152,53 +151,22 @@ class PolyMPNN(nn.Module):
         if (diag.abs() < 1e-15).any():
             raise ValueError(f"Matrix has {(diag.abs() < 1e-15).sum()} near-zero diagonal entries")
 
-        # Sign correction for negative diagonal matrices (e.g. saylr4).
-        # If diag < 0: A = -B where B has positive diag.
-        # A^{-1} = -B^{-1}, so M_A*r = -M_B*r.
-        # We compute M_B using |D| and flip the output sign.
-        self._diag_sign = 1.0
-        if (diag < 0).sum() > n // 2:
-            self._diag_sign = -1.0
-            diag = diag.abs()
-
         row_norms = torch.zeros(n, dtype=values.dtype, device=values.device)
         row_norms.scatter_add_(0, rows, values.abs())
         row_norms = row_norms.clamp(min=1e-12)
 
         gamma = row_norms.max().item()
 
-        # Global features (same for all nodes)
-        diag_cv = diag.abs().std() / diag.abs().mean().clamp(min=1e-12)  # diag variation
-        density = len(values) / (n * n)  # sparsity
-        off_diag_norms = row_norms - diag.abs()
-        mean_dd = (diag.abs() / off_diag_norms.clamp(min=1e-12)).mean()  # mean diag dominance
-        # Asymmetry: compute ||A - A^T||_F / ||A||_F approx via sampled edges
-        asym_vals = torch.zeros(n, dtype=values.dtype, device=values.device)
-        asym_vals.scatter_add_(0, rows, (values - values[torch.argsort(cols * n + rows)]).abs()
-                               if False else torch.zeros_like(values))
-        # Simpler asymmetry: just use fraction of symmetric entries
-        sym_mask = (rows != cols)
-        asym_score = torch.tensor(0.0, device=values.device)  # placeholder, computed below
-
         self.node_features = torch.stack([
-            # Original 3
             diag / gamma,
             diag.abs() / row_norms,
             row_norms / gamma,
-            # Global 4 (broadcast to all nodes)
-            torch.full((n,), diag_cv.item(), dtype=values.dtype, device=values.device),
-            torch.full((n,), density, dtype=values.dtype, device=values.device),
-            torch.full((n,), mean_dd.item(), dtype=values.dtype, device=values.device),
-            torch.full((n,), float(n) / 10000.0, dtype=values.dtype, device=values.device),  # size indicator
         ], dim=-1).float()
 
         diag_at_row = diag[rows].abs()
-        # Edge asymmetry: |a_ij - a_ji| / max(|a_ij|, |a_ji|)
-        # For efficiency, use |value| / |diag| ratio difference as proxy
         self.edge_features = torch.stack([
             values / gamma,
             values.abs() / diag_at_row,
-            (values.abs() / row_norms[rows]),  # relative edge weight
         ], dim=-1).float()
 
         self.edge_index = indices
@@ -226,11 +194,10 @@ class PolyMPNN(nn.Module):
 class PolynomialPreconditioner:
 
     def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
-                 D_inv: torch.Tensor, sign: float = 1.0):
+                 D_inv: torch.Tensor):
         self.coeffs = coeffs.double()
         self.D_inv_A = D_inv_A
         self.D_inv = D_inv
-        self.sign = sign
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
         K = self.coeffs.shape[1]
@@ -245,12 +212,12 @@ class PolynomialPreconditioner:
             power = power - omega * (self.D_inv_A @ power)
             result = result + self.coeffs[:, k] * power
 
-        return self.sign * result
+        return result
 
 
 def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
                         D_inv_A: torch.Tensor, D_inv: torch.Tensor,
-                        num_probes: int, sign: float = 1.0) -> torch.Tensor:
+                        num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
     K = coeffs.shape[1]
@@ -274,7 +241,7 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
         MAv = MAv + coeffs_k * power
 
     v_f32 = v.float()
-    residual = sign * MAv - v_f32
+    residual = MAv - v_f32
     per_probe = (residual ** 2).sum(dim=0) / (v_f32 ** 2).sum(dim=0).clamp(min=1e-12)
     return per_probe.mean()
 
@@ -344,7 +311,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
             try:
                 model.set_matrix(A)
                 coeffs = model()
-                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv, model._diag_sign)
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -395,7 +362,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
         try:
             model.set_matrix(A)
             coeffs = model()
-            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv, model._diag_sign)
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -567,7 +534,7 @@ while True:
         model.set_matrix(A)
         coeffs = model()
 
-        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES, model._diag_sign)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
