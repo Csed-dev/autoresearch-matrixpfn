@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 53: Neumann K=128 + tiny model (64/128) + correct LR schedule.
-Run 51 had estimated_epochs=667 but actual=251 — LR barely decayed.
-Fixing to estimated_epochs=250 for proper cosine annealing.
+Run 54: Neumann K=192 + 2 GNN layers (64/128). Fewer layers = faster
+epochs. More K = more Neumann terms. Testing if K=192 can crack saylr4.
 
 Usage: uv run train.py
 """
@@ -31,10 +30,10 @@ from prepare import (
 )
 
 SEED = 42
-NUM_LAYERS = 4
+NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 128
+POLY_DEGREE = 192
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
