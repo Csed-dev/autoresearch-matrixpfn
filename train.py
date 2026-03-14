@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 52: Dual-basis polynomial — K_power=6 + K_neumann=64.
-Power basis handles thermal (0.030 in Run 10). Neumann basis handles
-the hard matrices (rdb1250, sherman3, epb0). Combined: best of both.
+Run 51: Neumann K=128 + tiny model (64/128). Testing if minimal GNN
+still works — the polynomial dominates, GNN just needs to predict
+reasonable per-node coefficients.
 
 Usage: uv run train.py
 """
@@ -34,8 +34,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POWER_DEGREE = 6
-NEUMANN_DEGREE = 64
+POLY_DEGREE = 128
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
@@ -80,44 +79,36 @@ class MPNNConv(nn.Module):
         return out
 
 
-class DualBasisHead(nn.Module):
+class PolynomialHead(nn.Module):
 
-    def __init__(self, node_dim: int, power_degree: int, neumann_degree: int):
+    def __init__(self, node_dim: int, poly_degree: int):
         super().__init__()
-        self.power_degree = power_degree
-        self.neumann_degree = neumann_degree
-        total = power_degree + neumann_degree
+        self.poly_degree = poly_degree
         self.coeff_net = nn.Sequential(
             nn.Linear(node_dim, node_dim),
             nn.ReLU(),
-            nn.Linear(node_dim, total),
+            nn.Linear(node_dim, poly_degree),
         )
         nn.init.zeros_(self.coeff_net[-1].weight)
         nn.init.zeros_(self.coeff_net[-1].bias)
         with torch.no_grad():
-            # Power basis: c_0 = 1 (Jacobi init)
-            self.coeff_net[-1].bias[0] = 1.0
-            # Neumann basis: all c_k = 1
-            self.coeff_net[-1].bias[power_degree:].fill_(1.0)
+            # Neumann series: all c_k = 1
+            self.coeff_net[-1].bias.fill_(1.0)
 
-    def forward(self, h: torch.Tensor):
-        out = self.coeff_net(h)
-        power_coeffs = out[:, :self.power_degree]
-        neumann_coeffs = out[:, self.power_degree:]
-        return power_coeffs, neumann_coeffs
+    def forward(self, h: torch.Tensor) -> torch.Tensor:
+        return self.coeff_net(h)
 
 
 class PolyMPNN(nn.Module):
 
     def __init__(self, num_layers: int, embed: int, hidden: int,
-                 edge_feat_dim: int, power_degree: int = 6, neumann_degree: int = 64):
+                 edge_feat_dim: int, poly_degree: int):
         super().__init__()
         self.num_layers = num_layers
         self.embed = embed
         self.hidden = hidden
         self.edge_feat_dim = edge_feat_dim
-        self.power_degree = power_degree
-        self.neumann_degree = neumann_degree
+        self.poly_degree = poly_degree
 
         self.node_encoder = nn.Sequential(
             nn.Linear(NUM_NODE_FEATURES, hidden),
@@ -133,7 +124,7 @@ class PolyMPNN(nn.Module):
             self.skips.append(nn.Linear(embed, embed))
             self.norms.append(nn.LayerNorm(embed))
 
-        self.dual_head = DualBasisHead(embed, power_degree, neumann_degree)
+        self.poly_head = PolynomialHead(embed, poly_degree)
 
         self.edge_index = None
         self.edge_features = None
@@ -197,70 +188,55 @@ class PolyMPNN(nn.Module):
             h_new = F.relu(h_new)
             h = h_new
 
-        return self.dual_head(h)
+        return self.poly_head(h)
 
 
-class DualBasisPreconditioner:
+class PolynomialPreconditioner:
 
-    def __init__(self, power_coeffs: torch.Tensor, neumann_coeffs: torch.Tensor,
-                 D_inv_A: torch.Tensor, D_inv: torch.Tensor):
-        self.power_coeffs = power_coeffs.double()
-        self.neumann_coeffs = neumann_coeffs.double()
+    def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
+                 D_inv: torch.Tensor):
+        self.coeffs = coeffs.double()
         self.D_inv_A = D_inv_A
         self.D_inv = D_inv
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
+        K = self.coeffs.shape[1]
+
         d_inv_r = self.D_inv * r
+        power = d_inv_r  # J^0 * D^{-1} * r = D^{-1} * r
+        result = self.coeffs[:, 0] * power
 
-        # Power basis: sum c_k^p * (D^{-1}A)^k * D^{-1} * r
-        K_p = self.power_coeffs.shape[1]
-        power = d_inv_r
-        result = self.power_coeffs[:, 0] * power
-        for k in range(1, K_p):
-            power = self.D_inv_A @ power
-            result = result + self.power_coeffs[:, k] * power
-
-        # Neumann basis: sum c_k^n * J^k * D^{-1} * r
-        K_n = self.neumann_coeffs.shape[1]
-        jpower = d_inv_r
-        result = result + self.neumann_coeffs[:, 0] * jpower
-        for k in range(1, K_n):
-            jpower = jpower - self.D_inv_A @ jpower
-            result = result + self.neumann_coeffs[:, k] * jpower
+        for k in range(1, K):
+            # J * power = power - D^{-1}A @ power
+            power = power - self.D_inv_A @ power
+            result = result + self.coeffs[:, k] * power
 
         return result
 
 
-def dual_basis_loss(A: torch.Tensor, power_coeffs: torch.Tensor,
-                    neumann_coeffs: torch.Tensor,
-                    D_inv_A: torch.Tensor, D_inv: torch.Tensor,
-                    num_probes: int) -> torch.Tensor:
+def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
+                        D_inv_A: torch.Tensor, D_inv: torch.Tensor,
+                        num_probes: int) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
+    K = coeffs.shape[1]
 
     v = torch.randn(n, num_probes, dtype=torch.float64, device=device)
     Av = A @ v
 
     D_inv_unsq = D_inv.unsqueeze(-1)
     d_inv_Av = D_inv_unsq * Av
-    d_inv_Av_f32 = d_inv_Av.float()
+
+    power = d_inv_Av.float()
+    coeffs_0 = coeffs[:, 0:1]
+    MAv = coeffs_0 * power
+
     D_inv_A_f32 = D_inv_A.float()
-
-    # Power basis contribution
-    K_p = power_coeffs.shape[1]
-    power = d_inv_Av_f32
-    MAv = power_coeffs[:, 0:1] * power
-    for k in range(1, K_p):
-        power = D_inv_A_f32 @ power
-        MAv = MAv + power_coeffs[:, k:k+1] * power
-
-    # Neumann basis contribution
-    K_n = neumann_coeffs.shape[1]
-    jpower = d_inv_Av_f32
-    MAv = MAv + neumann_coeffs[:, 0:1] * jpower
-    for k in range(1, K_n):
-        jpower = jpower - D_inv_A_f32 @ jpower
-        MAv = MAv + neumann_coeffs[:, k:k+1] * jpower
+    for k in range(1, K):
+        # J * power = power - D^{-1}A @ power
+        power = power - D_inv_A_f32 @ power
+        coeffs_k = coeffs[:, k:k+1]
+        MAv = MAv + coeffs_k * power
 
     v_f32 = v.float()
     residual = MAv - v_f32
@@ -270,14 +246,13 @@ def dual_basis_loss(A: torch.Tensor, power_coeffs: torch.Tensor,
 
 def save_checkpoint(model: PolyMPNN, path: str):
     torch.save({
-        "model_type": "DualBasisMPNN",
+        "model_type": "PolyMPNN",
         "config": {
             "num_layers": model.num_layers,
             "embed": model.embed,
             "hidden": model.hidden,
             "edge_feat_dim": model.edge_feat_dim,
-            "power_degree": model.power_degree,
-            "neumann_degree": model.neumann_degree,
+            "poly_degree": model.poly_degree,
         },
         "state_dict": model.state_dict(),
     }, path)
@@ -291,8 +266,7 @@ def load_checkpoint(path: str, device: torch.device) -> PolyMPNN:
         embed=config["embed"],
         hidden=config["hidden"],
         edge_feat_dim=config["edge_feat_dim"],
-        power_degree=config["power_degree"],
-        neumann_degree=config["neumann_degree"],
+        poly_degree=config["poly_degree"],
     ).to(device)
     model.load_state_dict(checkpoint["state_dict"])
     return model
@@ -334,8 +308,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
             try:
                 model.set_matrix(A)
-                pc, nc = model()
-                precond = DualBasisPreconditioner(pc, nc, model.D_inv_A, model.D_inv)
+                coeffs = model()
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -385,8 +359,8 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
 
         try:
             model.set_matrix(A)
-            pc, nc = model()
-            precond = DualBasisPreconditioner(pc, nc, model.D_inv_A, model.D_inv)
+            coeffs = model()
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -504,14 +478,12 @@ model = PolyMPNN(
     embed=EMBED_DIM,
     hidden=HIDDEN_DIM,
     edge_feat_dim=NUM_EDGE_FEATURES,
-    power_degree=POWER_DEGREE,
-    neumann_degree=NEUMANN_DEGREE,
+    poly_degree=POLY_DEGREE,
 ).to(device)
 
 num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-print(f"Model: DualBasisMPNN ({num_params:,} params)")
-print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}")
-print(f"  power_degree={POWER_DEGREE}, neumann_degree={NEUMANN_DEGREE}")
+print(f"Model: PolyMPNN ({num_params:,} params)")
+print(f"  layers={NUM_LAYERS}, embed={EMBED_DIM}, hidden={HIDDEN_DIM}, poly_degree={POLY_DEGREE}")
 
 dataset = OnlineMatrixDataset(registry, 1, domain_weights=DOMAIN_WEIGHTS)
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
@@ -532,8 +504,8 @@ scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 print(f"\nTime budget: {TIME_BUDGET}s")
 print(f"Probes per matrix: {NUM_PROBES}, Matrices/epoch: {MATRICES_PER_EPOCH}")
 print(f"Grid sizes: {GRID_SIZES}")
-print(f"Loss: stochastic Frobenius ||MAv - v||^2 (dual basis)")
-print(f"Power K={POWER_DEGREE} + Neumann K={NEUMANN_DEGREE}, loss skip > {LOSS_SKIP_THRESHOLD}")
+print(f"Loss: stochastic Frobenius ||MAv - v||^2 (polynomial)")
+print(f"Poly degree: {POLY_DEGREE}, loss skip > {LOSS_SKIP_THRESHOLD}")
 print(f"LR: {LEARNING_RATE} with {WARMUP_EPOCHS}-epoch warmup + cosine decay (min {MIN_LR_RATIO})")
 print()
 
@@ -558,9 +530,9 @@ while True:
         ).coalesce().to_sparse_csc()
 
         model.set_matrix(A)
-        power_coeffs, neumann_coeffs = model()
+        coeffs = model()
 
-        loss = dual_basis_loss(A, power_coeffs, neumann_coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
