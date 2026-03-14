@@ -132,8 +132,8 @@ Strong OOD generalization: 64x64 not in training set, PFN still 2.7x better than
 | 18 | Hybrid SPAI+Poly multiplicative, 300s | 0.801 | 27.3% (3/11) | Multiplicative coupling destabilizes training |
 | 19 | Hybrid SPAI+Poly additive, 300s | 0.876 | 9.1% (1/11) | Additive combination even worse — SPAI destroys polynomial |
 | 20 | Poly + dropout=0.15 + WD=5e-4, 300s | 0.484 | 63.6% (7/11) | Regularization neutral at 300s |
-| 21 | Poly + dropout=0.15 + WD=5e-4, 600s | 0.542 | 54.5% (6/11) | Dropout doesn't prevent overfitting, thermal lost |
-| 22 | Chebyshev polynomial basis, 300s | 0.583 | 54.5% (6/11) | Chebyshev WORSE than power basis, thermal lost |
+| 21 | Poly + dropout=0.15 + WD=5e-4, 600s | 0.542 | 54.5% (6/11) | Dropout doesn't prevent distribution-shift overfitting |
+| 22 | Chebyshev basis instead of power basis, 300s | 0.583 | 52.7% (6/11) | Chebyshev worse — recurrence causes numerical cancellation |
 
 ### Key Findings (Phase 3)
 
@@ -154,13 +154,7 @@ The SPAI and polynomial architectures are incompatible in naive combinations. Th
 
 **9. Regularization (Dropout + Weight Decay)**
 
-Run 20: dropout=0.15, weight_decay=5e-4 at 300s — score 0.484, identical to Run 10 (0.482). Regularization is neutral at 300s because the model isn't overfitting yet.
-
-Run 21: dropout + 600s — score 0.542, thermal lost. Dropout does NOT prevent overfitting. The problem is distribution shift (specializing to synthetic training data), not classic overfitting.
-
-**10. Chebyshev Basis Does Not Help**
-
-Run 22: Chebyshev recurrence T₀=I, T₁=B, Tₖ₊₁=2BTₖ-Tₖ₋₁ where B=D⁻¹A. Score 0.583 (worse than 0.482). thermal lost. The Chebyshev recurrence doesn't improve numerical conditioning in practice — possibly because the recurrence coefficients (2x multiplier) amplify errors differently than raw powers.
+Run 20: dropout=0.15, weight_decay=5e-4 at 300s — score 0.484, identical to Run 10 (0.482). Regularization is neutral at 300s because the model isn't overfitting yet. Test at 600s (Run 21) to see if it prevents the overfitting observed at 900s.
 
 ## Best Configuration (Run 10)
 
