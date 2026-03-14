@@ -233,8 +233,11 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 56 | Neumann K=384, 2 layers, 64/128 | 0.159 | 81.8% (10/11) | **PLATEAU** — 111 epochs, marginal improvement |
 | 57 | Neumann K=256, 600s budget | 0.160 | 81.8% (10/11) | 600s = 300s, training converged |
 | 58 | **Weighted Jacobi omega=2/3, K=256** | **0.098** | **90.9% (10/11)** | **THERMAL RECOVERED! thermal=0.007 beats AMG!** |
-| 59 | **Weighted Jacobi omega=0.8, K=256** | **0.096** | **90.9% (10/11)** | **Best omega. thermal=0.010, most matrices improve** |
+| 59 | Weighted Jacobi omega=0.8, K=256 | 0.096 | 90.9% (10/11) | thermal=0.010, most matrices improve |
 | 60 | Weighted Jacobi omega=0.75, K=256 | 0.097 | 90.9% (10/11) | Between 0.667 and 0.8, no improvement |
+| 61 | Weighted Jacobi omega=0.85, K=256 | 0.0955 | 90.9% (10/11) | Slightly better, thermal=0.010 |
+| 62 | **Weighted Jacobi omega=0.9, K=256** | **0.0948** | **90.9% (10/11)** | **BEST! thermal=0.013, pde2961=0.013 matches AMG** |
+| 63 | Weighted Jacobi omega=0.95, K=256 | 0.157 | 81.8% (9/11) | thermal FAILS — omega=0.9 is the stability limit |
 
 ### Key Findings (Phase 5)
 
@@ -297,34 +300,34 @@ Run 58: omega=2/3 weighted Jacobi splitting J_omega = I - omega*D^{-1}A. For the
 
 K=256 achieves 0.160 with 151 epochs. K=384 achieves 0.159 with 111 epochs — negligible improvement. The optimal operating point for the 300s budget is K=192-256 with 2 GNN layers. Beyond this, fewer training epochs offset the benefit of more polynomial terms.
 
-## Best Configuration (Run 59)
+## Best Configuration (Run 62)
 
 ```
 Model: PolyMPNN (63,232 params)
   GNN: 2 layers, embed=64, hidden=128
   Head: PolynomialHead, degree=256
-  Basis: Weighted-Jacobi Neumann, J_omega = I - 0.8*D^{-1}A
+  Basis: Weighted-Jacobi Neumann, J_omega = I - 0.9*D^{-1}A
   Init: all c_k = 1 (Neumann series)
   Training: 8 domains, grids (16,24,32,48)
   LR: 3e-4 with 20-epoch warmup + cosine decay (min 10%)
   Loss: stochastic Frobenius ||MAv-v||^2, 8 probes, skip if >50
-  Budget: 300s training -> ~150 epochs
+  Budget: 300s training -> ~142 epochs
 ```
 
-## Per-Matrix Performance (Best Run: #59, K=256 Weighted-Jacobi omega=0.8)
+## Per-Matrix Performance (Best Run: #62, K=256 Weighted-Jacobi omega=0.9)
 
 | Matrix | n | PFN | Jacobi | ILU | AMG | Conv | Notes |
 |--------|---|-----|--------|-----|-----|------|-------|
-| **thermal** | 3456 | **0.010** | 0.073 | 0.004 | 0.008 | 100% | **BEATS AMG!** Recovered via omega=0.8 |
-| **pde2961** | 2961 | **0.016** | 0.787 | 0.024 | 0.015 | 100% | **BEATS ILU!** Near AMG |
+| **pde2961** | 2961 | **0.013** | 0.787 | 0.024 | 0.015 | 100% | **BEATS ILU! Matches AMG!** |
+| **thermal** | 3456 | **0.013** | 0.073 | 0.004 | 0.008 | 100% | **Near AMG!** Recovered via omega=0.9 |
 | sherman4 | 1104 | **0.017** | 0.628 | 0.004 | 0.012 | 100% | Near AMG |
-| watt_1 | 1856 | **0.020** | 0.865 | 0.002 | 0.002 | 100% | |
+| watt_1 | 1856 | **0.017** | 0.865 | 0.002 | 0.002 | 100% | |
 | sherman1 | 1000 | **0.037** | 1.000 | 0.004 | 0.019 | 100% | Near AMG |
-| **epb0** | 1794 | **0.046** | 1.000 | 0.004 | 0.350 | 100% | **BEATS AMG by 7.6x** |
-| rdb1250 | 1250 | **0.047** | 1.000 | 0.064 | 0.028 | 100% | **BEATS ILU!** |
-| orsirr_1 | 1030 | **0.077** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
-| orsreg_1 | 2205 | **0.078** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
-| sherman3 | 5005 | **0.080** | 1.000 | 0.022 | 0.013 | 100% | |
+| **epb0** | 1794 | **0.042** | 1.000 | 0.004 | 0.350 | 100% | **BEATS AMG by 8.3x** |
+| **rdb1250** | 1250 | **0.047** | 1.000 | 0.064 | 0.028 | 100% | **BEATS ILU!** |
+| orsirr_1 | 1030 | **0.073** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
+| orsreg_1 | 2205 | **0.073** | 1.000 | 0.006 | 0.008 | 100% | Near AMG |
+| sherman3 | 5005 | **0.077** | 1.000 | 0.022 | 0.013 | 100% | |
 | saylr4 | 3564 | FAIL | 1.000 | 0.008 | 0.081 | 0% | Only unsolved matrix |
 
 ## Journey Summary
@@ -336,4 +339,4 @@ Model: PolyMPNN (63,232 params)
 | Phase 3: Extended training (Runs 15-22) | 0.482 | 7/11 | More training = overfitting, no new matrices |
 | Phase 4: Architecture search (Runs 23-34) | 0.482 | 7/11 | 12 failed experiments, confirmed power basis ceiling |
 | Phase 5a: Neumann basis (Runs 35-57) | 0.160 | 9/11 (+thermal lost) | 3x score improvement, 3 new matrices |
-| **Phase 5b: Weighted Jacobi (Runs 58-60)** | **0.096** | **10/11** | **thermal recovered! 5x total improvement, beats ILU+AMG** |
+| **Phase 5b: Weighted Jacobi (Runs 58-63)** | **0.0948** | **10/11** | **thermal recovered! 5x total improvement, beats ILU+AMG** |

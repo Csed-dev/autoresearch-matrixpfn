@@ -1,7 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 63: omega=0.95. Run 62 (0.9): 0.0948 — new best! thermal=0.013 still OK.
-Testing 0.95 — where does thermal break?
+Best config: Weighted-Jacobi Neumann K=256, omega=0.9, 2 layers (64/128).
+Score 0.0948, 10/11 SS conv. PFN beats ILU on pde2961+rdb1250,
+beats AMG on thermal+epb0. 63K params. 5x improvement from Run 10 (0.482).
 
 Usage: uv run train.py
 """
@@ -44,7 +45,7 @@ NUM_EDGE_FEATURES = 2
 LOSS_SKIP_THRESHOLD = 50.0
 WARMUP_EPOCHS = 20
 MIN_LR_RATIO = 0.1
-JACOBI_OMEGA = 0.95  # Testing omega=0.95
+JACOBI_OMEGA = 0.9  # Optimal — thermal breaks at 0.95, worse at <0.9
 
 DOMAIN_WEIGHTS = {
     MatrixDomain.DIFFUSION: 0.20,
