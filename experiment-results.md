@@ -222,6 +222,10 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 45 | Neumann K=48 | 0.205 | 81.8% (10/11) | epb0=0.098 beats AMG by 3.6x |
 | 46 | Neumann K=64 | 0.192 | 81.8% (10/11) | pde2961=0.033 approaching ILU |
 | 47 | **Neumann K=96** | **0.179** | **81.8% (10/11)** | **pde2961=0.023 BEATS ILU!** epb0=0.067 beats AMG by 5.2x |
+| 48 | Neumann K=128, 192/384 | 0.171 | 81.8% (10/11) | 266 epochs, pde2961=0.020 |
+| 49 | Neumann K=128, 128/256 | 0.171 | 81.8% (10/11) | Same score with 332K params (vs 732K) |
+| 50 | Neumann K=96, 128/256 | 0.179 | 81.8% (10/11) | Same as Run 47 — model size irrelevant |
+| 51 | **Neumann K=128, 64/128** | **0.170** | **81.8% (10/11)** | **88K params! GNN nearly irrelevant** |
 
 ### Key Findings (Phase 5)
 
@@ -262,15 +266,21 @@ At K=32: epb0 (pfn=0.261 vs amg=0.350) — PFN is 1.3x better than AMG! Also com
 
 PFN beats Jacobi on ALL converging matrices (by 6-18x). **Beats ILU on pde2961.** Beats AMG on epb0 by 5.2x. Solves 8 matrices that Jacobi cannot. Only thermal and saylr4 remain unsolved.
 
-## Best Configuration (Run 47)
+### Key Findings (Phase 5, continued)
+
+**21. GNN Model Size Is Nearly Irrelevant**
+
+Runs 48-51: tested 192/384 (732K), 128/256 (332K), and 64/128 (88K) with K=128. All achieve score ~0.170-0.171. The polynomial degree (128 Neumann terms) dominates — the GNN only provides minor per-node coefficient adjustments from the Neumann series baseline (all c_k=1). An 88K parameter model matches a 732K parameter model.
+
+## Best Configuration (Run 51)
 
 ```
-Model: PolyMPNN (726,240 params)
-  GNN: 4 layers, embed=192, hidden=384
-  Head: PolynomialHead, degree=96 (Neumann basis J = I - D^{-1}A)
+Model: PolyMPNN (88,576 params)
+  GNN: 4 layers, embed=64, hidden=128
+  Head: PolynomialHead, degree=128 (Neumann basis J = I - D^{-1}A)
   Init: all c_k = 1 (Neumann series)
   Training: 8 domains, grids (16,24,32,48)
   LR: 3e-4 with 20-epoch warmup + cosine decay (min 10%)
   Loss: stochastic Frobenius ||MAv-v||^2, 8 probes, skip if >50
-  Budget: 300s training -> ~318 epochs
+  Budget: 300s training -> ~251 epochs
 ```
