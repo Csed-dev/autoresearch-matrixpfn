@@ -1,9 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 35: Neumann-basis polynomial — uses J = I - D^{-1}A instead of D^{-1}A.
-The Neumann series M = D^{-1} * sum J^k is the optimal polynomial preconditioner
-when rho(J) < 1. Powers of J naturally decay (unlike D^{-1}A which grows).
-Init all c_k = 1 (Neumann series). GNN learns corrections from there.
+Run 36: Neumann-basis polynomial + seed=0. Run 35 (seed=42) got 0.400 but
+lost thermal. Testing seed variation to see if thermal is recoverable.
 
 Usage: uv run train.py
 """
@@ -31,7 +29,7 @@ from prepare import (
     load_suitesparse_matrix,
 )
 
-SEED = 42
+SEED = 0
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
