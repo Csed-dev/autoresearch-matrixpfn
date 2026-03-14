@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 41: Neumann-basis K=16. Clear trend: higher K keeps improving.
-K=12 got 0.337, K=16 for even more Neumann terms.
+Run 42: Neumann-basis K=20. K=16 got 0.305, still improving monotonically.
+K=20 for further gains. 680 epochs at K=16 — compute budget is fine.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 16
+POLY_DEGREE = 20
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
