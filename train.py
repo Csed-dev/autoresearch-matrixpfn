@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 66: K=512, omega=0.9, 2 layers (64/128). Testing if very high K
-can crack saylr4. Previous K=384 gave 0.159 with saylr4 still FAIL.
-K=512 will have ~60-70 epochs — minimal but Neumann init is strong.
+Best config: Weighted-Jacobi Neumann K=256, omega=0.9, 2 layers (64/128).
+Score 0.0948, 10/11 SS conv. 63K params.
 
 Usage: uv run train.py
 """
@@ -34,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 2
 EMBED_DIM = 64
 HIDDEN_DIM = 128
-POLY_DEGREE = 512
+POLY_DEGREE = 256
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
