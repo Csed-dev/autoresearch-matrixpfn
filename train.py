@@ -1,8 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 38: Neumann-basis + K=8. Higher poly degree was bad with power basis
-(Run 9: 0.602) due to diverging powers. With Neumann basis, J^k decays
-naturally, so K=8 should train stably.
+Run 39: Neumann-basis K=10. K=8 got 0.368 with sherman3 at 60% conv.
+K=10 might fully resolve sherman3 and further improve other matrices.
 
 Usage: uv run train.py
 """
@@ -34,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 8
+POLY_DEGREE = 10
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
