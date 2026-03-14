@@ -1,8 +1,9 @@
 """
 MatrixPFN autoresearch training script.
-Run 18: Hybrid SPAI + Polynomial Preconditioner.
-M*r = D^{-1}(I+G) * [sum_k c_k(i) * (D^{-1}A)^k * D^{-1}*r]
-Polynomial provides multi-hop reach, SPAI refines locally.
+Run 19: Additive Hybrid — Polynomial + SPAI correction.
+M*r = P_poly(r) + D^{-1}*G*(D^{-1}*r)
+Polynomial provides multi-hop, SPAI adds independent local corrections.
+No coupling — simpler optimization landscape.
 
 Usage: uv run train.py
 """
@@ -234,12 +235,16 @@ class HybridPreconditioner:
     def apply(self, r):
         K = self.coeffs.shape[1]
         d_inv_r = self.D_inv * r
+
         power = d_inv_r
-        z = self.coeffs[:, 0] * power
+        poly_result = self.coeffs[:, 0] * power
         for k in range(1, K):
             power = self.D_inv_A @ power
-            z = z + self.coeffs[:, k] * power
-        return self.D_inv * (self.IpG @ z)
+            poly_result = poly_result + self.coeffs[:, k] * power
+
+        spai_result = self.D_inv * (self.IpG @ d_inv_r) - d_inv_r
+
+        return poly_result + spai_result
 
 
 def hybrid_frobenius_loss(A, coeffs, g_values, edge_index,
@@ -263,14 +268,15 @@ def hybrid_frobenius_loss(A, coeffs, g_values, edge_index,
         power = D_inv_A_f32 @ power
         z = z + coeffs[:, k:k+1] * power
 
-    z_at_cols = z[cols]
-    weighted = g_values.unsqueeze(-1) * z_at_cols
-    Gz = torch.zeros(n, num_probes, dtype=torch.float32, device=device)
-    Gz.scatter_add_(0, rows.unsqueeze(-1).expand_as(weighted), weighted)
-    IpGz = z + Gz
+    Av_at_cols = d_inv_Av.float()[cols]
+    weighted = g_values.unsqueeze(-1) * Av_at_cols
+    GAv_dinv = torch.zeros(n, num_probes, dtype=torch.float32, device=device)
+    GAv_dinv.scatter_add_(0, rows.unsqueeze(-1).expand_as(weighted), weighted)
 
     D_inv_f32 = D_inv.float().unsqueeze(-1)
-    MAv = D_inv_f32 * IpGz
+    spai_correction = D_inv_f32 * GAv_dinv
+
+    MAv = z + spai_correction
 
     v_f32 = v.float()
     residual = MAv - v_f32
