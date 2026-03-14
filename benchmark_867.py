@@ -225,8 +225,8 @@ def main():
         name = mat["name"]
         n = mat["rows"]
 
-        # Skip very large matrices (would be too slow)
-        if n > 50000:
+        # Skip very large matrices (would be too slow on GPU)
+        if n > 20000:
             skipped += 1
             continue
 
@@ -261,6 +261,11 @@ def main():
                 r["neumann"], neu_tag, r["ilu"], ilu_tag, r["amg"], amg_tag,
                 r.get("avg_k", 0), dt,
                 "NEU_BEST" if best == "neu" else ""))
+
+            # Save incremental results every 10 matrices
+            if len(results) % 10 == 0:
+                with open("benchmark_partial.json", "w") as jf:
+                    json.dump(results, jf)
             results.append(r)
 
         except Exception as e:
