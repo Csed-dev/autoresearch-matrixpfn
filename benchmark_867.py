@@ -226,7 +226,7 @@ def main():
         n = mat["rows"]
 
         # Skip very large matrices (would be too slow on GPU)
-        if n > 20000:
+        if n > 15000:
             skipped += 1
             continue
 
