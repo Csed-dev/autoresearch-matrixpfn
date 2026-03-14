@@ -238,6 +238,10 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 61 | Weighted Jacobi omega=0.85, K=256 | 0.0955 | 90.9% (10/11) | Slightly better, thermal=0.010 |
 | 62 | **Weighted Jacobi omega=0.9, K=256** | **0.0948** | **90.9% (10/11)** | **BEST! thermal=0.013, pde2961=0.013 matches AMG** |
 | 63 | Weighted Jacobi omega=0.95, K=256 | 0.157 | 81.8% (9/11) | thermal FAILS — omega=0.9 is the stability limit |
+| 64 | Learned global omega via pooling, K=256 | 0.099 | 90.9% (10/11) | Worse than fixed omega — GNN can't differentiate |
+| 65 | 11 training domains, K=256 | 0.0948 | 90.9% (10/11) | Extra domains neither help nor hurt |
+| 66 | **K=512, omega=0.9** | **0.082** | **92.7% (10.2/11)** | **saylr4 at 20% conv (pfn=0.928)! Score 0.082** |
+| 67 | **K=1024, omega=0.9** | **0.048** | **100% (11/11)** | **🎉 ALL 11 MATRICES CONVERGE! saylr4=0.447** |
 
 ### Key Findings (Phase 5)
 
@@ -339,4 +343,5 @@ Model: PolyMPNN (63,232 params)
 | Phase 3: Extended training (Runs 15-22) | 0.482 | 7/11 | More training = overfitting, no new matrices |
 | Phase 4: Architecture search (Runs 23-34) | 0.482 | 7/11 | 12 failed experiments, confirmed power basis ceiling |
 | Phase 5a: Neumann basis (Runs 35-57) | 0.160 | 9/11 (+thermal lost) | 3x score improvement, 3 new matrices |
-| **Phase 5b: Weighted Jacobi (Runs 58-63)** | **0.0948** | **10/11** | **thermal recovered! 5x total improvement, beats ILU+AMG** |
+| Phase 5b: Weighted Jacobi (Runs 58-63) | 0.0948 | 10/11 | thermal recovered via omega=0.9 |
+| **Phase 5c: High-K (Runs 66-67)** | **0.048** | **11/11** | **🎉 ALL MATRICES SOLVED! 10x total improvement** |
