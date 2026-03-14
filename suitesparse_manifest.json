@@ -1,0 +1,7805 @@
+[
+  {
+    "id": 65,
+    "group": "HB",
+    "name": "bcsstm10",
+    "rows": 1086,
+    "cols": 1086,
+    "nnz": 22092,
+    "kind": "structural problem"
+  },
+  {
+    "id": 68,
+    "group": "HB",
+    "name": "bcsstm13",
+    "rows": 2003,
+    "cols": 2003,
+    "nnz": 21181,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 77,
+    "group": "HB",
+    "name": "bcsstm27",
+    "rows": 1224,
+    "cols": 1224,
+    "nnz": 56126,
+    "kind": "structural problem"
+  },
+  {
+    "id": 156,
+    "group": "HB",
+    "name": "gemat11",
+    "rows": 4929,
+    "cols": 4929,
+    "nnz": 33108,
+    "kind": "power network problem sequence"
+  },
+  {
+    "id": 157,
+    "group": "HB",
+    "name": "gemat12",
+    "rows": 4929,
+    "cols": 4929,
+    "nnz": 33044,
+    "kind": "subsequent power network problem"
+  },
+  {
+    "id": 160,
+    "group": "HB",
+    "name": "gre_1107",
+    "rows": 1107,
+    "cols": 1107,
+    "nnz": 5664,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 189,
+    "group": "HB",
+    "name": "lns_3937",
+    "rows": 3937,
+    "cols": 3937,
+    "nnz": 25407,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 191,
+    "group": "HB",
+    "name": "lnsp3937",
+    "rows": 3937,
+    "cols": 3937,
+    "nnz": 25407,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 208,
+    "group": "HB",
+    "name": "mahindas",
+    "rows": 1258,
+    "cols": 1258,
+    "nnz": 7682,
+    "kind": "economic problem"
+  },
+  {
+    "id": 214,
+    "group": "HB",
+    "name": "nnc1374",
+    "rows": 1374,
+    "cols": 1374,
+    "nnz": 8588,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 224,
+    "group": "HB",
+    "name": "orani678",
+    "rows": 2529,
+    "cols": 2529,
+    "nnz": 90158,
+    "kind": "economic problem"
+  },
+  {
+    "id": 225,
+    "group": "HB",
+    "name": "orsirr_1",
+    "rows": 1030,
+    "cols": 1030,
+    "nnz": 6858,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 227,
+    "group": "HB",
+    "name": "orsreg_1",
+    "rows": 2205,
+    "cols": 2205,
+    "nnz": 14133,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 230,
+    "group": "HB",
+    "name": "plsk1919",
+    "rows": 1919,
+    "cols": 1919,
+    "nnz": 9662,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 233,
+    "group": "HB",
+    "name": "pores_2",
+    "rows": 1224,
+    "cols": 1224,
+    "nnz": 9613,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 235,
+    "group": "HB",
+    "name": "psmigr_1",
+    "rows": 3140,
+    "cols": 3140,
+    "nnz": 543160,
+    "kind": "economic problem"
+  },
+  {
+    "id": 236,
+    "group": "HB",
+    "name": "psmigr_2",
+    "rows": 3140,
+    "cols": 3140,
+    "nnz": 540022,
+    "kind": "economic problem"
+  },
+  {
+    "id": 237,
+    "group": "HB",
+    "name": "psmigr_3",
+    "rows": 3140,
+    "cols": 3140,
+    "nnz": 543160,
+    "kind": "economic problem"
+  },
+  {
+    "id": 240,
+    "group": "HB",
+    "name": "saylr3",
+    "rows": 1000,
+    "cols": 1000,
+    "nnz": 3750,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 241,
+    "group": "HB",
+    "name": "saylr4",
+    "rows": 3564,
+    "cols": 3564,
+    "nnz": 22316,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 242,
+    "group": "HB",
+    "name": "sherman1",
+    "rows": 1000,
+    "cols": 1000,
+    "nnz": 3750,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 243,
+    "group": "HB",
+    "name": "sherman2",
+    "rows": 1080,
+    "cols": 1080,
+    "nnz": 23094,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 244,
+    "group": "HB",
+    "name": "sherman3",
+    "rows": 5005,
+    "cols": 5005,
+    "nnz": 20033,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 245,
+    "group": "HB",
+    "name": "sherman4",
+    "rows": 1104,
+    "cols": 1104,
+    "nnz": 3786,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 246,
+    "group": "HB",
+    "name": "sherman5",
+    "rows": 3312,
+    "cols": 3312,
+    "nnz": 20793,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 258,
+    "group": "HB",
+    "name": "watt_1",
+    "rows": 1856,
+    "cols": 1856,
+    "nnz": 11360,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 259,
+    "group": "HB",
+    "name": "watt_2",
+    "rows": 1856,
+    "cols": 1856,
+    "nnz": 11550,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 271,
+    "group": "HB",
+    "name": "west1505",
+    "rows": 1505,
+    "cols": 1505,
+    "nnz": 5414,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 272,
+    "group": "HB",
+    "name": "west2021",
+    "rows": 2021,
+    "cols": 2021,
+    "nnz": 7310,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 282,
+    "group": "HB",
+    "name": "zenios",
+    "rows": 2873,
+    "cols": 2873,
+    "nnz": 1314,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 283,
+    "group": "ATandT",
+    "name": "onetone1",
+    "rows": 36057,
+    "cols": 36057,
+    "nnz": 335552,
+    "kind": "frequency-domain circuit simulation problem"
+  },
+  {
+    "id": 284,
+    "group": "ATandT",
+    "name": "onetone2",
+    "rows": 36057,
+    "cols": 36057,
+    "nnz": 222596,
+    "kind": "frequency-domain circuit simulation problem"
+  },
+  {
+    "id": 287,
+    "group": "Averous",
+    "name": "epb0",
+    "rows": 1794,
+    "cols": 1794,
+    "nnz": 7764,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 288,
+    "group": "Averous",
+    "name": "epb1",
+    "rows": 14734,
+    "cols": 14734,
+    "nnz": 95053,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 289,
+    "group": "Averous",
+    "name": "epb2",
+    "rows": 25228,
+    "cols": 25228,
+    "nnz": 175027,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 290,
+    "group": "Averous",
+    "name": "epb3",
+    "rows": 84617,
+    "cols": 84617,
+    "nnz": 463625,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 291,
+    "group": "Bai",
+    "name": "af23560",
+    "rows": 23560,
+    "cols": 23560,
+    "nnz": 460598,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 299,
+    "group": "Bai",
+    "name": "bwm2000",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 7996,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 309,
+    "group": "Bai",
+    "name": "dw1024",
+    "rows": 2048,
+    "cols": 2048,
+    "nnz": 10114,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 312,
+    "group": "Bai",
+    "name": "dw4096",
+    "rows": 8192,
+    "cols": 8192,
+    "nnz": 41746,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 319,
+    "group": "Bai",
+    "name": "olm1000",
+    "rows": 1000,
+    "cols": 1000,
+    "nnz": 3996,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 320,
+    "group": "Bai",
+    "name": "olm2000",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 7996,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 322,
+    "group": "Bai",
+    "name": "olm5000",
+    "rows": 5000,
+    "cols": 5000,
+    "nnz": 19996,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 324,
+    "group": "Bai",
+    "name": "pde2961",
+    "rows": 2961,
+    "cols": 2961,
+    "nnz": 14585,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 331,
+    "group": "Bai",
+    "name": "rdb2048",
+    "rows": 2048,
+    "cols": 2048,
+    "nnz": 12032,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 332,
+    "group": "Bai",
+    "name": "rdb5000",
+    "rows": 5000,
+    "cols": 5000,
+    "nnz": 29600,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 336,
+    "group": "Bai",
+    "name": "rw5151",
+    "rows": 5151,
+    "cols": 5151,
+    "nnz": 20199,
+    "kind": "statistical/mathematical problem"
+  },
+  {
+    "id": 338,
+    "group": "Bai",
+    "name": "tub1000",
+    "rows": 1000,
+    "cols": 1000,
+    "nnz": 3996,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 340,
+    "group": "Boeing",
+    "name": "bcsstk35",
+    "rows": 30237,
+    "cols": 30237,
+    "nnz": 1450163,
+    "kind": "structural problem"
+  },
+  {
+    "id": 342,
+    "group": "Boeing",
+    "name": "bcsstk37",
+    "rows": 25503,
+    "cols": 25503,
+    "nnz": 1140977,
+    "kind": "structural problem"
+  },
+  {
+    "id": 345,
+    "group": "Boeing",
+    "name": "bcsstm35",
+    "rows": 30237,
+    "cols": 30237,
+    "nnz": 20619,
+    "kind": "structural problem"
+  },
+  {
+    "id": 346,
+    "group": "Boeing",
+    "name": "bcsstm36",
+    "rows": 23052,
+    "cols": 23052,
+    "nnz": 320606,
+    "kind": "structural problem"
+  },
+  {
+    "id": 347,
+    "group": "Boeing",
+    "name": "bcsstm37",
+    "rows": 25503,
+    "cols": 25503,
+    "nnz": 15525,
+    "kind": "structural problem"
+  },
+  {
+    "id": 348,
+    "group": "Boeing",
+    "name": "bcsstm38",
+    "rows": 8032,
+    "cols": 8032,
+    "nnz": 10485,
+    "kind": "structural problem"
+  },
+  {
+    "id": 350,
+    "group": "Boeing",
+    "name": "crystk01",
+    "rows": 4875,
+    "cols": 4875,
+    "nnz": 315891,
+    "kind": "materials problem"
+  },
+  {
+    "id": 351,
+    "group": "Boeing",
+    "name": "crystk02",
+    "rows": 13965,
+    "cols": 13965,
+    "nnz": 968583,
+    "kind": "materials problem"
+  },
+  {
+    "id": 352,
+    "group": "Boeing",
+    "name": "crystk03",
+    "rows": 24696,
+    "cols": 24696,
+    "nnz": 1751178,
+    "kind": "materials problem"
+  },
+  {
+    "id": 363,
+    "group": "Boeing",
+    "name": "nasa1824",
+    "rows": 1824,
+    "cols": 1824,
+    "nnz": 39208,
+    "kind": "duplicate structural problem"
+  },
+  {
+    "id": 370,
+    "group": "Bomhof",
+    "name": "circuit_1",
+    "rows": 2624,
+    "cols": 2624,
+    "nnz": 35823,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 371,
+    "group": "Bomhof",
+    "name": "circuit_2",
+    "rows": 4510,
+    "cols": 4510,
+    "nnz": 21199,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 372,
+    "group": "Bomhof",
+    "name": "circuit_3",
+    "rows": 12127,
+    "cols": 12127,
+    "nnz": 48137,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 373,
+    "group": "Bomhof",
+    "name": "circuit_4",
+    "rows": 80209,
+    "cols": 80209,
+    "nnz": 307604,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 375,
+    "group": "Brethour",
+    "name": "coater1",
+    "rows": 1348,
+    "cols": 1348,
+    "nnz": 19457,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 376,
+    "group": "Brethour",
+    "name": "coater2",
+    "rows": 9540,
+    "cols": 9540,
+    "nnz": 207308,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 377,
+    "group": "Brunetiere",
+    "name": "thermal",
+    "rows": 3456,
+    "cols": 3456,
+    "nnz": 66528,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 379,
+    "group": "Cote",
+    "name": "vibrobox",
+    "rows": 12328,
+    "cols": 12328,
+    "nnz": 301700,
+    "kind": "acoustics problem"
+  },
+  {
+    "id": 384,
+    "group": "DRIVCAV",
+    "name": "cavity05",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 32632,
+    "kind": "computational fluid dynamics problem sequence"
+  },
+  {
+    "id": 385,
+    "group": "DRIVCAV",
+    "name": "cavity06",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 29675,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 386,
+    "group": "DRIVCAV",
+    "name": "cavity07",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 32702,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 387,
+    "group": "DRIVCAV",
+    "name": "cavity08",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 29675,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 388,
+    "group": "DRIVCAV",
+    "name": "cavity09",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 32702,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 389,
+    "group": "DRIVCAV",
+    "name": "cavity10",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 76171,
+    "kind": "computational fluid dynamics problem sequence"
+  },
+  {
+    "id": 390,
+    "group": "DRIVCAV",
+    "name": "cavity11",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 71601,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 391,
+    "group": "DRIVCAV",
+    "name": "cavity12",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 76258,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 392,
+    "group": "DRIVCAV",
+    "name": "cavity13",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 71601,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 393,
+    "group": "DRIVCAV",
+    "name": "cavity14",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 76258,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 394,
+    "group": "DRIVCAV",
+    "name": "cavity15",
+    "rows": 2597,
+    "cols": 2597,
+    "nnz": 71601,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 395,
+    "group": "DRIVCAV",
+    "name": "cavity16",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 137887,
+    "kind": "computational fluid dynamics problem sequence"
+  },
+  {
+    "id": 396,
+    "group": "DRIVCAV",
+    "name": "cavity17",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 131735,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 397,
+    "group": "DRIVCAV",
+    "name": "cavity18",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 138040,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 398,
+    "group": "DRIVCAV",
+    "name": "cavity19",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 131735,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 399,
+    "group": "DRIVCAV",
+    "name": "cavity20",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 138040,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 400,
+    "group": "DRIVCAV",
+    "name": "cavity21",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 131735,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 401,
+    "group": "DRIVCAV",
+    "name": "cavity22",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 138040,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 402,
+    "group": "DRIVCAV",
+    "name": "cavity23",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 131735,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 403,
+    "group": "DRIVCAV",
+    "name": "cavity24",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 138040,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 404,
+    "group": "DRIVCAV",
+    "name": "cavity25",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 131735,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 405,
+    "group": "DRIVCAV",
+    "name": "cavity26",
+    "rows": 4562,
+    "cols": 4562,
+    "nnz": 138040,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 409,
+    "group": "FIDAP",
+    "name": "ex11",
+    "rows": 16614,
+    "cols": 16614,
+    "nnz": 1096948,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 410,
+    "group": "FIDAP",
+    "name": "ex12",
+    "rows": 3973,
+    "cols": 3973,
+    "nnz": 79077,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 412,
+    "group": "FIDAP",
+    "name": "ex14",
+    "rows": 3251,
+    "cols": 3251,
+    "nnz": 65875,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 414,
+    "group": "FIDAP",
+    "name": "ex18",
+    "rows": 5773,
+    "cols": 5773,
+    "nnz": 71701,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 415,
+    "group": "FIDAP",
+    "name": "ex19",
+    "rows": 12005,
+    "cols": 12005,
+    "nnz": 259577,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 417,
+    "group": "FIDAP",
+    "name": "ex20",
+    "rows": 2203,
+    "cols": 2203,
+    "nnz": 67830,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 420,
+    "group": "FIDAP",
+    "name": "ex23",
+    "rows": 1409,
+    "cols": 1409,
+    "nnz": 42760,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 421,
+    "group": "FIDAP",
+    "name": "ex24",
+    "rows": 2283,
+    "cols": 2283,
+    "nnz": 47901,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 423,
+    "group": "FIDAP",
+    "name": "ex26",
+    "rows": 2163,
+    "cols": 2163,
+    "nnz": 74464,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 425,
+    "group": "FIDAP",
+    "name": "ex28",
+    "rows": 2603,
+    "cols": 2603,
+    "nnz": 77031,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 426,
+    "group": "FIDAP",
+    "name": "ex29",
+    "rows": 2870,
+    "cols": 2870,
+    "nnz": 23754,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 428,
+    "group": "FIDAP",
+    "name": "ex31",
+    "rows": 3909,
+    "cols": 3909,
+    "nnz": 91223,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 429,
+    "group": "FIDAP",
+    "name": "ex32",
+    "rows": 1159,
+    "cols": 1159,
+    "nnz": 11047,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 431,
+    "group": "FIDAP",
+    "name": "ex35",
+    "rows": 19716,
+    "cols": 19716,
+    "nnz": 227872,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 432,
+    "group": "FIDAP",
+    "name": "ex36",
+    "rows": 3079,
+    "cols": 3079,
+    "nnz": 53099,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 433,
+    "group": "FIDAP",
+    "name": "ex37",
+    "rows": 3565,
+    "cols": 3565,
+    "nnz": 67591,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 434,
+    "group": "FIDAP",
+    "name": "ex4",
+    "rows": 1601,
+    "cols": 1601,
+    "nnz": 31849,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 435,
+    "group": "FIDAP",
+    "name": "ex40",
+    "rows": 7740,
+    "cols": 7740,
+    "nnz": 456188,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 437,
+    "group": "FIDAP",
+    "name": "ex6",
+    "rows": 1651,
+    "cols": 1651,
+    "nnz": 49062,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 438,
+    "group": "FIDAP",
+    "name": "ex7",
+    "rows": 1633,
+    "cols": 1633,
+    "nnz": 46626,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 439,
+    "group": "FIDAP",
+    "name": "ex8",
+    "rows": 3096,
+    "cols": 3096,
+    "nnz": 90841,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 441,
+    "group": "Gaertner",
+    "name": "big",
+    "rows": 13209,
+    "cols": 13209,
+    "nnz": 91465,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 442,
+    "group": "Gaertner",
+    "name": "nopoly",
+    "rows": 10774,
+    "cols": 10774,
+    "nnz": 70842,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 443,
+    "group": "Gaertner",
+    "name": "pesa",
+    "rows": 11738,
+    "cols": 11738,
+    "nnz": 79566,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 444,
+    "group": "Garon",
+    "name": "garon1",
+    "rows": 3175,
+    "cols": 3175,
+    "nnz": 84723,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 445,
+    "group": "Garon",
+    "name": "garon2",
+    "rows": 13535,
+    "cols": 13535,
+    "nnz": 373235,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 446,
+    "group": "Goodwin",
+    "name": "goodwin",
+    "rows": 7320,
+    "cols": 7320,
+    "nnz": 324772,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 447,
+    "group": "Goodwin",
+    "name": "rim",
+    "rows": 22560,
+    "cols": 22560,
+    "nnz": 1014951,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 448,
+    "group": "Graham",
+    "name": "graham1",
+    "rows": 9035,
+    "cols": 9035,
+    "nnz": 335472,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 450,
+    "group": "Grund",
+    "name": "b2_ss",
+    "rows": 1089,
+    "cols": 1089,
+    "nnz": 3895,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 451,
+    "group": "Grund",
+    "name": "b_dyn",
+    "rows": 1089,
+    "cols": 1089,
+    "nnz": 4144,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 452,
+    "group": "Grund",
+    "name": "bayer01",
+    "rows": 57735,
+    "cols": 57735,
+    "nnz": 275094,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 453,
+    "group": "Grund",
+    "name": "bayer02",
+    "rows": 13935,
+    "cols": 13935,
+    "nnz": 63307,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 454,
+    "group": "Grund",
+    "name": "bayer03",
+    "rows": 6747,
+    "cols": 6747,
+    "nnz": 29195,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 455,
+    "group": "Grund",
+    "name": "bayer04",
+    "rows": 20545,
+    "cols": 20545,
+    "nnz": 85537,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 456,
+    "group": "Grund",
+    "name": "bayer05",
+    "rows": 3268,
+    "cols": 3268,
+    "nnz": 20712,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 457,
+    "group": "Grund",
+    "name": "bayer06",
+    "rows": 3008,
+    "cols": 3008,
+    "nnz": 20715,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 458,
+    "group": "Grund",
+    "name": "bayer07",
+    "rows": 3268,
+    "cols": 3268,
+    "nnz": 20963,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 459,
+    "group": "Grund",
+    "name": "bayer08",
+    "rows": 3008,
+    "cols": 3008,
+    "nnz": 20698,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 460,
+    "group": "Grund",
+    "name": "bayer09",
+    "rows": 3083,
+    "cols": 3083,
+    "nnz": 11767,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 461,
+    "group": "Grund",
+    "name": "bayer10",
+    "rows": 13436,
+    "cols": 13436,
+    "nnz": 71594,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 465,
+    "group": "Grund",
+    "name": "meg1",
+    "rows": 2904,
+    "cols": 2904,
+    "nnz": 58142,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 466,
+    "group": "Grund",
+    "name": "meg4",
+    "rows": 5860,
+    "cols": 5860,
+    "nnz": 25258,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 467,
+    "group": "Grund",
+    "name": "poli",
+    "rows": 4008,
+    "cols": 4008,
+    "nnz": 8188,
+    "kind": "economic problem"
+  },
+  {
+    "id": 468,
+    "group": "Grund",
+    "name": "poli_large",
+    "rows": 15575,
+    "cols": 15575,
+    "nnz": 33033,
+    "kind": "economic problem"
+  },
+  {
+    "id": 488,
+    "group": "Gset",
+    "name": "G27",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 39980,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 489,
+    "group": "Gset",
+    "name": "G28",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 39980,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 490,
+    "group": "Gset",
+    "name": "G29",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 39980,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 492,
+    "group": "Gset",
+    "name": "G30",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 39980,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 493,
+    "group": "Gset",
+    "name": "G31",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 39980,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 494,
+    "group": "Gset",
+    "name": "G32",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 8000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 495,
+    "group": "Gset",
+    "name": "G33",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 8000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 496,
+    "group": "Gset",
+    "name": "G34",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 8000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 501,
+    "group": "Gset",
+    "name": "G39",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 23556,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 503,
+    "group": "Gset",
+    "name": "G40",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 23532,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 504,
+    "group": "Gset",
+    "name": "G41",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 23570,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 505,
+    "group": "Gset",
+    "name": "G42",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 23558,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 520,
+    "group": "Gset",
+    "name": "G56",
+    "rows": 5000,
+    "cols": 5000,
+    "nnz": 24996,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 521,
+    "group": "Gset",
+    "name": "G57",
+    "rows": 5000,
+    "cols": 5000,
+    "nnz": 20000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 523,
+    "group": "Gset",
+    "name": "G59",
+    "rows": 5000,
+    "cols": 5000,
+    "nnz": 59140,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 526,
+    "group": "Gset",
+    "name": "G61",
+    "rows": 7000,
+    "cols": 7000,
+    "nnz": 34296,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 527,
+    "group": "Gset",
+    "name": "G62",
+    "rows": 7000,
+    "cols": 7000,
+    "nnz": 28000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 529,
+    "group": "Gset",
+    "name": "G64",
+    "rows": 7000,
+    "cols": 7000,
+    "nnz": 82918,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 530,
+    "group": "Gset",
+    "name": "G65",
+    "rows": 8000,
+    "cols": 8000,
+    "nnz": 32000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 531,
+    "group": "Gset",
+    "name": "G66",
+    "rows": 9000,
+    "cols": 9000,
+    "nnz": 36000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 532,
+    "group": "Gset",
+    "name": "G67",
+    "rows": 10000,
+    "cols": 10000,
+    "nnz": 40000,
+    "kind": "undirected weighted random graph"
+  },
+  {
+    "id": 539,
+    "group": "Hamm",
+    "name": "add20",
+    "rows": 2395,
+    "cols": 2395,
+    "nnz": 13151,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 540,
+    "group": "Hamm",
+    "name": "add32",
+    "rows": 4960,
+    "cols": 4960,
+    "nnz": 19848,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 541,
+    "group": "Hamm",
+    "name": "bcircuit",
+    "rows": 68902,
+    "cols": 68902,
+    "nnz": 375558,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 543,
+    "group": "Hamm",
+    "name": "memplus",
+    "rows": 17758,
+    "cols": 17758,
+    "nnz": 99147,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 545,
+    "group": "Hollinger",
+    "name": "g7jac010",
+    "rows": 2880,
+    "cols": 2880,
+    "nnz": 18229,
+    "kind": "economic problem"
+  },
+  {
+    "id": 546,
+    "group": "Hollinger",
+    "name": "g7jac010sc",
+    "rows": 2880,
+    "cols": 2880,
+    "nnz": 18229,
+    "kind": "economic problem"
+  },
+  {
+    "id": 547,
+    "group": "Hollinger",
+    "name": "g7jac020",
+    "rows": 5850,
+    "cols": 5850,
+    "nnz": 42568,
+    "kind": "economic problem"
+  },
+  {
+    "id": 548,
+    "group": "Hollinger",
+    "name": "g7jac020sc",
+    "rows": 5850,
+    "cols": 5850,
+    "nnz": 42568,
+    "kind": "economic problem"
+  },
+  {
+    "id": 549,
+    "group": "Hollinger",
+    "name": "g7jac040",
+    "rows": 11790,
+    "cols": 11790,
+    "nnz": 107383,
+    "kind": "economic problem"
+  },
+  {
+    "id": 550,
+    "group": "Hollinger",
+    "name": "g7jac040sc",
+    "rows": 11790,
+    "cols": 11790,
+    "nnz": 107383,
+    "kind": "economic problem"
+  },
+  {
+    "id": 551,
+    "group": "Hollinger",
+    "name": "g7jac050sc",
+    "rows": 14760,
+    "cols": 14760,
+    "nnz": 145157,
+    "kind": "economic problem"
+  },
+  {
+    "id": 552,
+    "group": "Hollinger",
+    "name": "g7jac060",
+    "rows": 17730,
+    "cols": 17730,
+    "nnz": 183325,
+    "kind": "economic problem"
+  },
+  {
+    "id": 553,
+    "group": "Hollinger",
+    "name": "g7jac060sc",
+    "rows": 17730,
+    "cols": 17730,
+    "nnz": 183325,
+    "kind": "economic problem"
+  },
+  {
+    "id": 554,
+    "group": "Hollinger",
+    "name": "g7jac080",
+    "rows": 23670,
+    "cols": 23670,
+    "nnz": 259648,
+    "kind": "economic problem"
+  },
+  {
+    "id": 555,
+    "group": "Hollinger",
+    "name": "g7jac080sc",
+    "rows": 23670,
+    "cols": 23670,
+    "nnz": 259648,
+    "kind": "economic problem"
+  },
+  {
+    "id": 556,
+    "group": "Hollinger",
+    "name": "g7jac100",
+    "rows": 29610,
+    "cols": 29610,
+    "nnz": 335972,
+    "kind": "economic problem"
+  },
+  {
+    "id": 557,
+    "group": "Hollinger",
+    "name": "g7jac100sc",
+    "rows": 29610,
+    "cols": 29610,
+    "nnz": 335972,
+    "kind": "economic problem"
+  },
+  {
+    "id": 558,
+    "group": "Hollinger",
+    "name": "g7jac120",
+    "rows": 35550,
+    "cols": 35550,
+    "nnz": 412306,
+    "kind": "economic problem"
+  },
+  {
+    "id": 559,
+    "group": "Hollinger",
+    "name": "g7jac120sc",
+    "rows": 35550,
+    "cols": 35550,
+    "nnz": 412306,
+    "kind": "economic problem"
+  },
+  {
+    "id": 560,
+    "group": "Hollinger",
+    "name": "g7jac140",
+    "rows": 41490,
+    "cols": 41490,
+    "nnz": 488633,
+    "kind": "economic problem"
+  },
+  {
+    "id": 561,
+    "group": "Hollinger",
+    "name": "g7jac140sc",
+    "rows": 41490,
+    "cols": 41490,
+    "nnz": 488633,
+    "kind": "economic problem"
+  },
+  {
+    "id": 562,
+    "group": "Hollinger",
+    "name": "g7jac160",
+    "rows": 47430,
+    "cols": 47430,
+    "nnz": 564952,
+    "kind": "economic problem"
+  },
+  {
+    "id": 563,
+    "group": "Hollinger",
+    "name": "g7jac160sc",
+    "rows": 47430,
+    "cols": 47430,
+    "nnz": 564952,
+    "kind": "economic problem"
+  },
+  {
+    "id": 564,
+    "group": "Hollinger",
+    "name": "g7jac180",
+    "rows": 53370,
+    "cols": 53370,
+    "nnz": 641290,
+    "kind": "economic problem"
+  },
+  {
+    "id": 565,
+    "group": "Hollinger",
+    "name": "g7jac180sc",
+    "rows": 53370,
+    "cols": 53370,
+    "nnz": 641290,
+    "kind": "economic problem"
+  },
+  {
+    "id": 566,
+    "group": "Hollinger",
+    "name": "g7jac200",
+    "rows": 59310,
+    "cols": 59310,
+    "nnz": 717620,
+    "kind": "economic problem"
+  },
+  {
+    "id": 567,
+    "group": "Hollinger",
+    "name": "g7jac200sc",
+    "rows": 59310,
+    "cols": 59310,
+    "nnz": 717620,
+    "kind": "economic problem"
+  },
+  {
+    "id": 568,
+    "group": "Hollinger",
+    "name": "jan99jac020",
+    "rows": 6774,
+    "cols": 6774,
+    "nnz": 33744,
+    "kind": "economic problem"
+  },
+  {
+    "id": 569,
+    "group": "Hollinger",
+    "name": "jan99jac020sc",
+    "rows": 6774,
+    "cols": 6774,
+    "nnz": 33744,
+    "kind": "economic problem"
+  },
+  {
+    "id": 570,
+    "group": "Hollinger",
+    "name": "jan99jac040",
+    "rows": 13694,
+    "cols": 13694,
+    "nnz": 72734,
+    "kind": "economic problem"
+  },
+  {
+    "id": 571,
+    "group": "Hollinger",
+    "name": "jan99jac040sc",
+    "rows": 13694,
+    "cols": 13694,
+    "nnz": 72734,
+    "kind": "economic problem"
+  },
+  {
+    "id": 572,
+    "group": "Hollinger",
+    "name": "jan99jac060",
+    "rows": 20614,
+    "cols": 20614,
+    "nnz": 111903,
+    "kind": "economic problem"
+  },
+  {
+    "id": 573,
+    "group": "Hollinger",
+    "name": "jan99jac060sc",
+    "rows": 20614,
+    "cols": 20614,
+    "nnz": 111903,
+    "kind": "economic problem"
+  },
+  {
+    "id": 574,
+    "group": "Hollinger",
+    "name": "jan99jac080",
+    "rows": 27534,
+    "cols": 27534,
+    "nnz": 151063,
+    "kind": "economic problem"
+  },
+  {
+    "id": 575,
+    "group": "Hollinger",
+    "name": "jan99jac080sc",
+    "rows": 27534,
+    "cols": 27534,
+    "nnz": 151063,
+    "kind": "economic problem"
+  },
+  {
+    "id": 576,
+    "group": "Hollinger",
+    "name": "jan99jac100",
+    "rows": 34454,
+    "cols": 34454,
+    "nnz": 190224,
+    "kind": "economic problem"
+  },
+  {
+    "id": 577,
+    "group": "Hollinger",
+    "name": "jan99jac100sc",
+    "rows": 34454,
+    "cols": 34454,
+    "nnz": 190224,
+    "kind": "economic problem"
+  },
+  {
+    "id": 578,
+    "group": "Hollinger",
+    "name": "jan99jac120",
+    "rows": 41374,
+    "cols": 41374,
+    "nnz": 229385,
+    "kind": "economic problem"
+  },
+  {
+    "id": 579,
+    "group": "Hollinger",
+    "name": "jan99jac120sc",
+    "rows": 41374,
+    "cols": 41374,
+    "nnz": 229385,
+    "kind": "economic problem"
+  },
+  {
+    "id": 580,
+    "group": "Hollinger",
+    "name": "mark3jac020",
+    "rows": 9129,
+    "cols": 9129,
+    "nnz": 52883,
+    "kind": "economic problem"
+  },
+  {
+    "id": 581,
+    "group": "Hollinger",
+    "name": "mark3jac020sc",
+    "rows": 9129,
+    "cols": 9129,
+    "nnz": 52883,
+    "kind": "economic problem"
+  },
+  {
+    "id": 582,
+    "group": "Hollinger",
+    "name": "mark3jac040",
+    "rows": 18289,
+    "cols": 18289,
+    "nnz": 106803,
+    "kind": "economic problem"
+  },
+  {
+    "id": 583,
+    "group": "Hollinger",
+    "name": "mark3jac040sc",
+    "rows": 18289,
+    "cols": 18289,
+    "nnz": 106803,
+    "kind": "economic problem"
+  },
+  {
+    "id": 584,
+    "group": "Hollinger",
+    "name": "mark3jac060",
+    "rows": 27449,
+    "cols": 27449,
+    "nnz": 160723,
+    "kind": "economic problem"
+  },
+  {
+    "id": 585,
+    "group": "Hollinger",
+    "name": "mark3jac060sc",
+    "rows": 27449,
+    "cols": 27449,
+    "nnz": 160723,
+    "kind": "economic problem"
+  },
+  {
+    "id": 586,
+    "group": "Hollinger",
+    "name": "mark3jac080",
+    "rows": 36609,
+    "cols": 36609,
+    "nnz": 214643,
+    "kind": "economic problem"
+  },
+  {
+    "id": 587,
+    "group": "Hollinger",
+    "name": "mark3jac080sc",
+    "rows": 36609,
+    "cols": 36609,
+    "nnz": 214643,
+    "kind": "economic problem"
+  },
+  {
+    "id": 588,
+    "group": "Hollinger",
+    "name": "mark3jac100",
+    "rows": 45769,
+    "cols": 45769,
+    "nnz": 268563,
+    "kind": "economic problem"
+  },
+  {
+    "id": 589,
+    "group": "Hollinger",
+    "name": "mark3jac100sc",
+    "rows": 45769,
+    "cols": 45769,
+    "nnz": 268563,
+    "kind": "economic problem"
+  },
+  {
+    "id": 590,
+    "group": "Hollinger",
+    "name": "mark3jac120",
+    "rows": 54929,
+    "cols": 54929,
+    "nnz": 322483,
+    "kind": "economic problem"
+  },
+  {
+    "id": 591,
+    "group": "Hollinger",
+    "name": "mark3jac120sc",
+    "rows": 54929,
+    "cols": 54929,
+    "nnz": 322483,
+    "kind": "economic problem"
+  },
+  {
+    "id": 592,
+    "group": "Hollinger",
+    "name": "mark3jac140",
+    "rows": 64089,
+    "cols": 64089,
+    "nnz": 376395,
+    "kind": "economic problem"
+  },
+  {
+    "id": 593,
+    "group": "Hollinger",
+    "name": "mark3jac140sc",
+    "rows": 64089,
+    "cols": 64089,
+    "nnz": 376395,
+    "kind": "economic problem"
+  },
+  {
+    "id": 732,
+    "group": "Li",
+    "name": "li",
+    "rows": 22695,
+    "cols": 22695,
+    "nnz": 1215181,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 734,
+    "group": "Mallya",
+    "name": "lhr01",
+    "rows": 1477,
+    "cols": 1477,
+    "nnz": 18427,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 735,
+    "group": "Mallya",
+    "name": "lhr02",
+    "rows": 2954,
+    "cols": 2954,
+    "nnz": 36875,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 736,
+    "group": "Mallya",
+    "name": "lhr04",
+    "rows": 4101,
+    "cols": 4101,
+    "nnz": 81057,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 737,
+    "group": "Mallya",
+    "name": "lhr04c",
+    "rows": 4101,
+    "cols": 4101,
+    "nnz": 82682,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 738,
+    "group": "Mallya",
+    "name": "lhr07",
+    "rows": 7337,
+    "cols": 7337,
+    "nnz": 154660,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 739,
+    "group": "Mallya",
+    "name": "lhr07c",
+    "rows": 7337,
+    "cols": 7337,
+    "nnz": 156508,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 740,
+    "group": "Mallya",
+    "name": "lhr10",
+    "rows": 10672,
+    "cols": 10672,
+    "nnz": 228395,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 741,
+    "group": "Mallya",
+    "name": "lhr10c",
+    "rows": 10672,
+    "cols": 10672,
+    "nnz": 232633,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 742,
+    "group": "Mallya",
+    "name": "lhr11",
+    "rows": 10964,
+    "cols": 10964,
+    "nnz": 231806,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 743,
+    "group": "Mallya",
+    "name": "lhr11c",
+    "rows": 10964,
+    "cols": 10964,
+    "nnz": 233741,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 744,
+    "group": "Mallya",
+    "name": "lhr14",
+    "rows": 14270,
+    "cols": 14270,
+    "nnz": 305750,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 745,
+    "group": "Mallya",
+    "name": "lhr14c",
+    "rows": 14270,
+    "cols": 14270,
+    "nnz": 307858,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 746,
+    "group": "Mallya",
+    "name": "lhr17",
+    "rows": 17576,
+    "cols": 17576,
+    "nnz": 379761,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 747,
+    "group": "Mallya",
+    "name": "lhr17c",
+    "rows": 17576,
+    "cols": 17576,
+    "nnz": 381975,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 748,
+    "group": "Mallya",
+    "name": "lhr34",
+    "rows": 35152,
+    "cols": 35152,
+    "nnz": 746972,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 749,
+    "group": "Mallya",
+    "name": "lhr34c",
+    "rows": 35152,
+    "cols": 35152,
+    "nnz": 764014,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 750,
+    "group": "Mallya",
+    "name": "lhr71",
+    "rows": 70304,
+    "cols": 70304,
+    "nnz": 1494006,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 751,
+    "group": "Mallya",
+    "name": "lhr71c",
+    "rows": 70304,
+    "cols": 70304,
+    "nnz": 1528092,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 765,
+    "group": "Nemeth",
+    "name": "nemeth01",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 725054,
+    "kind": "theoretical/quantum chemistry problem sequence"
+  },
+  {
+    "id": 766,
+    "group": "Nemeth",
+    "name": "nemeth02",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394808,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 767,
+    "group": "Nemeth",
+    "name": "nemeth03",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394808,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 768,
+    "group": "Nemeth",
+    "name": "nemeth04",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394808,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 769,
+    "group": "Nemeth",
+    "name": "nemeth05",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394808,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 770,
+    "group": "Nemeth",
+    "name": "nemeth06",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394808,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 771,
+    "group": "Nemeth",
+    "name": "nemeth07",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394812,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 772,
+    "group": "Nemeth",
+    "name": "nemeth08",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 394816,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 773,
+    "group": "Nemeth",
+    "name": "nemeth09",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 395506,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 774,
+    "group": "Nemeth",
+    "name": "nemeth10",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 401448,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 775,
+    "group": "Nemeth",
+    "name": "nemeth11",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 408264,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 776,
+    "group": "Nemeth",
+    "name": "nemeth12",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 446818,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 777,
+    "group": "Nemeth",
+    "name": "nemeth13",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 474472,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 778,
+    "group": "Nemeth",
+    "name": "nemeth14",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 496144,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 779,
+    "group": "Nemeth",
+    "name": "nemeth15",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 539802,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 780,
+    "group": "Nemeth",
+    "name": "nemeth16",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 587012,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 781,
+    "group": "Nemeth",
+    "name": "nemeth17",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 629620,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 782,
+    "group": "Nemeth",
+    "name": "nemeth18",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 695234,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 783,
+    "group": "Nemeth",
+    "name": "nemeth19",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 818302,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 784,
+    "group": "Nemeth",
+    "name": "nemeth20",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 971870,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 785,
+    "group": "Nemeth",
+    "name": "nemeth21",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1173746,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 786,
+    "group": "Nemeth",
+    "name": "nemeth22",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1358832,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 787,
+    "group": "Nemeth",
+    "name": "nemeth23",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1506810,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 788,
+    "group": "Nemeth",
+    "name": "nemeth24",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1506550,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 789,
+    "group": "Nemeth",
+    "name": "nemeth25",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1511758,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 790,
+    "group": "Nemeth",
+    "name": "nemeth26",
+    "rows": 9506,
+    "cols": 9506,
+    "nnz": 1511760,
+    "kind": "subsequent theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 801,
+    "group": "Ronis",
+    "name": "xenon1",
+    "rows": 48600,
+    "cols": 48600,
+    "nnz": 1181120,
+    "kind": "materials problem"
+  },
+  {
+    "id": 809,
+    "group": "Shyy",
+    "name": "shyy161",
+    "rows": 76480,
+    "cols": 76480,
+    "nnz": 329762,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 810,
+    "group": "Shyy",
+    "name": "shyy41",
+    "rows": 4720,
+    "cols": 4720,
+    "nnz": 20042,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 811,
+    "group": "Simon",
+    "name": "appu",
+    "rows": 14000,
+    "cols": 14000,
+    "nnz": 1853104,
+    "kind": "directed weighted random graph"
+  },
+  {
+    "id": 812,
+    "group": "Simon",
+    "name": "bbmat",
+    "rows": 38744,
+    "cols": 38744,
+    "nnz": 1771722,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 814,
+    "group": "Simon",
+    "name": "raefsky1",
+    "rows": 3242,
+    "cols": 3242,
+    "nnz": 293409,
+    "kind": "computational fluid dynamics problem sequence"
+  },
+  {
+    "id": 815,
+    "group": "Simon",
+    "name": "raefsky2",
+    "rows": 3242,
+    "cols": 3242,
+    "nnz": 293551,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 816,
+    "group": "Simon",
+    "name": "raefsky3",
+    "rows": 21200,
+    "cols": 21200,
+    "nnz": 1488768,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 818,
+    "group": "Simon",
+    "name": "raefsky5",
+    "rows": 6316,
+    "cols": 6316,
+    "nnz": 167178,
+    "kind": "structural problem"
+  },
+  {
+    "id": 819,
+    "group": "Simon",
+    "name": "raefsky6",
+    "rows": 3402,
+    "cols": 3402,
+    "nnz": 130371,
+    "kind": "structural problem"
+  },
+  {
+    "id": 820,
+    "group": "Simon",
+    "name": "venkat01",
+    "rows": 62424,
+    "cols": 62424,
+    "nnz": 1717792,
+    "kind": "computational fluid dynamics problem sequence"
+  },
+  {
+    "id": 821,
+    "group": "Simon",
+    "name": "venkat25",
+    "rows": 62424,
+    "cols": 62424,
+    "nnz": 1717763,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 822,
+    "group": "Simon",
+    "name": "venkat50",
+    "rows": 62424,
+    "cols": 62424,
+    "nnz": 1717777,
+    "kind": "subsequent computational fluid dynamics problem"
+  },
+  {
+    "id": 823,
+    "group": "TOKAMAK",
+    "name": "utm1700b",
+    "rows": 1700,
+    "cols": 1700,
+    "nnz": 21509,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 825,
+    "group": "TOKAMAK",
+    "name": "utm3060",
+    "rows": 3060,
+    "cols": 3060,
+    "nnz": 42211,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 826,
+    "group": "TOKAMAK",
+    "name": "utm5940",
+    "rows": 5940,
+    "cols": 5940,
+    "nnz": 83842,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 827,
+    "group": "Vavasis",
+    "name": "av41092",
+    "rows": 41092,
+    "cols": 41092,
+    "nnz": 1683902,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 828,
+    "group": "Wang",
+    "name": "swang1",
+    "rows": 3169,
+    "cols": 3169,
+    "nnz": 20841,
+    "kind": "semiconductor device problem sequence"
+  },
+  {
+    "id": 829,
+    "group": "Wang",
+    "name": "swang2",
+    "rows": 3169,
+    "cols": 3169,
+    "nnz": 20841,
+    "kind": "subsequent semiconductor device problem"
+  },
+  {
+    "id": 830,
+    "group": "Wang",
+    "name": "wang1",
+    "rows": 2903,
+    "cols": 2903,
+    "nnz": 19093,
+    "kind": "semiconductor device problem sequence"
+  },
+  {
+    "id": 831,
+    "group": "Wang",
+    "name": "wang2",
+    "rows": 2903,
+    "cols": 2903,
+    "nnz": 19093,
+    "kind": "subsequent semiconductor device problem"
+  },
+  {
+    "id": 832,
+    "group": "Wang",
+    "name": "wang3",
+    "rows": 26064,
+    "cols": 26064,
+    "nnz": 177168,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 833,
+    "group": "Wang",
+    "name": "wang4",
+    "rows": 26068,
+    "cols": 26068,
+    "nnz": 177196,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 834,
+    "group": "Zhao",
+    "name": "Zhao1",
+    "rows": 33861,
+    "cols": 33861,
+    "nnz": 166453,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 835,
+    "group": "Zhao",
+    "name": "Zhao2",
+    "rows": 33861,
+    "cols": 33861,
+    "nnz": 166453,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 836,
+    "group": "Zitney",
+    "name": "extr1",
+    "rows": 2837,
+    "cols": 2837,
+    "nnz": 10967,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 837,
+    "group": "Zitney",
+    "name": "hydr1",
+    "rows": 5308,
+    "cols": 5308,
+    "nnz": 22680,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 838,
+    "group": "Zitney",
+    "name": "radfr1",
+    "rows": 1048,
+    "cols": 1048,
+    "nnz": 13299,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 839,
+    "group": "Zitney",
+    "name": "rdist1",
+    "rows": 4134,
+    "cols": 4134,
+    "nnz": 94408,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 840,
+    "group": "Zitney",
+    "name": "rdist2",
+    "rows": 3198,
+    "cols": 3198,
+    "nnz": 56834,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 841,
+    "group": "Zitney",
+    "name": "rdist3a",
+    "rows": 2398,
+    "cols": 2398,
+    "nnz": 61896,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 842,
+    "group": "Cunningham",
+    "name": "k3plates",
+    "rows": 11107,
+    "cols": 11107,
+    "nnz": 378927,
+    "kind": "acoustics problem"
+  },
+  {
+    "id": 843,
+    "group": "Cunningham",
+    "name": "m3plates",
+    "rows": 11107,
+    "cols": 11107,
+    "nnz": 6639,
+    "kind": "acoustics problem"
+  },
+  {
+    "id": 844,
+    "group": "Cunningham",
+    "name": "qa8fk",
+    "rows": 66127,
+    "cols": 66127,
+    "nnz": 1660579,
+    "kind": "acoustics problem"
+  },
+  {
+    "id": 864,
+    "group": "Langemyr",
+    "name": "comsol",
+    "rows": 1500,
+    "cols": 1500,
+    "nnz": 97645,
+    "kind": "structural problem"
+  },
+  {
+    "id": 890,
+    "group": "Norris",
+    "name": "heart1",
+    "rows": 3557,
+    "cols": 3557,
+    "nnz": 1385317,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 891,
+    "group": "Norris",
+    "name": "heart2",
+    "rows": 2339,
+    "cols": 2339,
+    "nnz": 680341,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 892,
+    "group": "Norris",
+    "name": "heart3",
+    "rows": 2339,
+    "cols": 2339,
+    "nnz": 680341,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 893,
+    "group": "Norris",
+    "name": "lung1",
+    "rows": 1650,
+    "cols": 1650,
+    "nnz": 7419,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 899,
+    "group": "Shen",
+    "name": "e40r0100",
+    "rows": 17281,
+    "cols": 17281,
+    "nnz": 553562,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 900,
+    "group": "Shen",
+    "name": "shermanACa",
+    "rows": 3432,
+    "cols": 3432,
+    "nnz": 25220,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 901,
+    "group": "Shen",
+    "name": "shermanACb",
+    "rows": 18510,
+    "cols": 18510,
+    "nnz": 145149,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 902,
+    "group": "Shen",
+    "name": "shermanACd",
+    "rows": 6136,
+    "cols": 6136,
+    "nnz": 53329,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 909,
+    "group": "vanHeukelum",
+    "name": "cage8",
+    "rows": 1015,
+    "cols": 1015,
+    "nnz": 11003,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 910,
+    "group": "vanHeukelum",
+    "name": "cage9",
+    "rows": 3534,
+    "cols": 3534,
+    "nnz": 41594,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 911,
+    "group": "vanHeukelum",
+    "name": "cage10",
+    "rows": 11397,
+    "cols": 11397,
+    "nnz": 150645,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 912,
+    "group": "vanHeukelum",
+    "name": "cage11",
+    "rows": 39082,
+    "cols": 39082,
+    "nnz": 559722,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 917,
+    "group": "Hohn",
+    "name": "fd12",
+    "rows": 7500,
+    "cols": 7500,
+    "nnz": 28462,
+    "kind": "materials problem"
+  },
+  {
+    "id": 918,
+    "group": "Hohn",
+    "name": "fd15",
+    "rows": 11532,
+    "cols": 11532,
+    "nnz": 44206,
+    "kind": "materials problem"
+  },
+  {
+    "id": 919,
+    "group": "Hohn",
+    "name": "fd18",
+    "rows": 16428,
+    "cols": 16428,
+    "nnz": 63406,
+    "kind": "materials problem"
+  },
+  {
+    "id": 920,
+    "group": "Hohn",
+    "name": "sinc12",
+    "rows": 7500,
+    "cols": 7500,
+    "nnz": 283992,
+    "kind": "materials problem"
+  },
+  {
+    "id": 921,
+    "group": "Hohn",
+    "name": "sinc15",
+    "rows": 11532,
+    "cols": 11532,
+    "nnz": 551184,
+    "kind": "materials problem"
+  },
+  {
+    "id": 922,
+    "group": "Hohn",
+    "name": "sinc18",
+    "rows": 16428,
+    "cols": 16428,
+    "nnz": 948696,
+    "kind": "materials problem"
+  },
+  {
+    "id": 923,
+    "group": "Alemdar",
+    "name": "Alemdar",
+    "rows": 6245,
+    "cols": 6245,
+    "nnz": 42581,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 925,
+    "group": "FEMLAB",
+    "name": "ns3Da",
+    "rows": 20414,
+    "cols": 20414,
+    "nnz": 1679599,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 927,
+    "group": "FEMLAB",
+    "name": "poisson3Da",
+    "rows": 13514,
+    "cols": 13514,
+    "nnz": 352762,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 930,
+    "group": "FEMLAB",
+    "name": "sme3Da",
+    "rows": 12504,
+    "cols": 12504,
+    "nnz": 874887,
+    "kind": "structural problem"
+  },
+  {
+    "id": 934,
+    "group": "Lucifora",
+    "name": "cell1",
+    "rows": 7055,
+    "cols": 7055,
+    "nnz": 30082,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 935,
+    "group": "Lucifora",
+    "name": "cell2",
+    "rows": 7055,
+    "cols": 7055,
+    "nnz": 30082,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 949,
+    "group": "Schenk_IBMNA",
+    "name": "c-62",
+    "rows": 41731,
+    "cols": 41731,
+    "nnz": 559341,
+    "kind": "optimization problem sequence"
+  },
+  {
+    "id": 950,
+    "group": "Schenk_IBMNA",
+    "name": "c-64",
+    "rows": 51035,
+    "cols": 51035,
+    "nnz": 707985,
+    "kind": "optimization problem sequence"
+  },
+  {
+    "id": 951,
+    "group": "Schenk_IBMNA",
+    "name": "c-66",
+    "rows": 49989,
+    "cols": 49989,
+    "nnz": 444853,
+    "kind": "optimization problem sequence"
+  },
+  {
+    "id": 952,
+    "group": "Schenk_IBMNA",
+    "name": "c-67",
+    "rows": 57975,
+    "cols": 57975,
+    "nnz": 530229,
+    "kind": "optimization problem sequence"
+  },
+  {
+    "id": 954,
+    "group": "Schenk_IBMSDS",
+    "name": "2D_27628_bjtcai",
+    "rows": 27628,
+    "cols": 27628,
+    "nnz": 206670,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 955,
+    "group": "Schenk_IBMSDS",
+    "name": "2D_54019_highK",
+    "rows": 54019,
+    "cols": 54019,
+    "nnz": 486129,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 956,
+    "group": "Schenk_IBMSDS",
+    "name": "3D_28984_Tetra",
+    "rows": 28984,
+    "cols": 28984,
+    "nnz": 285092,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 957,
+    "group": "Schenk_IBMSDS",
+    "name": "3D_51448_3D",
+    "rows": 51448,
+    "cols": 51448,
+    "nnz": 537038,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 958,
+    "group": "Schenk_IBMSDS",
+    "name": "ibm_matrix_2",
+    "rows": 51448,
+    "cols": 51448,
+    "nnz": 537038,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 969,
+    "group": "Schenk_ISEI",
+    "name": "igbt3",
+    "rows": 10938,
+    "cols": 10938,
+    "nnz": 130500,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 970,
+    "group": "Schenk_ISEI",
+    "name": "nmos3",
+    "rows": 18588,
+    "cols": 18588,
+    "nnz": 237130,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 983,
+    "group": "Sanghavi",
+    "name": "ecl32",
+    "rows": 51993,
+    "cols": 51993,
+    "nnz": 380415,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 984,
+    "group": "Sandia",
+    "name": "adder_dcop_01",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11156,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 985,
+    "group": "Sandia",
+    "name": "adder_dcop_02",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 986,
+    "group": "Sandia",
+    "name": "adder_dcop_03",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11148,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 987,
+    "group": "Sandia",
+    "name": "adder_dcop_04",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11107,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 988,
+    "group": "Sandia",
+    "name": "adder_dcop_05",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11097,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 989,
+    "group": "Sandia",
+    "name": "adder_dcop_06",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11224,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 990,
+    "group": "Sandia",
+    "name": "adder_dcop_07",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11226,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 991,
+    "group": "Sandia",
+    "name": "adder_dcop_08",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11242,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 992,
+    "group": "Sandia",
+    "name": "adder_dcop_09",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11239,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 993,
+    "group": "Sandia",
+    "name": "adder_dcop_10",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11232,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 994,
+    "group": "Sandia",
+    "name": "adder_dcop_11",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11243,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 995,
+    "group": "Sandia",
+    "name": "adder_dcop_12",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 996,
+    "group": "Sandia",
+    "name": "adder_dcop_13",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11245,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 997,
+    "group": "Sandia",
+    "name": "adder_dcop_14",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 998,
+    "group": "Sandia",
+    "name": "adder_dcop_15",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 999,
+    "group": "Sandia",
+    "name": "adder_dcop_16",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1000,
+    "group": "Sandia",
+    "name": "adder_dcop_17",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1001,
+    "group": "Sandia",
+    "name": "adder_dcop_18",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1002,
+    "group": "Sandia",
+    "name": "adder_dcop_19",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11245,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1003,
+    "group": "Sandia",
+    "name": "adder_dcop_20",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1004,
+    "group": "Sandia",
+    "name": "adder_dcop_21",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1005,
+    "group": "Sandia",
+    "name": "adder_dcop_22",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1006,
+    "group": "Sandia",
+    "name": "adder_dcop_23",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1007,
+    "group": "Sandia",
+    "name": "adder_dcop_24",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1008,
+    "group": "Sandia",
+    "name": "adder_dcop_25",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1009,
+    "group": "Sandia",
+    "name": "adder_dcop_26",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1010,
+    "group": "Sandia",
+    "name": "adder_dcop_27",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1011,
+    "group": "Sandia",
+    "name": "adder_dcop_28",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1012,
+    "group": "Sandia",
+    "name": "adder_dcop_29",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1013,
+    "group": "Sandia",
+    "name": "adder_dcop_30",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1014,
+    "group": "Sandia",
+    "name": "adder_dcop_31",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1015,
+    "group": "Sandia",
+    "name": "adder_dcop_32",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1016,
+    "group": "Sandia",
+    "name": "adder_dcop_33",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1017,
+    "group": "Sandia",
+    "name": "adder_dcop_34",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1018,
+    "group": "Sandia",
+    "name": "adder_dcop_35",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1019,
+    "group": "Sandia",
+    "name": "adder_dcop_36",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1020,
+    "group": "Sandia",
+    "name": "adder_dcop_37",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1021,
+    "group": "Sandia",
+    "name": "adder_dcop_38",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1022,
+    "group": "Sandia",
+    "name": "adder_dcop_39",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1023,
+    "group": "Sandia",
+    "name": "adder_dcop_40",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1024,
+    "group": "Sandia",
+    "name": "adder_dcop_41",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1025,
+    "group": "Sandia",
+    "name": "adder_dcop_42",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1026,
+    "group": "Sandia",
+    "name": "adder_dcop_43",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1027,
+    "group": "Sandia",
+    "name": "adder_dcop_44",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11245,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1028,
+    "group": "Sandia",
+    "name": "adder_dcop_45",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1029,
+    "group": "Sandia",
+    "name": "adder_dcop_46",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1030,
+    "group": "Sandia",
+    "name": "adder_dcop_47",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1031,
+    "group": "Sandia",
+    "name": "adder_dcop_48",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1032,
+    "group": "Sandia",
+    "name": "adder_dcop_49",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1033,
+    "group": "Sandia",
+    "name": "adder_dcop_50",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1034,
+    "group": "Sandia",
+    "name": "adder_dcop_51",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1035,
+    "group": "Sandia",
+    "name": "adder_dcop_52",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1036,
+    "group": "Sandia",
+    "name": "adder_dcop_53",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1037,
+    "group": "Sandia",
+    "name": "adder_dcop_54",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1038,
+    "group": "Sandia",
+    "name": "adder_dcop_55",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1039,
+    "group": "Sandia",
+    "name": "adder_dcop_56",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1040,
+    "group": "Sandia",
+    "name": "adder_dcop_57",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1041,
+    "group": "Sandia",
+    "name": "adder_dcop_58",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1042,
+    "group": "Sandia",
+    "name": "adder_dcop_59",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1043,
+    "group": "Sandia",
+    "name": "adder_dcop_60",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1044,
+    "group": "Sandia",
+    "name": "adder_dcop_61",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1045,
+    "group": "Sandia",
+    "name": "adder_dcop_62",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1046,
+    "group": "Sandia",
+    "name": "adder_dcop_63",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1047,
+    "group": "Sandia",
+    "name": "adder_dcop_64",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1048,
+    "group": "Sandia",
+    "name": "adder_dcop_65",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1049,
+    "group": "Sandia",
+    "name": "adder_dcop_66",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1050,
+    "group": "Sandia",
+    "name": "adder_dcop_67",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1051,
+    "group": "Sandia",
+    "name": "adder_dcop_68",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1052,
+    "group": "Sandia",
+    "name": "adder_dcop_69",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11246,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1053,
+    "group": "Sandia",
+    "name": "adder_trans_01",
+    "rows": 1814,
+    "cols": 1814,
+    "nnz": 14579,
+    "kind": "circuit simulation problem sequence"
+  },
+  {
+    "id": 1054,
+    "group": "Sandia",
+    "name": "adder_trans_02",
+    "rows": 1814,
+    "cols": 1814,
+    "nnz": 14579,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1055,
+    "group": "Sandia",
+    "name": "fpga_dcop_01",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "circuit simulation problem sequence"
+  },
+  {
+    "id": 1056,
+    "group": "Sandia",
+    "name": "fpga_dcop_02",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1057,
+    "group": "Sandia",
+    "name": "fpga_dcop_03",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1058,
+    "group": "Sandia",
+    "name": "fpga_dcop_04",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5884,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1059,
+    "group": "Sandia",
+    "name": "fpga_dcop_05",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5852,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1060,
+    "group": "Sandia",
+    "name": "fpga_dcop_06",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5860,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1061,
+    "group": "Sandia",
+    "name": "fpga_dcop_07",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5855,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1062,
+    "group": "Sandia",
+    "name": "fpga_dcop_08",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5888,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1063,
+    "group": "Sandia",
+    "name": "fpga_dcop_09",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5888,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1064,
+    "group": "Sandia",
+    "name": "fpga_dcop_10",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5884,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1065,
+    "group": "Sandia",
+    "name": "fpga_dcop_11",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1066,
+    "group": "Sandia",
+    "name": "fpga_dcop_12",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1067,
+    "group": "Sandia",
+    "name": "fpga_dcop_13",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1068,
+    "group": "Sandia",
+    "name": "fpga_dcop_14",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1069,
+    "group": "Sandia",
+    "name": "fpga_dcop_15",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1070,
+    "group": "Sandia",
+    "name": "fpga_dcop_16",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1071,
+    "group": "Sandia",
+    "name": "fpga_dcop_17",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1072,
+    "group": "Sandia",
+    "name": "fpga_dcop_18",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1073,
+    "group": "Sandia",
+    "name": "fpga_dcop_19",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1074,
+    "group": "Sandia",
+    "name": "fpga_dcop_20",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1075,
+    "group": "Sandia",
+    "name": "fpga_dcop_21",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1076,
+    "group": "Sandia",
+    "name": "fpga_dcop_22",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1077,
+    "group": "Sandia",
+    "name": "fpga_dcop_23",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1078,
+    "group": "Sandia",
+    "name": "fpga_dcop_24",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1079,
+    "group": "Sandia",
+    "name": "fpga_dcop_25",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1080,
+    "group": "Sandia",
+    "name": "fpga_dcop_26",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1081,
+    "group": "Sandia",
+    "name": "fpga_dcop_27",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1082,
+    "group": "Sandia",
+    "name": "fpga_dcop_28",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1083,
+    "group": "Sandia",
+    "name": "fpga_dcop_29",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1084,
+    "group": "Sandia",
+    "name": "fpga_dcop_30",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1085,
+    "group": "Sandia",
+    "name": "fpga_dcop_31",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1086,
+    "group": "Sandia",
+    "name": "fpga_dcop_32",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1087,
+    "group": "Sandia",
+    "name": "fpga_dcop_33",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1088,
+    "group": "Sandia",
+    "name": "fpga_dcop_34",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1089,
+    "group": "Sandia",
+    "name": "fpga_dcop_35",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1090,
+    "group": "Sandia",
+    "name": "fpga_dcop_36",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1091,
+    "group": "Sandia",
+    "name": "fpga_dcop_37",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1092,
+    "group": "Sandia",
+    "name": "fpga_dcop_38",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1093,
+    "group": "Sandia",
+    "name": "fpga_dcop_39",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1094,
+    "group": "Sandia",
+    "name": "fpga_dcop_40",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1095,
+    "group": "Sandia",
+    "name": "fpga_dcop_41",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1096,
+    "group": "Sandia",
+    "name": "fpga_dcop_42",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1097,
+    "group": "Sandia",
+    "name": "fpga_dcop_43",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1098,
+    "group": "Sandia",
+    "name": "fpga_dcop_44",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1099,
+    "group": "Sandia",
+    "name": "fpga_dcop_45",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1100,
+    "group": "Sandia",
+    "name": "fpga_dcop_46",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1101,
+    "group": "Sandia",
+    "name": "fpga_dcop_47",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1102,
+    "group": "Sandia",
+    "name": "fpga_dcop_48",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1103,
+    "group": "Sandia",
+    "name": "fpga_dcop_49",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1104,
+    "group": "Sandia",
+    "name": "fpga_dcop_50",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1105,
+    "group": "Sandia",
+    "name": "fpga_dcop_51",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 5892,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1106,
+    "group": "Sandia",
+    "name": "fpga_trans_01",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 7382,
+    "kind": "circuit simulation problem sequence"
+  },
+  {
+    "id": 1107,
+    "group": "Sandia",
+    "name": "fpga_trans_02",
+    "rows": 1220,
+    "cols": 1220,
+    "nnz": 7382,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1108,
+    "group": "Sandia",
+    "name": "init_adder1",
+    "rows": 1813,
+    "cols": 1813,
+    "nnz": 11156,
+    "kind": "circuit simulation problem sequence"
+  },
+  {
+    "id": 1109,
+    "group": "Sandia",
+    "name": "mult_dcop_01",
+    "rows": 25187,
+    "cols": 25187,
+    "nnz": 193276,
+    "kind": "circuit simulation problem sequence"
+  },
+  {
+    "id": 1110,
+    "group": "Sandia",
+    "name": "mult_dcop_02",
+    "rows": 25187,
+    "cols": 25187,
+    "nnz": 193276,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1111,
+    "group": "Sandia",
+    "name": "mult_dcop_03",
+    "rows": 25187,
+    "cols": 25187,
+    "nnz": 193216,
+    "kind": "subsequent circuit simulation problem"
+  },
+  {
+    "id": 1170,
+    "group": "MathWorks",
+    "name": "Pd",
+    "rows": 8081,
+    "cols": 8081,
+    "nnz": 13036,
+    "kind": "counter-example problem"
+  },
+  {
+    "id": 1183,
+    "group": "IBM_Austin",
+    "name": "coupled",
+    "rows": 11341,
+    "cols": 11341,
+    "nnz": 97193,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1187,
+    "group": "Rajat",
+    "name": "rajat03",
+    "rows": 7602,
+    "cols": 7602,
+    "nnz": 32653,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1188,
+    "group": "Rajat",
+    "name": "rajat04",
+    "rows": 1041,
+    "cols": 1041,
+    "nnz": 8725,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1196,
+    "group": "Rajat",
+    "name": "rajat12",
+    "rows": 1879,
+    "cols": 1879,
+    "nnz": 12818,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1197,
+    "group": "Rajat",
+    "name": "rajat13",
+    "rows": 7598,
+    "cols": 7598,
+    "nnz": 48762,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1200,
+    "group": "Hamrle",
+    "name": "Hamrle2",
+    "rows": 5952,
+    "cols": 5952,
+    "nnz": 22162,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1204,
+    "group": "Oberwolfach",
+    "name": "t2dah_a",
+    "rows": 11445,
+    "cols": 11445,
+    "nnz": 176117,
+    "kind": "duplicate model reduction problem"
+  },
+  {
+    "id": 1206,
+    "group": "Oberwolfach",
+    "name": "t2dal_a",
+    "rows": 4257,
+    "cols": 4257,
+    "nnz": 37465,
+    "kind": "duplicate model reduction problem"
+  },
+  {
+    "id": 1210,
+    "group": "Oberwolfach",
+    "name": "t3dl_a",
+    "rows": 20360,
+    "cols": 20360,
+    "nnz": 509866,
+    "kind": "duplicate model reduction problem"
+  },
+  {
+    "id": 1212,
+    "group": "LiuWenzhuo",
+    "name": "powersim",
+    "rows": 15838,
+    "cols": 15838,
+    "nnz": 64424,
+    "kind": "power network problem"
+  },
+  {
+    "id": 1215,
+    "group": "GHS_indef",
+    "name": "aug2d",
+    "rows": 29008,
+    "cols": 29008,
+    "nnz": 76832,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1216,
+    "group": "GHS_indef",
+    "name": "aug2dc",
+    "rows": 30200,
+    "cols": 30200,
+    "nnz": 80000,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1217,
+    "group": "GHS_indef",
+    "name": "aug3d",
+    "rows": 24300,
+    "cols": 24300,
+    "nnz": 69984,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1218,
+    "group": "GHS_indef",
+    "name": "aug3dcqp",
+    "rows": 35543,
+    "cols": 35543,
+    "nnz": 128115,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1220,
+    "group": "GHS_indef",
+    "name": "c-55",
+    "rows": 32780,
+    "cols": 32780,
+    "nnz": 403450,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1221,
+    "group": "GHS_indef",
+    "name": "c-58",
+    "rows": 37595,
+    "cols": 37595,
+    "nnz": 552551,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1222,
+    "group": "GHS_indef",
+    "name": "c-59",
+    "rows": 41282,
+    "cols": 41282,
+    "nnz": 480536,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1223,
+    "group": "GHS_indef",
+    "name": "c-62ghs",
+    "rows": 41731,
+    "cols": 41731,
+    "nnz": 559339,
+    "kind": "subsequent optimization problem"
+  },
+  {
+    "id": 1224,
+    "group": "GHS_indef",
+    "name": "c-63",
+    "rows": 44234,
+    "cols": 44234,
+    "nnz": 434704,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1225,
+    "group": "GHS_indef",
+    "name": "c-68",
+    "rows": 64810,
+    "cols": 64810,
+    "nnz": 565996,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1226,
+    "group": "GHS_indef",
+    "name": "c-69",
+    "rows": 67458,
+    "cols": 67458,
+    "nnz": 623914,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1227,
+    "group": "GHS_indef",
+    "name": "c-70",
+    "rows": 68924,
+    "cols": 68924,
+    "nnz": 658986,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1228,
+    "group": "GHS_indef",
+    "name": "c-71",
+    "rows": 76638,
+    "cols": 76638,
+    "nnz": 859520,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1229,
+    "group": "GHS_indef",
+    "name": "c-72",
+    "rows": 84064,
+    "cols": 84064,
+    "nnz": 707546,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1230,
+    "group": "GHS_indef",
+    "name": "copter2",
+    "rows": 55476,
+    "cols": 55476,
+    "nnz": 759952,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1233,
+    "group": "GHS_indef",
+    "name": "dawson5",
+    "rows": 51537,
+    "cols": 51537,
+    "nnz": 1010777,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1234,
+    "group": "GHS_indef",
+    "name": "dtoc",
+    "rows": 24993,
+    "cols": 24993,
+    "nnz": 69972,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1237,
+    "group": "GHS_indef",
+    "name": "helm3d01",
+    "rows": 32226,
+    "cols": 32226,
+    "nnz": 428444,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1238,
+    "group": "GHS_indef",
+    "name": "k1_san",
+    "rows": 67759,
+    "cols": 67759,
+    "nnz": 559774,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1239,
+    "group": "GHS_indef",
+    "name": "laser",
+    "rows": 3002,
+    "cols": 3002,
+    "nnz": 9000,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1240,
+    "group": "GHS_indef",
+    "name": "mario001",
+    "rows": 38434,
+    "cols": 38434,
+    "nnz": 204912,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1242,
+    "group": "GHS_indef",
+    "name": "ncvxqp1",
+    "rows": 12111,
+    "cols": 12111,
+    "nnz": 73963,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1243,
+    "group": "GHS_indef",
+    "name": "ncvxqp9",
+    "rows": 16554,
+    "cols": 16554,
+    "nnz": 54040,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1244,
+    "group": "GHS_indef",
+    "name": "olesnik0",
+    "rows": 88263,
+    "cols": 88263,
+    "nnz": 744216,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1245,
+    "group": "GHS_indef",
+    "name": "sit100",
+    "rows": 10262,
+    "cols": 10262,
+    "nnz": 61046,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1246,
+    "group": "GHS_indef",
+    "name": "stokes128",
+    "rows": 49666,
+    "cols": 49666,
+    "nnz": 558594,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1247,
+    "group": "GHS_indef",
+    "name": "stokes64",
+    "rows": 12546,
+    "cols": 12546,
+    "nnz": 140034,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1248,
+    "group": "GHS_indef",
+    "name": "stokes64s",
+    "rows": 12546,
+    "cols": 12546,
+    "nnz": 140034,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1249,
+    "group": "GHS_indef",
+    "name": "tuma1",
+    "rows": 22967,
+    "cols": 22967,
+    "nnz": 87760,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1250,
+    "group": "GHS_indef",
+    "name": "tuma2",
+    "rows": 12992,
+    "cols": 12992,
+    "nnz": 49365,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1291,
+    "group": "GHS_indef",
+    "name": "a0nsdsil",
+    "rows": 80016,
+    "cols": 80016,
+    "nnz": 355034,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1292,
+    "group": "GHS_indef",
+    "name": "a2nnsnsl",
+    "rows": 80016,
+    "cols": 80016,
+    "nnz": 347222,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1293,
+    "group": "GHS_indef",
+    "name": "a5esindl",
+    "rows": 60008,
+    "cols": 60008,
+    "nnz": 255004,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1294,
+    "group": "GHS_indef",
+    "name": "blockqp1",
+    "rows": 60012,
+    "cols": 60012,
+    "nnz": 640033,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1295,
+    "group": "GHS_indef",
+    "name": "bloweya",
+    "rows": 30004,
+    "cols": 30004,
+    "nnz": 150009,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1296,
+    "group": "GHS_indef",
+    "name": "boyd1",
+    "rows": 93279,
+    "cols": 93279,
+    "nnz": 1211231,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1298,
+    "group": "GHS_indef",
+    "name": "brainpc2",
+    "rows": 27607,
+    "cols": 27607,
+    "nnz": 179395,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1299,
+    "group": "GHS_indef",
+    "name": "bratu3d",
+    "rows": 27792,
+    "cols": 27792,
+    "nnz": 173796,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1300,
+    "group": "GHS_indef",
+    "name": "cont-201",
+    "rows": 80595,
+    "cols": 80595,
+    "nnz": 438795,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1302,
+    "group": "GHS_indef",
+    "name": "dixmaanl",
+    "rows": 60000,
+    "cols": 60000,
+    "nnz": 299998,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1303,
+    "group": "GHS_indef",
+    "name": "linverse",
+    "rows": 11999,
+    "cols": 11999,
+    "nnz": 95977,
+    "kind": "statistical/mathematical problem"
+  },
+  {
+    "id": 1304,
+    "group": "GHS_indef",
+    "name": "ncvxbqp1",
+    "rows": 50000,
+    "cols": 50000,
+    "nnz": 349968,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1305,
+    "group": "GHS_indef",
+    "name": "ncvxqp3",
+    "rows": 75000,
+    "cols": 75000,
+    "nnz": 499964,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1306,
+    "group": "GHS_indef",
+    "name": "ncvxqp5",
+    "rows": 62500,
+    "cols": 62500,
+    "nnz": 424966,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1307,
+    "group": "GHS_indef",
+    "name": "ncvxqp7",
+    "rows": 87500,
+    "cols": 87500,
+    "nnz": 574962,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1308,
+    "group": "GHS_indef",
+    "name": "sparsine",
+    "rows": 50000,
+    "cols": 50000,
+    "nnz": 1548988,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1309,
+    "group": "GHS_indef",
+    "name": "spmsrtls",
+    "rows": 29995,
+    "cols": 29995,
+    "nnz": 229947,
+    "kind": "statistical/mathematical problem"
+  },
+  {
+    "id": 1316,
+    "group": "Rajat",
+    "name": "rajat15",
+    "rows": 37261,
+    "cols": 37261,
+    "nnz": 443573,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1319,
+    "group": "Engwirda",
+    "name": "airfoil_2d",
+    "rows": 14214,
+    "cols": 14214,
+    "nnz": 259688,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1333,
+    "group": "VanVelzen",
+    "name": "std1_Jac2_db",
+    "rows": 21982,
+    "cols": 21982,
+    "nnz": 498771,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1334,
+    "group": "VanVelzen",
+    "name": "std1_Jac2",
+    "rows": 21982,
+    "cols": 21982,
+    "nnz": 1248213,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1335,
+    "group": "VanVelzen",
+    "name": "std1_Jac3_db",
+    "rows": 21982,
+    "cols": 21982,
+    "nnz": 531826,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1336,
+    "group": "VanVelzen",
+    "name": "std1_Jac3",
+    "rows": 21982,
+    "cols": 21982,
+    "nnz": 1455374,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1337,
+    "group": "VanVelzen",
+    "name": "Zd_Jac2_db",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 676439,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1338,
+    "group": "VanVelzen",
+    "name": "Zd_Jac2",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 1642407,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1339,
+    "group": "VanVelzen",
+    "name": "Zd_Jac3_db",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 713907,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1340,
+    "group": "VanVelzen",
+    "name": "Zd_Jac3",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 1915726,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1341,
+    "group": "VanVelzen",
+    "name": "Zd_Jac6_db",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 663643,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1342,
+    "group": "VanVelzen",
+    "name": "Zd_Jac6",
+    "rows": 22835,
+    "cols": 22835,
+    "nnz": 1711557,
+    "kind": "chemical process simulation problem"
+  },
+  {
+    "id": 1343,
+    "group": "Rajat",
+    "name": "rajat16",
+    "rows": 94294,
+    "cols": 94294,
+    "nnz": 476766,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1344,
+    "group": "Rajat",
+    "name": "rajat17",
+    "rows": 94294,
+    "cols": 94294,
+    "nnz": 479246,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1345,
+    "group": "Rajat",
+    "name": "rajat18",
+    "rows": 94294,
+    "cols": 94294,
+    "nnz": 479151,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1346,
+    "group": "Rajat",
+    "name": "rajat19",
+    "rows": 1157,
+    "cols": 1157,
+    "nnz": 3699,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1348,
+    "group": "PARSEC",
+    "name": "benzene",
+    "rows": 8219,
+    "cols": 8219,
+    "nnz": 242669,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1358,
+    "group": "PARSEC",
+    "name": "Na5",
+    "rows": 5832,
+    "cols": 5832,
+    "nnz": 305630,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1359,
+    "group": "PARSEC",
+    "name": "Si10H16",
+    "rows": 17077,
+    "cols": 17077,
+    "nnz": 875923,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1363,
+    "group": "PARSEC",
+    "name": "Si5H12",
+    "rows": 19896,
+    "cols": 19896,
+    "nnz": 738598,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1365,
+    "group": "PARSEC",
+    "name": "SiH4",
+    "rows": 5041,
+    "cols": 5041,
+    "nnz": 171903,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1366,
+    "group": "PARSEC",
+    "name": "SiNa",
+    "rows": 5743,
+    "cols": 5743,
+    "nnz": 198787,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1368,
+    "group": "PARSEC",
+    "name": "SiO",
+    "rows": 33401,
+    "cols": 33401,
+    "nnz": 1317655,
+    "kind": "theoretical/quantum chemistry problem"
+  },
+  {
+    "id": 1369,
+    "group": "Rajat",
+    "name": "rajat20",
+    "rows": 86916,
+    "cols": 86916,
+    "nnz": 604299,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1371,
+    "group": "Rajat",
+    "name": "rajat22",
+    "rows": 39899,
+    "cols": 39899,
+    "nnz": 195429,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1374,
+    "group": "Rajat",
+    "name": "rajat25",
+    "rows": 87190,
+    "cols": 87190,
+    "nnz": 606489,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1375,
+    "group": "Rajat",
+    "name": "rajat26",
+    "rows": 51032,
+    "cols": 51032,
+    "nnz": 247528,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1376,
+    "group": "Rajat",
+    "name": "rajat27",
+    "rows": 20640,
+    "cols": 20640,
+    "nnz": 97353,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1377,
+    "group": "Rajat",
+    "name": "rajat28",
+    "rows": 87190,
+    "cols": 87190,
+    "nnz": 606489,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1378,
+    "group": "MathWorks",
+    "name": "Sieber",
+    "rows": 2290,
+    "cols": 2290,
+    "nnz": 14873,
+    "kind": "counter-example problem"
+  },
+  {
+    "id": 1395,
+    "group": "MKS",
+    "name": "fp",
+    "rows": 7548,
+    "cols": 7548,
+    "nnz": 834222,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 1404,
+    "group": "MathWorks",
+    "name": "Kaufhold",
+    "rows": 8765,
+    "cols": 8765,
+    "nnz": 42471,
+    "kind": "counter-example problem"
+  },
+  {
+    "id": 1405,
+    "group": "Bindel",
+    "name": "ted_A",
+    "rows": 10605,
+    "cols": 10605,
+    "nnz": 424587,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 1408,
+    "group": "Bindel",
+    "name": "ted_A_unscaled",
+    "rows": 10605,
+    "cols": 10605,
+    "nnz": 424587,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 1413,
+    "group": "IBM_EDA",
+    "name": "ckt11752_dc_1",
+    "rows": 49702,
+    "cols": 49702,
+    "nnz": 333029,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1414,
+    "group": "IBM_EDA",
+    "name": "ckt11752_tr_0",
+    "rows": 49702,
+    "cols": 49702,
+    "nnz": 332807,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1415,
+    "group": "Sandia",
+    "name": "ASIC_100k",
+    "rows": 99340,
+    "cols": 99340,
+    "nnz": 940621,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1416,
+    "group": "Sandia",
+    "name": "ASIC_100ks",
+    "rows": 99190,
+    "cols": 99190,
+    "nnz": 578890,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1424,
+    "group": "GHS_indef",
+    "name": "bloweybl",
+    "rows": 30003,
+    "cols": 30003,
+    "nnz": 109999,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1426,
+    "group": "GHS_indef",
+    "name": "cvxqp3",
+    "rows": 17500,
+    "cols": 17500,
+    "nnz": 114962,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1427,
+    "group": "GHS_indef",
+    "name": "qpband",
+    "rows": 20000,
+    "cols": 20000,
+    "nnz": 45000,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1428,
+    "group": "Oberwolfach",
+    "name": "chipcool0",
+    "rows": 20082,
+    "cols": 20082,
+    "nnz": 281150,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1429,
+    "group": "Oberwolfach",
+    "name": "chipcool1",
+    "rows": 20082,
+    "cols": 20082,
+    "nnz": 281150,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1430,
+    "group": "Oberwolfach",
+    "name": "filter2D",
+    "rows": 1668,
+    "cols": 1668,
+    "nnz": 10750,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1432,
+    "group": "Oberwolfach",
+    "name": "flowmeter0",
+    "rows": 9669,
+    "cols": 9669,
+    "nnz": 67391,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1433,
+    "group": "Oberwolfach",
+    "name": "flowmeter5",
+    "rows": 9669,
+    "cols": 9669,
+    "nnz": 67391,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1434,
+    "group": "Oberwolfach",
+    "name": "gas_sensor",
+    "rows": 66917,
+    "cols": 66917,
+    "nnz": 1703365,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1436,
+    "group": "Oberwolfach",
+    "name": "inlet",
+    "rows": 11730,
+    "cols": 11730,
+    "nnz": 328323,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1441,
+    "group": "Oberwolfach",
+    "name": "piston",
+    "rows": 2025,
+    "cols": 2025,
+    "nnz": 100015,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1442,
+    "group": "Oberwolfach",
+    "name": "rail_1357",
+    "rows": 1357,
+    "cols": 1357,
+    "nnz": 8985,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1443,
+    "group": "Oberwolfach",
+    "name": "rail_20209",
+    "rows": 20209,
+    "cols": 20209,
+    "nnz": 139233,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1444,
+    "group": "Oberwolfach",
+    "name": "rail_5177",
+    "rows": 5177,
+    "cols": 5177,
+    "nnz": 35185,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1445,
+    "group": "Oberwolfach",
+    "name": "rail_79841",
+    "rows": 79841,
+    "cols": 79841,
+    "nnz": 553921,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1446,
+    "group": "Oberwolfach",
+    "name": "spiral",
+    "rows": 1434,
+    "cols": 1434,
+    "nnz": 18228,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1447,
+    "group": "Oberwolfach",
+    "name": "t2dah",
+    "rows": 11445,
+    "cols": 11445,
+    "nnz": 176117,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1448,
+    "group": "Oberwolfach",
+    "name": "t2dal_bci",
+    "rows": 4257,
+    "cols": 4257,
+    "nnz": 37465,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1449,
+    "group": "Oberwolfach",
+    "name": "t2dal",
+    "rows": 4257,
+    "cols": 4257,
+    "nnz": 37465,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1451,
+    "group": "Oberwolfach",
+    "name": "t3dl",
+    "rows": 20360,
+    "cols": 20360,
+    "nnz": 509866,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 1461,
+    "group": "Pajek",
+    "name": "EAT_RS",
+    "rows": 23219,
+    "cols": 23219,
+    "nnz": 325592,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 1462,
+    "group": "Pajek",
+    "name": "EAT_SR",
+    "rows": 23219,
+    "cols": 23219,
+    "nnz": 325589,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 1472,
+    "group": "Pajek",
+    "name": "FA",
+    "rows": 10617,
+    "cols": 10617,
+    "nnz": 72176,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 1473,
+    "group": "Pajek",
+    "name": "foldoc",
+    "rows": 13356,
+    "cols": 13356,
+    "nnz": 120238,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 1488,
+    "group": "Pajek",
+    "name": "GD96_a",
+    "rows": 1096,
+    "cols": 1096,
+    "nnz": 1677,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1500,
+    "group": "Pajek",
+    "name": "geom",
+    "rows": 7343,
+    "cols": 7343,
+    "nnz": 23796,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 1508,
+    "group": "Pajek",
+    "name": "Lederberg",
+    "rows": 8843,
+    "cols": 8843,
+    "nnz": 41601,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1512,
+    "group": "Pajek",
+    "name": "ODLIS",
+    "rows": 2909,
+    "cols": 2909,
+    "nnz": 18246,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1517,
+    "group": "Pajek",
+    "name": "Reuters911",
+    "rows": 13332,
+    "cols": 13332,
+    "nnz": 296076,
+    "kind": "undirected weighted graph sequence"
+  },
+  {
+    "id": 1521,
+    "group": "Pajek",
+    "name": "SciMet",
+    "rows": 3084,
+    "cols": 3084,
+    "nnz": 10413,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1522,
+    "group": "Pajek",
+    "name": "SmaGri",
+    "rows": 1059,
+    "cols": 1059,
+    "nnz": 4919,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1531,
+    "group": "Pajek",
+    "name": "Wordnet3",
+    "rows": 82670,
+    "cols": 82670,
+    "nnz": 132964,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 1534,
+    "group": "Pajek",
+    "name": "Zewail",
+    "rows": 6752,
+    "cols": 6752,
+    "nnz": 54233,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 1535,
+    "group": "Zitney",
+    "name": "extr1b",
+    "rows": 2836,
+    "cols": 2836,
+    "nnz": 10965,
+    "kind": "chemical process simulation problem sequence"
+  },
+  {
+    "id": 1536,
+    "group": "Zitney",
+    "name": "hydr1c",
+    "rows": 5308,
+    "cols": 5308,
+    "nnz": 22592,
+    "kind": "chemical process simulation problem sequence"
+  },
+  {
+    "id": 1537,
+    "group": "Schenk_IBMNA",
+    "name": "c-18",
+    "rows": 2169,
+    "cols": 2169,
+    "nnz": 15145,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1538,
+    "group": "Schenk_IBMNA",
+    "name": "c-19",
+    "rows": 2327,
+    "cols": 2327,
+    "nnz": 21817,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1539,
+    "group": "Schenk_IBMNA",
+    "name": "c-20",
+    "rows": 2921,
+    "cols": 2921,
+    "nnz": 20445,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1540,
+    "group": "Schenk_IBMNA",
+    "name": "c-21",
+    "rows": 3509,
+    "cols": 3509,
+    "nnz": 32145,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1541,
+    "group": "Schenk_IBMNA",
+    "name": "c-22",
+    "rows": 3792,
+    "cols": 3792,
+    "nnz": 28870,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1542,
+    "group": "Schenk_IBMNA",
+    "name": "c-23",
+    "rows": 3969,
+    "cols": 3969,
+    "nnz": 31079,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1543,
+    "group": "Schenk_IBMNA",
+    "name": "c-24",
+    "rows": 4119,
+    "cols": 4119,
+    "nnz": 35699,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1544,
+    "group": "Schenk_IBMNA",
+    "name": "c-25",
+    "rows": 3797,
+    "cols": 3797,
+    "nnz": 49635,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1545,
+    "group": "Schenk_IBMNA",
+    "name": "c-26",
+    "rows": 4307,
+    "cols": 4307,
+    "nnz": 34537,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1546,
+    "group": "Schenk_IBMNA",
+    "name": "c-27",
+    "rows": 4563,
+    "cols": 4563,
+    "nnz": 30927,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1547,
+    "group": "Schenk_IBMNA",
+    "name": "c-28",
+    "rows": 4598,
+    "cols": 4598,
+    "nnz": 30590,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1548,
+    "group": "Schenk_IBMNA",
+    "name": "c-29",
+    "rows": 5033,
+    "cols": 5033,
+    "nnz": 43731,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1549,
+    "group": "Schenk_IBMNA",
+    "name": "c-30",
+    "rows": 5321,
+    "cols": 5321,
+    "nnz": 65693,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1550,
+    "group": "Schenk_IBMNA",
+    "name": "c-31",
+    "rows": 5339,
+    "cols": 5339,
+    "nnz": 78571,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1551,
+    "group": "Schenk_IBMNA",
+    "name": "c-32",
+    "rows": 5975,
+    "cols": 5975,
+    "nnz": 54471,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1552,
+    "group": "Schenk_IBMNA",
+    "name": "c-33",
+    "rows": 6317,
+    "cols": 6317,
+    "nnz": 56123,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1553,
+    "group": "Schenk_IBMNA",
+    "name": "c-34",
+    "rows": 6611,
+    "cols": 6611,
+    "nnz": 64333,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1554,
+    "group": "Schenk_IBMNA",
+    "name": "c-35",
+    "rows": 6537,
+    "cols": 6537,
+    "nnz": 62891,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1555,
+    "group": "Schenk_IBMNA",
+    "name": "c-36",
+    "rows": 7479,
+    "cols": 7479,
+    "nnz": 65941,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1556,
+    "group": "Schenk_IBMNA",
+    "name": "c-37",
+    "rows": 8204,
+    "cols": 8204,
+    "nnz": 74676,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1557,
+    "group": "Schenk_IBMNA",
+    "name": "c-38",
+    "rows": 8127,
+    "cols": 8127,
+    "nnz": 77689,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1558,
+    "group": "Schenk_IBMNA",
+    "name": "c-39",
+    "rows": 9271,
+    "cols": 9271,
+    "nnz": 116587,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1559,
+    "group": "Schenk_IBMNA",
+    "name": "c-40",
+    "rows": 9941,
+    "cols": 9941,
+    "nnz": 81501,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1560,
+    "group": "Schenk_IBMNA",
+    "name": "c-41",
+    "rows": 9769,
+    "cols": 9769,
+    "nnz": 101635,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1561,
+    "group": "Schenk_IBMNA",
+    "name": "c-42",
+    "rows": 10471,
+    "cols": 10471,
+    "nnz": 110285,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1562,
+    "group": "Schenk_IBMNA",
+    "name": "c-43",
+    "rows": 11125,
+    "cols": 11125,
+    "nnz": 123659,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1563,
+    "group": "Schenk_IBMNA",
+    "name": "c-44",
+    "rows": 10728,
+    "cols": 10728,
+    "nnz": 85000,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1564,
+    "group": "Schenk_IBMNA",
+    "name": "c-45",
+    "rows": 13206,
+    "cols": 13206,
+    "nnz": 174452,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1565,
+    "group": "Schenk_IBMNA",
+    "name": "c-46",
+    "rows": 14913,
+    "cols": 14913,
+    "nnz": 130397,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1566,
+    "group": "Schenk_IBMNA",
+    "name": "c-47",
+    "rows": 15343,
+    "cols": 15343,
+    "nnz": 211401,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1567,
+    "group": "Schenk_IBMNA",
+    "name": "c-48",
+    "rows": 18354,
+    "cols": 18354,
+    "nnz": 166080,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1568,
+    "group": "Schenk_IBMNA",
+    "name": "c-49",
+    "rows": 21132,
+    "cols": 21132,
+    "nnz": 157040,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1569,
+    "group": "Schenk_IBMNA",
+    "name": "c-50",
+    "rows": 22401,
+    "cols": 22401,
+    "nnz": 180245,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1570,
+    "group": "Schenk_IBMNA",
+    "name": "c-51",
+    "rows": 23196,
+    "cols": 23196,
+    "nnz": 203048,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1571,
+    "group": "Schenk_IBMNA",
+    "name": "c-52",
+    "rows": 23948,
+    "cols": 23948,
+    "nnz": 202708,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1572,
+    "group": "Schenk_IBMNA",
+    "name": "c-53",
+    "rows": 30235,
+    "cols": 30235,
+    "nnz": 355139,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1573,
+    "group": "Schenk_IBMNA",
+    "name": "c-54",
+    "rows": 31793,
+    "cols": 31793,
+    "nnz": 385987,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1574,
+    "group": "Schenk_IBMNA",
+    "name": "c-56",
+    "rows": 35910,
+    "cols": 35910,
+    "nnz": 380240,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1575,
+    "group": "Schenk_IBMNA",
+    "name": "c-57",
+    "rows": 37833,
+    "cols": 37833,
+    "nnz": 403373,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1576,
+    "group": "Schenk_IBMNA",
+    "name": "c-60",
+    "rows": 43640,
+    "cols": 43640,
+    "nnz": 298570,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1577,
+    "group": "Schenk_IBMNA",
+    "name": "c-61",
+    "rows": 43618,
+    "cols": 43618,
+    "nnz": 310016,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1578,
+    "group": "Schenk_IBMNA",
+    "name": "c-65",
+    "rows": 48066,
+    "cols": 48066,
+    "nnz": 360428,
+    "kind": "optimization problem"
+  },
+  {
+    "id": 1587,
+    "group": "Schenk_IBMNA",
+    "name": "c-64b",
+    "rows": 51035,
+    "cols": 51035,
+    "nnz": 707601,
+    "kind": "subsequent optimization problem"
+  },
+  {
+    "id": 1588,
+    "group": "Schenk_IBMNA",
+    "name": "c-66b",
+    "rows": 49989,
+    "cols": 49989,
+    "nnz": 444851,
+    "kind": "subsequent optimization problem"
+  },
+  {
+    "id": 1589,
+    "group": "Schenk_IBMNA",
+    "name": "c-67b",
+    "rows": 57975,
+    "cols": 57975,
+    "nnz": 530583,
+    "kind": "subsequent optimization problem"
+  },
+  {
+    "id": 1612,
+    "group": "Bai",
+    "name": "cryg10000",
+    "rows": 10000,
+    "cols": 10000,
+    "nnz": 49699,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1613,
+    "group": "Bai",
+    "name": "cryg2500",
+    "rows": 2500,
+    "cols": 2500,
+    "nnz": 12349,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1614,
+    "group": "Bai",
+    "name": "dw2048",
+    "rows": 2048,
+    "cols": 2048,
+    "nnz": 10114,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 1615,
+    "group": "Bai",
+    "name": "dw8192",
+    "rows": 8192,
+    "cols": 8192,
+    "nnz": 41746,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 1622,
+    "group": "Bai",
+    "name": "mhd3200a",
+    "rows": 3200,
+    "cols": 3200,
+    "nnz": 68026,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 1624,
+    "group": "Bai",
+    "name": "mhd4800a",
+    "rows": 4800,
+    "cols": 4800,
+    "nnz": 102252,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 1626,
+    "group": "Bai",
+    "name": "qh1484",
+    "rows": 1484,
+    "cols": 1484,
+    "nnz": 6110,
+    "kind": "power network problem"
+  },
+  {
+    "id": 1628,
+    "group": "Bai",
+    "name": "rdb1250",
+    "rows": 1250,
+    "cols": 1250,
+    "nnz": 7300,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1629,
+    "group": "Bai",
+    "name": "rdb1250l",
+    "rows": 1250,
+    "cols": 1250,
+    "nnz": 7300,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1632,
+    "group": "Bai",
+    "name": "rdb2048_noL",
+    "rows": 2048,
+    "cols": 2048,
+    "nnz": 12032,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1633,
+    "group": "Bai",
+    "name": "rdb3200l",
+    "rows": 3200,
+    "cols": 3200,
+    "nnz": 18880,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1637,
+    "group": "Bai",
+    "name": "tols1090",
+    "rows": 1090,
+    "cols": 1090,
+    "nnz": 3546,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1638,
+    "group": "Bai",
+    "name": "tols2000",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 5184,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1640,
+    "group": "Bai",
+    "name": "tols4000",
+    "rows": 4000,
+    "cols": 4000,
+    "nnz": 8784,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1642,
+    "group": "POLYFLOW",
+    "name": "invextr1_new",
+    "rows": 30412,
+    "cols": 30412,
+    "nnz": 1793881,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1643,
+    "group": "POLYFLOW",
+    "name": "mixtank_new",
+    "rows": 29957,
+    "cols": 29957,
+    "nnz": 1990919,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1790,
+    "group": "Meszaros",
+    "name": "iprob",
+    "rows": 3001,
+    "cols": 3001,
+    "nnz": 9000,
+    "kind": "linear programming problem"
+  },
+  {
+    "id": 1851,
+    "group": "Botonakis",
+    "name": "FEM_3D_thermal1",
+    "rows": 17880,
+    "cols": 17880,
+    "nnz": 430740,
+    "kind": "thermal problem"
+  },
+  {
+    "id": 1854,
+    "group": "Watson",
+    "name": "chem_master1",
+    "rows": 40401,
+    "cols": 40401,
+    "nnz": 201201,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 1862,
+    "group": "Szczerba",
+    "name": "Ill_Stokes",
+    "rows": 20896,
+    "cols": 20896,
+    "nnz": 191368,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 1865,
+    "group": "Muite",
+    "name": "Chebyshev2",
+    "rows": 2053,
+    "cols": 2053,
+    "nnz": 18447,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1866,
+    "group": "Muite",
+    "name": "Chebyshev3",
+    "rows": 4101,
+    "cols": 4101,
+    "nnz": 36879,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1868,
+    "group": "Quaglino",
+    "name": "viscoplastic1",
+    "rows": 4326,
+    "cols": 4326,
+    "nnz": 61166,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1869,
+    "group": "Quaglino",
+    "name": "viscoplastic2",
+    "rows": 32769,
+    "cols": 32769,
+    "nnz": 381326,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1874,
+    "group": "HVDC",
+    "name": "hvdc1",
+    "rows": 24842,
+    "cols": 24842,
+    "nnz": 158426,
+    "kind": "power network problem"
+  },
+  {
+    "id": 1879,
+    "group": "Mancktelow",
+    "name": "viscorocks",
+    "rows": 37762,
+    "cols": 37762,
+    "nnz": 1133641,
+    "kind": "materials problem"
+  },
+  {
+    "id": 1891,
+    "group": "Marini",
+    "name": "eurqsa",
+    "rows": 7245,
+    "cols": 7245,
+    "nnz": 46142,
+    "kind": "economic problem"
+  },
+  {
+    "id": 1896,
+    "group": "YZhou",
+    "name": "circuit204",
+    "rows": 1020,
+    "cols": 1020,
+    "nnz": 5883,
+    "kind": "circuit simulation problem"
+  },
+  {
+    "id": 1908,
+    "group": "TKK",
+    "name": "t520",
+    "rows": 5563,
+    "cols": 5563,
+    "nnz": 286341,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1913,
+    "group": "TKK",
+    "name": "cyl6",
+    "rows": 13681,
+    "cols": 13681,
+    "nnz": 714241,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1915,
+    "group": "TKK",
+    "name": "tube2",
+    "rows": 21498,
+    "cols": 21498,
+    "nnz": 897056,
+    "kind": "structural problem"
+  },
+  {
+    "id": 1916,
+    "group": "TKK",
+    "name": "t2d_q4",
+    "rows": 9801,
+    "cols": 9801,
+    "nnz": 87025,
+    "kind": "structural problem sequence"
+  },
+  {
+    "id": 1917,
+    "group": "TKK",
+    "name": "t2d_q9",
+    "rows": 9801,
+    "cols": 9801,
+    "nnz": 87025,
+    "kind": "structural problem sequence"
+  },
+  {
+    "id": 1941,
+    "group": "JGD_CAG",
+    "name": "CAG_mat1916",
+    "rows": 1916,
+    "cols": 1916,
+    "nnz": 195985,
+    "kind": "combinatorial problem"
+  },
+  {
+    "id": 2104,
+    "group": "JGD_Homology",
+    "name": "n3c6-b7",
+    "rows": 6435,
+    "cols": 6435,
+    "nnz": 51480,
+    "kind": "combinatorial problem"
+  },
+  {
+    "id": 2136,
+    "group": "QY",
+    "name": "case39",
+    "rows": 40216,
+    "cols": 40216,
+    "nnz": 1042160,
+    "kind": "power network problem sequence"
+  },
+  {
+    "id": 2214,
+    "group": "QY",
+    "name": "case9",
+    "rows": 14454,
+    "cols": 14454,
+    "nnz": 147972,
+    "kind": "power network problem sequence"
+  },
+  {
+    "id": 2221,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b162_c1",
+    "rows": 10798,
+    "cols": 10798,
+    "nnz": 608540,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2222,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b162_c3",
+    "rows": 30798,
+    "cols": 30798,
+    "nnz": 1801300,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2227,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b39_c19",
+    "rows": 76216,
+    "cols": 76216,
+    "nnz": 1977600,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2229,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b39_c7",
+    "rows": 28216,
+    "cols": 28216,
+    "nnz": 730080,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2230,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b9_c1",
+    "rows": 2454,
+    "cols": 2454,
+    "nnz": 25032,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2231,
+    "group": "TSOPF",
+    "name": "TSOPF_FS_b9_c6",
+    "rows": 14454,
+    "cols": 14454,
+    "nnz": 147972,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2232,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b162_c1",
+    "rows": 5374,
+    "cols": 5374,
+    "nnz": 205399,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2233,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b162_c3",
+    "rows": 15374,
+    "cols": 15374,
+    "nnz": 610299,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2234,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b162_c4",
+    "rows": 20374,
+    "cols": 20374,
+    "nnz": 812749,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2237,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b300_c1",
+    "rows": 14538,
+    "cols": 14538,
+    "nnz": 1474325,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2240,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b39_c19",
+    "rows": 38098,
+    "cols": 38098,
+    "nnz": 684206,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2241,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b39_c30",
+    "rows": 60098,
+    "cols": 60098,
+    "nnz": 1079986,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2242,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b39_c7",
+    "rows": 14098,
+    "cols": 14098,
+    "nnz": 252446,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2245,
+    "group": "TSOPF",
+    "name": "TSOPF_RS_b9_c6",
+    "rows": 7224,
+    "cols": 7224,
+    "nnz": 54082,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2256,
+    "group": "MathWorks",
+    "name": "TS",
+    "rows": 2142,
+    "cols": 2142,
+    "nnz": 45262,
+    "kind": "counter-example problem"
+  },
+  {
+    "id": 2269,
+    "group": "Puri",
+    "name": "ABACUS_shell_ud",
+    "rows": 23412,
+    "cols": 23412,
+    "nnz": 218484,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 2278,
+    "group": "Grund",
+    "name": "poli3",
+    "rows": 16955,
+    "cols": 16955,
+    "nnz": 37849,
+    "kind": "economic problem"
+  },
+  {
+    "id": 2279,
+    "group": "Grund",
+    "name": "poli4",
+    "rows": 33833,
+    "cols": 33833,
+    "nnz": 73249,
+    "kind": "economic problem"
+  },
+  {
+    "id": 2322,
+    "group": "SNAP",
+    "name": "as-caida",
+    "rows": 31379,
+    "cols": 31379,
+    "nnz": 106762,
+    "kind": "directed weighted graph sequence"
+  },
+  {
+    "id": 2326,
+    "group": "SNAP",
+    "name": "soc-sign-Slashdot081106",
+    "rows": 77357,
+    "cols": 77357,
+    "nnz": 516575,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 2327,
+    "group": "SNAP",
+    "name": "soc-sign-Slashdot090216",
+    "rows": 81871,
+    "cols": 81871,
+    "nnz": 545671,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 2328,
+    "group": "SNAP",
+    "name": "soc-sign-Slashdot090221",
+    "rows": 82144,
+    "cols": 82144,
+    "nnz": 549202,
+    "kind": "directed weighted graph"
+  },
+  {
+    "id": 2335,
+    "group": "Fluorem",
+    "name": "GT01R",
+    "rows": 7980,
+    "cols": 7980,
+    "nnz": 430909,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 2339,
+    "group": "Rommes",
+    "name": "ww_vref_6405",
+    "rows": 13251,
+    "cols": 13251,
+    "nnz": 48737,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2340,
+    "group": "Rommes",
+    "name": "xingo_afonso_itaipu",
+    "rows": 13250,
+    "cols": 13250,
+    "nnz": 48735,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2341,
+    "group": "Rommes",
+    "name": "mimo8x8_system",
+    "rows": 13309,
+    "cols": 13309,
+    "nnz": 48872,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2342,
+    "group": "Rommes",
+    "name": "mimo28x28_system",
+    "rows": 13251,
+    "cols": 13251,
+    "nnz": 48737,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2343,
+    "group": "Rommes",
+    "name": "mimo46x46_system",
+    "rows": 13250,
+    "cols": 13250,
+    "nnz": 48735,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2344,
+    "group": "Rommes",
+    "name": "juba40k",
+    "rows": 40337,
+    "cols": 40337,
+    "nnz": 144945,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2345,
+    "group": "Rommes",
+    "name": "bauru5727",
+    "rows": 40366,
+    "cols": 40366,
+    "nnz": 145019,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2346,
+    "group": "Rommes",
+    "name": "zeros_nopss_13k",
+    "rows": 13296,
+    "cols": 13296,
+    "nnz": 48827,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2347,
+    "group": "Rommes",
+    "name": "descriptor_xingo6u",
+    "rows": 20738,
+    "cols": 20738,
+    "nnz": 73916,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2348,
+    "group": "Rommes",
+    "name": "nopss_11k",
+    "rows": 11685,
+    "cols": 11685,
+    "nnz": 44941,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2349,
+    "group": "Rommes",
+    "name": "xingo3012",
+    "rows": 20944,
+    "cols": 20944,
+    "nnz": 74386,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2350,
+    "group": "Rommes",
+    "name": "bips98_606",
+    "rows": 7135,
+    "cols": 7135,
+    "nnz": 34738,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2351,
+    "group": "Rommes",
+    "name": "bips98_1142",
+    "rows": 9735,
+    "cols": 9735,
+    "nnz": 40983,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2352,
+    "group": "Rommes",
+    "name": "bips98_1450",
+    "rows": 11305,
+    "cols": 11305,
+    "nnz": 44678,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2353,
+    "group": "Rommes",
+    "name": "bips07_1693",
+    "rows": 13275,
+    "cols": 13275,
+    "nnz": 49044,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2354,
+    "group": "Rommes",
+    "name": "bips07_1998",
+    "rows": 15066,
+    "cols": 15066,
+    "nnz": 62198,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2355,
+    "group": "Rommes",
+    "name": "bips07_2476",
+    "rows": 16861,
+    "cols": 16861,
+    "nnz": 66498,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2356,
+    "group": "Rommes",
+    "name": "bips07_3078",
+    "rows": 21128,
+    "cols": 21128,
+    "nnz": 75729,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2358,
+    "group": "Rommes",
+    "name": "M20PI_n1",
+    "rows": 1028,
+    "cols": 1028,
+    "nnz": 2547,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2359,
+    "group": "Rommes",
+    "name": "M40PI_n1",
+    "rows": 2028,
+    "cols": 2028,
+    "nnz": 5007,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2360,
+    "group": "Rommes",
+    "name": "M80PI_n1",
+    "rows": 4028,
+    "cols": 4028,
+    "nnz": 9927,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2362,
+    "group": "Rommes",
+    "name": "M20PI_n",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 2881,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2363,
+    "group": "Rommes",
+    "name": "M40PI_n",
+    "rows": 2182,
+    "cols": 2182,
+    "nnz": 5341,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2364,
+    "group": "Rommes",
+    "name": "M80PI_n",
+    "rows": 4182,
+    "cols": 4182,
+    "nnz": 10261,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2366,
+    "group": "Rommes",
+    "name": "S20PI_n1",
+    "rows": 1028,
+    "cols": 1028,
+    "nnz": 2547,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2367,
+    "group": "Rommes",
+    "name": "S40PI_n1",
+    "rows": 2028,
+    "cols": 2028,
+    "nnz": 5007,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2368,
+    "group": "Rommes",
+    "name": "S80PI_n1",
+    "rows": 4028,
+    "cols": 4028,
+    "nnz": 9927,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2370,
+    "group": "Rommes",
+    "name": "S20PI_n",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 2881,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2371,
+    "group": "Rommes",
+    "name": "S40PI_n",
+    "rows": 2182,
+    "cols": 2182,
+    "nnz": 5341,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2372,
+    "group": "Rommes",
+    "name": "S80PI_n",
+    "rows": 4182,
+    "cols": 4182,
+    "nnz": 10261,
+    "kind": "eigenvalue/model reduction problem"
+  },
+  {
+    "id": 2391,
+    "group": "Newman",
+    "name": "astro-ph",
+    "rows": 16706,
+    "cols": 16706,
+    "nnz": 242502,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2393,
+    "group": "Newman",
+    "name": "cond-mat",
+    "rows": 16726,
+    "cols": 16726,
+    "nnz": 95188,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2394,
+    "group": "Newman",
+    "name": "cond-mat-2003",
+    "rows": 31163,
+    "cols": 31163,
+    "nnz": 240058,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2395,
+    "group": "Newman",
+    "name": "cond-mat-2005",
+    "rows": 40421,
+    "cols": 40421,
+    "nnz": 351382,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2398,
+    "group": "Newman",
+    "name": "hep-th",
+    "rows": 8361,
+    "cols": 8361,
+    "nnz": 31502,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2401,
+    "group": "Newman",
+    "name": "netscience",
+    "rows": 1589,
+    "cols": 1589,
+    "nnz": 5484,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2402,
+    "group": "Newman",
+    "name": "polblogs",
+    "rows": 1490,
+    "cols": 1490,
+    "nnz": 19025,
+    "kind": "directed multigraph"
+  },
+  {
+    "id": 2405,
+    "group": "Arenas",
+    "name": "PGPgiantcompo",
+    "rows": 10680,
+    "cols": 10680,
+    "nnz": 48632,
+    "kind": "undirected multigraph"
+  },
+  {
+    "id": 2536,
+    "group": "IPSO",
+    "name": "OPF_10000",
+    "rows": 43887,
+    "cols": 43887,
+    "nnz": 426898,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2537,
+    "group": "IPSO",
+    "name": "OPF_3754",
+    "rows": 15435,
+    "cols": 15435,
+    "nnz": 141478,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2538,
+    "group": "IPSO",
+    "name": "OPF_6000",
+    "rows": 29902,
+    "cols": 29902,
+    "nnz": 274697,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2540,
+    "group": "IPSO",
+    "name": "TSC_OPF_300",
+    "rows": 9774,
+    "cols": 9774,
+    "nnz": 820783,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2562,
+    "group": "CPM",
+    "name": "cz1268",
+    "rows": 1268,
+    "cols": 1268,
+    "nnz": 12786,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2563,
+    "group": "CPM",
+    "name": "cz2548",
+    "rows": 2548,
+    "cols": 2548,
+    "nnz": 25674,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2564,
+    "group": "CPM",
+    "name": "cz5108",
+    "rows": 5108,
+    "cols": 5108,
+    "nnz": 51412,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2565,
+    "group": "CPM",
+    "name": "cz10228",
+    "rows": 10228,
+    "cols": 10228,
+    "nnz": 102876,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2566,
+    "group": "CPM",
+    "name": "cz20468",
+    "rows": 20468,
+    "cols": 20468,
+    "nnz": 206076,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2567,
+    "group": "CPM",
+    "name": "cz40948",
+    "rows": 40948,
+    "cols": 40948,
+    "nnz": 412148,
+    "kind": "2D/3D problem"
+  },
+  {
+    "id": 2569,
+    "group": "Bodendiek",
+    "name": "CurlCurl_0",
+    "rows": 11083,
+    "cols": 11083,
+    "nnz": 113343,
+    "kind": "model reduction problem"
+  },
+  {
+    "id": 2582,
+    "group": "DIMACS10",
+    "name": "ak2010",
+    "rows": 45292,
+    "cols": 45292,
+    "nnz": 217098,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2588,
+    "group": "DIMACS10",
+    "name": "ct2010",
+    "rows": 67578,
+    "cols": 67578,
+    "nnz": 336352,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2589,
+    "group": "DIMACS10",
+    "name": "de2010",
+    "rows": 24115,
+    "cols": 24115,
+    "nnz": 116056,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2592,
+    "group": "DIMACS10",
+    "name": "hi2010",
+    "rows": 25016,
+    "cols": 25016,
+    "nnz": 124126,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2602,
+    "group": "DIMACS10",
+    "name": "me2010",
+    "rows": 69518,
+    "cols": 69518,
+    "nnz": 335476,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2611,
+    "group": "DIMACS10",
+    "name": "nh2010",
+    "rows": 48837,
+    "cols": 48837,
+    "nnz": 234550,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2614,
+    "group": "DIMACS10",
+    "name": "nv2010",
+    "rows": 84538,
+    "cols": 84538,
+    "nnz": 416998,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2620,
+    "group": "DIMACS10",
+    "name": "ri2010",
+    "rows": 25181,
+    "cols": 25181,
+    "nnz": 125750,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2622,
+    "group": "DIMACS10",
+    "name": "sd2010",
+    "rows": 88360,
+    "cols": 88360,
+    "nnz": 410722,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2627,
+    "group": "DIMACS10",
+    "name": "vt2010",
+    "rows": 32580,
+    "cols": 32580,
+    "nnz": 155598,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2631,
+    "group": "DIMACS10",
+    "name": "wy2010",
+    "rows": 86204,
+    "cols": 86204,
+    "nnz": 427586,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2655,
+    "group": "LeGresley",
+    "name": "LeGresley_2508",
+    "rows": 2508,
+    "cols": 2508,
+    "nnz": 16727,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2656,
+    "group": "LeGresley",
+    "name": "LeGresley_4908",
+    "rows": 4908,
+    "cols": 4908,
+    "nnz": 30482,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2657,
+    "group": "LeGresley",
+    "name": "LeGresley_87936",
+    "rows": 87936,
+    "cols": 87936,
+    "nnz": 593276,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2663,
+    "group": "Moqri",
+    "name": "MISKnowledgeMap",
+    "rows": 2427,
+    "cols": 2427,
+    "nnz": 57022,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2666,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_2",
+    "rows": 1591,
+    "cols": 1591,
+    "nnz": 15588,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2667,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_3",
+    "rows": 2871,
+    "cols": 2871,
+    "nnz": 32022,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2668,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_4",
+    "rows": 3191,
+    "cols": 3191,
+    "nnz": 36516,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2669,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_5",
+    "rows": 3271,
+    "cols": 3271,
+    "nnz": 36789,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2670,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_6",
+    "rows": 3431,
+    "cols": 3431,
+    "nnz": 36741,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2671,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_7",
+    "rows": 3511,
+    "cols": 3511,
+    "nnz": 37680,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2672,
+    "group": "VDOL",
+    "name": "dynamicSoaringProblem_8",
+    "rows": 3543,
+    "cols": 3543,
+    "nnz": 38136,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2674,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_2",
+    "rows": 1338,
+    "cols": 1338,
+    "nnz": 11600,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2675,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_3",
+    "rows": 1718,
+    "cols": 1718,
+    "nnz": 12922,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2676,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_4",
+    "rows": 2358,
+    "cols": 2358,
+    "nnz": 18218,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2677,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_5",
+    "rows": 2878,
+    "cols": 2878,
+    "nnz": 24582,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2678,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_6",
+    "rows": 3358,
+    "cols": 3358,
+    "nnz": 27030,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2679,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_7",
+    "rows": 3918,
+    "cols": 3918,
+    "nnz": 31046,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2680,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_8",
+    "rows": 4398,
+    "cols": 4398,
+    "nnz": 34958,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2681,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_9",
+    "rows": 4778,
+    "cols": 4778,
+    "nnz": 39964,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2682,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_10",
+    "rows": 5218,
+    "cols": 5218,
+    "nnz": 40080,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2683,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_11",
+    "rows": 5438,
+    "cols": 5438,
+    "nnz": 40054,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2684,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_12",
+    "rows": 5578,
+    "cols": 5578,
+    "nnz": 41940,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2685,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_13",
+    "rows": 5718,
+    "cols": 5718,
+    "nnz": 43994,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2686,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_14",
+    "rows": 5958,
+    "cols": 5958,
+    "nnz": 43298,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2687,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_15",
+    "rows": 6038,
+    "cols": 6038,
+    "nnz": 43378,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2688,
+    "group": "VDOL",
+    "name": "freeFlyingRobot_16",
+    "rows": 6078,
+    "cols": 6078,
+    "nnz": 44006,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2692,
+    "group": "VDOL",
+    "name": "hangGlider_2",
+    "rows": 1647,
+    "cols": 1647,
+    "nnz": 14754,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2693,
+    "group": "VDOL",
+    "name": "hangGlider_3",
+    "rows": 10260,
+    "cols": 10260,
+    "nnz": 92703,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2694,
+    "group": "VDOL",
+    "name": "hangGlider_4",
+    "rows": 15561,
+    "cols": 15561,
+    "nnz": 149532,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2695,
+    "group": "VDOL",
+    "name": "hangGlider_5",
+    "rows": 16011,
+    "cols": 16011,
+    "nnz": 155246,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2696,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_1",
+    "rows": 2052,
+    "cols": 2052,
+    "nnz": 20600,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2697,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_2",
+    "rows": 4361,
+    "cols": 4361,
+    "nnz": 44840,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2698,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_3",
+    "rows": 5082,
+    "cols": 5082,
+    "nnz": 53219,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2699,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_4",
+    "rows": 7105,
+    "cols": 7105,
+    "nnz": 74869,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2700,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_5",
+    "rows": 7641,
+    "cols": 7641,
+    "nnz": 80767,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2701,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_6",
+    "rows": 7773,
+    "cols": 7773,
+    "nnz": 82500,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2702,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_7",
+    "rows": 7968,
+    "cols": 7968,
+    "nnz": 84508,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2703,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_8",
+    "rows": 8052,
+    "cols": 8052,
+    "nnz": 85194,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2704,
+    "group": "VDOL",
+    "name": "kineticBatchReactor_9",
+    "rows": 8115,
+    "cols": 8115,
+    "nnz": 86183,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2706,
+    "group": "VDOL",
+    "name": "lowThrust_2",
+    "rows": 2312,
+    "cols": 2312,
+    "nnz": 26261,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2707,
+    "group": "VDOL",
+    "name": "lowThrust_3",
+    "rows": 7064,
+    "cols": 7064,
+    "nnz": 80645,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2708,
+    "group": "VDOL",
+    "name": "lowThrust_4",
+    "rows": 13562,
+    "cols": 13562,
+    "nnz": 160947,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2709,
+    "group": "VDOL",
+    "name": "lowThrust_5",
+    "rows": 16262,
+    "cols": 16262,
+    "nnz": 198369,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2710,
+    "group": "VDOL",
+    "name": "lowThrust_6",
+    "rows": 16928,
+    "cols": 16928,
+    "nnz": 207349,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2711,
+    "group": "VDOL",
+    "name": "lowThrust_7",
+    "rows": 17378,
+    "cols": 17378,
+    "nnz": 211561,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2712,
+    "group": "VDOL",
+    "name": "lowThrust_8",
+    "rows": 17702,
+    "cols": 17702,
+    "nnz": 216445,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2713,
+    "group": "VDOL",
+    "name": "lowThrust_9",
+    "rows": 18044,
+    "cols": 18044,
+    "nnz": 219589,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2714,
+    "group": "VDOL",
+    "name": "lowThrust_10",
+    "rows": 18260,
+    "cols": 18260,
+    "nnz": 222005,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2715,
+    "group": "VDOL",
+    "name": "lowThrust_11",
+    "rows": 18368,
+    "cols": 18368,
+    "nnz": 223801,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2716,
+    "group": "VDOL",
+    "name": "lowThrust_12",
+    "rows": 18458,
+    "cols": 18458,
+    "nnz": 224593,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2717,
+    "group": "VDOL",
+    "name": "lowThrust_13",
+    "rows": 18476,
+    "cols": 18476,
+    "nnz": 224897,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2723,
+    "group": "VDOL",
+    "name": "reorientation_2",
+    "rows": 1544,
+    "cols": 1544,
+    "nnz": 17910,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2724,
+    "group": "VDOL",
+    "name": "reorientation_3",
+    "rows": 2513,
+    "cols": 2513,
+    "nnz": 32166,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2725,
+    "group": "VDOL",
+    "name": "reorientation_4",
+    "rows": 2717,
+    "cols": 2717,
+    "nnz": 33630,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2726,
+    "group": "VDOL",
+    "name": "reorientation_5",
+    "rows": 2904,
+    "cols": 2904,
+    "nnz": 35590,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2727,
+    "group": "VDOL",
+    "name": "reorientation_6",
+    "rows": 3006,
+    "cols": 3006,
+    "nnz": 37342,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2728,
+    "group": "VDOL",
+    "name": "reorientation_7",
+    "rows": 3057,
+    "cols": 3057,
+    "nnz": 37150,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2729,
+    "group": "VDOL",
+    "name": "reorientation_8",
+    "rows": 3108,
+    "cols": 3108,
+    "nnz": 37894,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2731,
+    "group": "VDOL",
+    "name": "spaceShuttleEntry_2",
+    "rows": 1428,
+    "cols": 1428,
+    "nnz": 24073,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2732,
+    "group": "VDOL",
+    "name": "spaceShuttleEntry_3",
+    "rows": 1834,
+    "cols": 1834,
+    "nnz": 28757,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2733,
+    "group": "VDOL",
+    "name": "spaceShuttleEntry_4",
+    "rows": 2450,
+    "cols": 2450,
+    "nnz": 39669,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2738,
+    "group": "VDOL",
+    "name": "spaceStation_5",
+    "rows": 1019,
+    "cols": 1019,
+    "nnz": 15219,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2739,
+    "group": "VDOL",
+    "name": "spaceStation_6",
+    "rows": 1111,
+    "cols": 1111,
+    "nnz": 17595,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2740,
+    "group": "VDOL",
+    "name": "spaceStation_7",
+    "rows": 1134,
+    "cols": 1134,
+    "nnz": 18252,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2741,
+    "group": "VDOL",
+    "name": "spaceStation_8",
+    "rows": 1157,
+    "cols": 1157,
+    "nnz": 18945,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2742,
+    "group": "VDOL",
+    "name": "spaceStation_9",
+    "rows": 1180,
+    "cols": 1180,
+    "nnz": 19674,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2743,
+    "group": "VDOL",
+    "name": "spaceStation_10",
+    "rows": 1272,
+    "cols": 1272,
+    "nnz": 17478,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2744,
+    "group": "VDOL",
+    "name": "spaceStation_11",
+    "rows": 1364,
+    "cols": 1364,
+    "nnz": 18954,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2745,
+    "group": "VDOL",
+    "name": "spaceStation_12",
+    "rows": 1410,
+    "cols": 1410,
+    "nnz": 19728,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2746,
+    "group": "VDOL",
+    "name": "spaceStation_13",
+    "rows": 1617,
+    "cols": 1617,
+    "nnz": 23649,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2747,
+    "group": "VDOL",
+    "name": "spaceStation_14",
+    "rows": 1640,
+    "cols": 1640,
+    "nnz": 24324,
+    "kind": "optimal control problem"
+  },
+  {
+    "id": 2777,
+    "group": "SNAP",
+    "name": "CollegeMsg",
+    "rows": 1899,
+    "cols": 1899,
+    "nnz": 20296,
+    "kind": "directed temporal multigraph"
+  },
+  {
+    "id": 2785,
+    "group": "SNAP",
+    "name": "email-Eu-core-temporal",
+    "rows": 1005,
+    "cols": 1005,
+    "nnz": 24929,
+    "kind": "directed temporal multigraph"
+  },
+  {
+    "id": 2790,
+    "group": "SNAP",
+    "name": "soc-sign-bitcoin-alpha",
+    "rows": 3783,
+    "cols": 3783,
+    "nnz": 24186,
+    "kind": "directed weighted temporal graph"
+  },
+  {
+    "id": 2791,
+    "group": "SNAP",
+    "name": "soc-sign-bitcoin-otc",
+    "rows": 5881,
+    "cols": 5881,
+    "nnz": 35592,
+    "kind": "directed weighted temporal graph"
+  },
+  {
+    "id": 2793,
+    "group": "SNAP",
+    "name": "sx-mathoverflow",
+    "rows": 24818,
+    "cols": 24818,
+    "nnz": 239978,
+    "kind": "directed temporal multigraph"
+  },
+  {
+    "id": 2797,
+    "group": "SNAP",
+    "name": "wiki-RfA",
+    "rows": 11380,
+    "cols": 11380,
+    "nnz": 188077,
+    "kind": "directed weighted temporal multigraph"
+  },
+  {
+    "id": 2811,
+    "group": "Guettel",
+    "name": "TEM27623",
+    "rows": 27623,
+    "cols": 27623,
+    "nnz": 439469,
+    "kind": "electromagnetics problem"
+  },
+  {
+    "id": 2814,
+    "group": "Grueninger",
+    "name": "windtunnel_evap2d",
+    "rows": 8256,
+    "cols": 8256,
+    "nnz": 109368,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 2815,
+    "group": "Grueninger",
+    "name": "windtunnel_evap3d",
+    "rows": 40816,
+    "cols": 40816,
+    "nnz": 803978,
+    "kind": "computational fluid dynamics problem"
+  },
+  {
+    "id": 2817,
+    "group": "Goodwin",
+    "name": "Goodwin_010",
+    "rows": 1182,
+    "cols": 1182,
+    "nnz": 32282,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2818,
+    "group": "Goodwin",
+    "name": "Goodwin_013",
+    "rows": 1965,
+    "cols": 1965,
+    "nnz": 56069,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2819,
+    "group": "Goodwin",
+    "name": "Goodwin_017",
+    "rows": 3317,
+    "cols": 3317,
+    "nnz": 97773,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2820,
+    "group": "Goodwin",
+    "name": "Goodwin_023",
+    "rows": 6005,
+    "cols": 6005,
+    "nnz": 182168,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2821,
+    "group": "Goodwin",
+    "name": "Goodwin_030",
+    "rows": 10142,
+    "cols": 10142,
+    "nnz": 312814,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2822,
+    "group": "Goodwin",
+    "name": "Goodwin_040",
+    "rows": 17922,
+    "cols": 17922,
+    "nnz": 561677,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2823,
+    "group": "Goodwin",
+    "name": "Goodwin_054",
+    "rows": 32510,
+    "cols": 32510,
+    "nnz": 1030878,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2824,
+    "group": "Goodwin",
+    "name": "Goodwin_071",
+    "rows": 56021,
+    "cols": 56021,
+    "nnz": 1797934,
+    "kind": "computational fluid dynamics"
+  },
+  {
+    "id": 2827,
+    "group": "TAMU_SmartGridCenter",
+    "name": "ACTIVSg2000",
+    "rows": 4000,
+    "cols": 4000,
+    "nnz": 28505,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2828,
+    "group": "TAMU_SmartGridCenter",
+    "name": "ACTIVSg10K",
+    "rows": 20000,
+    "cols": 20000,
+    "nnz": 135888,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2829,
+    "group": "TAMU_SmartGridCenter",
+    "name": "ACTIVSg70K",
+    "rows": 69999,
+    "cols": 69999,
+    "nnz": 238627,
+    "kind": "power network problem"
+  },
+  {
+    "id": 2834,
+    "group": "VLSI",
+    "name": "nv1",
+    "rows": 75468,
+    "cols": 75468,
+    "nnz": 1635003,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 2837,
+    "group": "VLSI",
+    "name": "mosfet2",
+    "rows": 46994,
+    "cols": 46994,
+    "nnz": 1013062,
+    "kind": "semiconductor device problem"
+  },
+  {
+    "id": 2857,
+    "group": "ML_Graph",
+    "name": "Binaryalphadigs_10NN",
+    "rows": 1404,
+    "cols": 1404,
+    "nnz": 19392,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2859,
+    "group": "ML_Graph",
+    "name": "cnae9_10NN",
+    "rows": 1080,
+    "cols": 1080,
+    "nnz": 18278,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2860,
+    "group": "ML_Graph",
+    "name": "collins_15NN",
+    "rows": 1000,
+    "cols": 1000,
+    "nnz": 16492,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2861,
+    "group": "ML_Graph",
+    "name": "dataset12mfeatfactors_10NN",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 27442,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2862,
+    "group": "ML_Graph",
+    "name": "dataset16mfeatkarhunen_10NN",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 27668,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2863,
+    "group": "ML_Graph",
+    "name": "dataset18mfeatmorphological_10NN",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 22832,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2864,
+    "group": "ML_Graph",
+    "name": "dataset20mfeatpixel_10NN",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 27932,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2865,
+    "group": "ML_Graph",
+    "name": "dataset22mfeatzernike_10NN",
+    "rows": 2000,
+    "cols": 2000,
+    "nnz": 27414,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2868,
+    "group": "ML_Graph",
+    "name": "Fashion_MNIST_norm_10NN",
+    "rows": 10000,
+    "cols": 10000,
+    "nnz": 158304,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2870,
+    "group": "ML_Graph",
+    "name": "har_10NN",
+    "rows": 10299,
+    "cols": 10299,
+    "nnz": 151736,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2871,
+    "group": "ML_Graph",
+    "name": "indianpines_10NN",
+    "rows": 9144,
+    "cols": 9144,
+    "nnz": 124656,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2873,
+    "group": "ML_Graph",
+    "name": "JapaneseVowelsSmall_10NN",
+    "rows": 9961,
+    "cols": 9961,
+    "nnz": 131144,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2874,
+    "group": "ML_Graph",
+    "name": "k49_norm_10NN",
+    "rows": 38547,
+    "cols": 38547,
+    "nnz": 618158,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2875,
+    "group": "ML_Graph",
+    "name": "kmnist_norm_10NN",
+    "rows": 10000,
+    "cols": 10000,
+    "nnz": 156932,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2876,
+    "group": "ML_Graph",
+    "name": "mice_10NN",
+    "rows": 1077,
+    "cols": 1077,
+    "nnz": 13484,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2878,
+    "group": "ML_Graph",
+    "name": "mnist_test_norm_10NN",
+    "rows": 10000,
+    "cols": 10000,
+    "nnz": 145600,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2880,
+    "group": "ML_Graph",
+    "name": "optdigits_10NN",
+    "rows": 5620,
+    "cols": 5620,
+    "nnz": 79650,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2881,
+    "group": "ML_Graph",
+    "name": "Plants_10NN",
+    "rows": 1600,
+    "cols": 1600,
+    "nnz": 21930,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2882,
+    "group": "ML_Graph",
+    "name": "plantsmargin_12NN",
+    "rows": 1600,
+    "cols": 1600,
+    "nnz": 25482,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2883,
+    "group": "ML_Graph",
+    "name": "plantstexture_10NN",
+    "rows": 1599,
+    "cols": 1599,
+    "nnz": 21204,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2884,
+    "group": "ML_Graph",
+    "name": "semeion_10NN",
+    "rows": 1593,
+    "cols": 1593,
+    "nnz": 22226,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2887,
+    "group": "ML_Graph",
+    "name": "usps_norm_5NN",
+    "rows": 11000,
+    "cols": 11000,
+    "nnz": 81112,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2889,
+    "group": "ML_Graph",
+    "name": "worms20_10NN",
+    "rows": 20055,
+    "cols": 20055,
+    "nnz": 240826,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2891,
+    "group": "ML_Graph",
+    "name": "YaleB_10NN",
+    "rows": 2414,
+    "cols": 2414,
+    "nnz": 34808,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2892,
+    "group": "ML_Graph",
+    "name": "yeast_30NN",
+    "rows": 1484,
+    "cols": 1484,
+    "nnz": 62350,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2902,
+    "group": "FlowIPM22",
+    "name": "uni_chimera_i3",
+    "rows": 100000,
+    "cols": 100000,
+    "nnz": 499696,
+    "kind": "undirected weighted graph"
+  },
+  {
+    "id": 2903,
+    "group": "FlowIPM22",
+    "name": "uni_chimera_i4",
+    "rows": 100000,
+    "cols": 100000,
+    "nnz": 814436,
+    "kind": "undirected weighted graph"
+  }
+]
