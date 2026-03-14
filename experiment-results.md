@@ -231,6 +231,8 @@ Run 33: EMA with decay=0.999 blurs the sharp coefficient values. The polynomial 
 | 54 | **Neumann K=192, 2 layers, 64/128** | **0.163** | **81.8% (10/11)** | 2 layers sufficient, pde2961=0.017 beats ILU |
 | 55 | **Neumann K=256, 2 layers, 64/128** | **0.160** | **81.8% (10/11)** | **pde2961=0.013 beats ILU AND AMG!** 151 epochs |
 | 56 | Neumann K=384, 2 layers, 64/128 | 0.159 | 81.8% (10/11) | **PLATEAU** — 111 epochs, marginal improvement |
+| 57 | Neumann K=256, 600s budget | 0.160 | 81.8% (10/11) | 600s = 300s, training converged |
+| 58 | **Weighted Jacobi omega=2/3, K=256** | **0.098** | **90.9% (10/11)** | **THERMAL RECOVERED! thermal=0.007 beats AMG!** |
 
 ### Key Findings (Phase 5)
 
@@ -284,6 +286,10 @@ Run 52: combined power basis (K=6, for thermal) with Neumann basis (K=64). Score
 **23. 2 GNN Layers Suffice**
 
 Runs 54-56: reducing from 4 to 2 GNN layers freed compute for higher K. With 2 layers, K=192 achieves 0.163 (vs K=128 with 4 layers: 0.170). The GNN only needs 2-hop neighborhood to produce useful per-node coefficient adjustments.
+
+**25. Weighted Jacobi Recovers thermal**
+
+Run 58: omega=2/3 weighted Jacobi splitting J_omega = I - omega*D^{-1}A. For thermal (SPD diffusion matrix), rho(J_{2/3}) < rho(J_1) ≈ 1, making the Neumann series converge. thermal goes from FAIL to 0.007 (beats AMG!). rdb1250 also improves (0.047 vs 0.080). Minor degradation on some matrices (pde2961: 0.017 vs 0.013) but net score improves dramatically: 0.160 → 0.098.
 
 **24. The K-vs-Epochs Tradeoff Plateau**
 
