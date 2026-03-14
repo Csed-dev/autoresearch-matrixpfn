@@ -406,6 +406,19 @@ Scale test (K=256, 12 matrices n=10K-50K):
 
 Only 1/6 testable matrices converge. The preconditioner generalizes to structural problems but not to semiconductor, CFD, quantum chem.
 
+### Key Finding 30: 867-Matrix Benchmark (PARTIAL — 114/867 evaluated)
+
+Pure Neumann-series preconditioner (omega=0.9, K_max=256, adaptive stopping, NO ML):
+- **114 matrices evaluated** (many skipped: zero diagonal, n>50K)
+- **51 matrices: Neumann is BEST** (45% — vs GNP's 17.5%!)
+- Highlights:
+  - af23560 (n=23560): Neumann 0.007, ILU 0.972 — **139x better than ILU**
+  - bcsstk35 (n=30237): Neumann 0.007, ILU FAIL, AMG FAIL — **only Neumann converges**
+  - epb1 (n=14734): Neumann 0.050, ILU 0.200, AMG 0.083 — **Neumann BEST**
+  - epb2 (n=25228): Neumann 0.017, ILU 0.057, AMG 0.125 — **Neumann BEST**
+
+This is WITHOUT any ML training. A zero-cost classical preconditioner beats GNP's per-matrix trained GNN on ~45% of evaluated matrices.
+
 ### Key Finding 29: Global Features Don't Help
 
 Run 68 (7 node features including diag_CV, density, mean_DD, size indicator + 3 edge features):
