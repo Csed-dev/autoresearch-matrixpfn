@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 42: Neumann-basis K=20. K=16 got 0.305, still improving monotonically.
-K=20 for further gains. 680 epochs at K=16 — compute budget is fine.
+Run 43: Neumann-basis K=24. K=20 got 0.279, 10/11 conv! epb0 solved!
+K=24 to push for saylr4 and/or thermal.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 20
+POLY_DEGREE = 24
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
