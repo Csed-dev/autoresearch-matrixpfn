@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 49: Neumann K=128 + smaller model (128/256) for more epochs.
-Run 48 (K=128, 192/384) got 0.171 with only 266 epochs.
-Smaller model = faster epochs = more training with same K.
+Run 50: Neumann K=96 + small model (128/256). Run 49 showed 128/256
+matches 192/384 at K=128. K=96 with smaller model should get more
+epochs (~400+) with still-high polynomial degree.
 
 Usage: uv run train.py
 """
@@ -34,7 +34,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 128
 HIDDEN_DIM = 256
-POLY_DEGREE = 128
+POLY_DEGREE = 96
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
