@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 68: Global features + edge asymmetry. 7 node features (3 local + 4 global),
-3 edge features (2 existing + asymmetry). Tests if global matrix info
-improves OOD generalization (1/6 in scale test).
+Run 69: Sign correction + global features. If diag < 0 (saylr4!), use |D|
+instead of D and flip preconditioner output sign. Plus 7 node features
+(3 local + 4 global), 3 edge features. K=256, omega=0.9.
 
 Usage: uv run train.py
 """
@@ -152,6 +152,15 @@ class PolyMPNN(nn.Module):
         if (diag.abs() < 1e-15).any():
             raise ValueError(f"Matrix has {(diag.abs() < 1e-15).sum()} near-zero diagonal entries")
 
+        # Sign correction for negative diagonal matrices (e.g. saylr4).
+        # If diag < 0: A = -B where B has positive diag.
+        # A^{-1} = -B^{-1}, so M_A*r = -M_B*r.
+        # We compute M_B using |D| and flip the output sign.
+        self._diag_sign = 1.0
+        if (diag < 0).sum() > n // 2:
+            self._diag_sign = -1.0
+            diag = diag.abs()
+
         row_norms = torch.zeros(n, dtype=values.dtype, device=values.device)
         row_norms.scatter_add_(0, rows, values.abs())
         row_norms = row_norms.clamp(min=1e-12)
@@ -217,10 +226,11 @@ class PolyMPNN(nn.Module):
 class PolynomialPreconditioner:
 
     def __init__(self, coeffs: torch.Tensor, D_inv_A: torch.Tensor,
-                 D_inv: torch.Tensor):
+                 D_inv: torch.Tensor, sign: float = 1.0):
         self.coeffs = coeffs.double()
         self.D_inv_A = D_inv_A
         self.D_inv = D_inv
+        self.sign = sign
 
     def apply(self, r: torch.Tensor) -> torch.Tensor:
         K = self.coeffs.shape[1]
@@ -235,12 +245,12 @@ class PolynomialPreconditioner:
             power = power - omega * (self.D_inv_A @ power)
             result = result + self.coeffs[:, k] * power
 
-        return result
+        return self.sign * result
 
 
 def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
                         D_inv_A: torch.Tensor, D_inv: torch.Tensor,
-                        num_probes: int) -> torch.Tensor:
+                        num_probes: int, sign: float = 1.0) -> torch.Tensor:
     n = A.shape[0]
     device = A.device
     K = coeffs.shape[1]
@@ -264,7 +274,7 @@ def poly_frobenius_loss(A: torch.Tensor, coeffs: torch.Tensor,
         MAv = MAv + coeffs_k * power
 
     v_f32 = v.float()
-    residual = MAv - v_f32
+    residual = sign * MAv - v_f32
     per_probe = (residual ** 2).sum(dim=0) / (v_f32 ** 2).sum(dim=0).clamp(min=1e-12)
     return per_probe.mean()
 
@@ -334,7 +344,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
             try:
                 model.set_matrix(A)
                 coeffs = model()
-                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
+                precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv, model._diag_sign)
                 result = solver.solve(A, b, M=precond, progress_bar=False)
                 gs_pfn_iters.append(result.iterations / FGMRES_MAX_ITERS)
                 gs_pfn_conv.append(result.converged)
@@ -385,7 +395,7 @@ def evaluate_poly(model: PolyMPNN, device: torch.device) -> dict:
         try:
             model.set_matrix(A)
             coeffs = model()
-            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv)
+            precond = PolynomialPreconditioner(coeffs, model.D_inv_A, model.D_inv, model._diag_sign)
         except Exception:
             for _ in range(NUM_RHS):
                 mat_pfn_iters.append(1.0)
@@ -557,7 +567,7 @@ while True:
         model.set_matrix(A)
         coeffs = model()
 
-        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES)
+        loss = poly_frobenius_loss(A, coeffs, model.D_inv_A, model.D_inv, NUM_PROBES, model._diag_sign)
         loss_val = loss.item()
 
         if not math.isfinite(loss_val) or loss_val > LOSS_SKIP_THRESHOLD:
