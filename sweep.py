@@ -133,7 +133,7 @@ def main():
     print("OMEGA SENSITIVITY SWEEP")
     print("=" * 60)
 
-    omegas = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.92, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99]
+    omegas = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.92, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.05, 1.1, 1.2, 1.5]
     print(f"Testing {len(omegas)} omega values...")
 
     for omega in omegas:
