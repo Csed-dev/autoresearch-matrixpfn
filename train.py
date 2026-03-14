@@ -1,8 +1,8 @@
 """
 MatrixPFN autoresearch training script.
-Run 50: Neumann K=96 + small model (128/256). Run 49 showed 128/256
-matches 192/384 at K=128. K=96 with smaller model should get more
-epochs (~400+) with still-high polynomial degree.
+Run 51: Neumann K=128 + tiny model (64/128). Testing if minimal GNN
+still works — the polynomial dominates, GNN just needs to predict
+reasonable per-node coefficients.
 
 Usage: uv run train.py
 """
@@ -32,9 +32,9 @@ from prepare import (
 
 SEED = 42
 NUM_LAYERS = 4
-EMBED_DIM = 128
-HIDDEN_DIM = 256
-POLY_DEGREE = 96
+EMBED_DIM = 64
+HIDDEN_DIM = 128
+POLY_DEGREE = 128
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
