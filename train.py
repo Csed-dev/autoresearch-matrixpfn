@@ -1,7 +1,7 @@
 """
 MatrixPFN autoresearch training script.
-Run 43: Neumann-basis K=24. K=20 got 0.279, 10/11 conv! epb0 solved!
-K=24 to push for saylr4 and/or thermal.
+Run 44: Neumann-basis K=32. K=24 got 0.260, still improving.
+Testing where the plateau is.
 
 Usage: uv run train.py
 """
@@ -33,7 +33,7 @@ SEED = 42
 NUM_LAYERS = 4
 EMBED_DIM = 192
 HIDDEN_DIM = 384
-POLY_DEGREE = 24
+POLY_DEGREE = 32
 NUM_PROBES = 8
 LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
