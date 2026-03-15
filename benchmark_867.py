@@ -29,6 +29,7 @@ K_MAX = 256
 K_ADAPTIVE_TOL = 1e-10  # Stop Neumann recurrence when power norm drops below this
 NUM_RHS = 2
 MANIFEST_PATH = "suitesparse_manifest.json"
+START_INDEX = 0  # Set > 0 to resume from a specific matrix index
 
 
 class AdaptiveNeumannPreconditioner:
@@ -51,6 +52,12 @@ class AdaptiveNeumannPreconditioner:
 
         # Sign correction: if majority of diagonal is negative, use |D|
         # and flip preconditioner output sign (since A^{-1} = -(-A)^{-1})
+        self._sign = 1.0
+        if (diag < 0).sum() > n // 2:
+            self._sign = -1.0
+            diag = diag.abs()
+
+        # Sign correction for negative diagonal matrices
         self._sign = 1.0
         if (diag < 0).sum() > n // 2:
             self._sign = -1.0
@@ -228,6 +235,8 @@ def main():
     errors = 0
 
     for i, mat in enumerate(manifest):
+        if i < START_INDEX:
+            continue
         group = mat["group"]
         name = mat["name"]
         n = mat["rows"]
