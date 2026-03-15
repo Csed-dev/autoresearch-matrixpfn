@@ -49,6 +49,13 @@ class AdaptiveNeumannPreconditioner:
         diag_mask = rows == cols
         diag[rows[diag_mask]] = values[diag_mask]
 
+        # Sign correction: if majority of diagonal is negative, use |D|
+        # and flip preconditioner output sign (since A^{-1} = -(-A)^{-1})
+        self._sign = 1.0
+        if (diag < 0).sum() > n // 2:
+            self._sign = -1.0
+            diag = diag.abs()
+
         self.D_inv = 1.0 / diag
         d_inv_values = self.D_inv[rows] * values
         self.D_inv_A = torch.sparse_coo_tensor(
@@ -74,11 +81,11 @@ class AdaptiveNeumannPreconditioner:
             power_norm = power.norm().item()
             if result_norm > 0 and power_norm < self.tol * result_norm:
                 self.last_k = k + 1
-                return result
+                return self._sign * result
             result_norm = max(result_norm, result.norm().item())
 
         self.last_k = self.k_max
-        return result
+        return self._sign * result
 
 
 def load_matrix(group, name, device):
