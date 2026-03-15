@@ -61,7 +61,7 @@ class ExperimentManager:
             state = self._states[spec.name]
             deps_str = f" (deps: {', '.join(spec.dependencies)})" if spec.dependencies else ""
             gpu = spec.gpu_type or self._config.gpu_type
-            desc = f" — {spec.description.strip()[:80]}" if spec.description else ""
+            desc = f" — {spec.description.strip()[:60]}" if spec.description else ""
             lines.append(f"  {spec.name:30s} {state.status.value:10s} gpu={gpu}{deps_str}{desc}")
         running = [n for n, s in self._states.items() if s.status == ExperimentStatus.RUNNING]
         ready = self.get_ready()
@@ -172,6 +172,8 @@ class ExperimentManager:
         lines = [f"Experiment: {experiment_name}", f"Status: {state.status.value}"]
         if spec.description:
             lines.append(f"Description: {spec.description.strip()}")
+        if spec.hypothesis:
+            lines.append(f"Hypothesis: {spec.hypothesis.strip()}")
 
         if state.started_at:
             lines.append(f"Started: {state.started_at}")
