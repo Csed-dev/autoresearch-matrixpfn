@@ -38,6 +38,7 @@ class Template:
 class ExperimentSpec:
     name: str
     command: str
+    description: str = ""
     env: dict[str, str] = field(default_factory=dict)
     dependencies: list[str] = field(default_factory=list)
     gpu_type: str | None = None
@@ -137,6 +138,7 @@ def load_experiments(path: str | Path) -> tuple[dict[str, Template], list[Experi
         experiments.append(ExperimentSpec(
             name=exp_data["name"],
             command=command,
+            description=exp_data.get("description", ""),
             env=env,
             dependencies=deps,
             gpu_type=gpu_type,
@@ -172,6 +174,7 @@ def save_experiment_config(results_dir: Path, spec: ExperimentSpec, config: Sche
     exp_dir.mkdir(parents=True, exist_ok=True)
     config_snapshot = {
         "name": spec.name,
+        "description": spec.description,
         "template": spec.template_name,
         "command": spec.command,
         "env": spec.env,

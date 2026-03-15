@@ -61,7 +61,8 @@ class ExperimentManager:
             state = self._states[spec.name]
             deps_str = f" (deps: {', '.join(spec.dependencies)})" if spec.dependencies else ""
             gpu = spec.gpu_type or self._config.gpu_type
-            lines.append(f"  {spec.name:30s} {state.status.value:10s} gpu={gpu}{deps_str}")
+            desc = f" — {spec.description.strip()[:80]}" if spec.description else ""
+            lines.append(f"  {spec.name:30s} {state.status.value:10s} gpu={gpu}{deps_str}{desc}")
         running = [n for n, s in self._states.items() if s.status == ExperimentStatus.RUNNING]
         ready = self.get_ready()
         lines.append(f"\nRunning: {len(running)}/{self._config.max_pods}  Ready: {len(ready)}  "
@@ -166,8 +167,11 @@ class ExperimentManager:
             raise ExperimentNotFoundError(experiment_name, list(self._spec_map.keys()))
 
         state = self._states[experiment_name]
+        spec = self._spec_map[experiment_name]
         exp_dir = self._results_dir / experiment_name
         lines = [f"Experiment: {experiment_name}", f"Status: {state.status.value}"]
+        if spec.description:
+            lines.append(f"Description: {spec.description.strip()}")
 
         if state.started_at:
             lines.append(f"Started: {state.started_at}")

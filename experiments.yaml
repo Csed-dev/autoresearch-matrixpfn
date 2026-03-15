@@ -13,15 +13,25 @@ templates:
 experiments:
   - name: baseline
     template: spai-default
+    description: >
+      Establish baseline score with default SpaiMPNN architecture.
+      Expect ~0.68 composite score based on previous run.
+      This sets the reference point for all subsequent experiments.
 
   - name: lr-sweep-low
     template: spai-default
     env:
       LR: "5e-4"
     dependencies: [baseline]
+    description: >
+      Test lower learning rate. Hypothesis: slower convergence but potentially
+      better final score due to less overshooting on SuiteSparse matrices.
 
   - name: lr-sweep-high
     template: spai-default
     env:
       LR: "3e-3"
     dependencies: [baseline]
+    description: >
+      Test higher learning rate. Hypothesis: faster training may find
+      different local minima. Risk: instability with large gradients.
