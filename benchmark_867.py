@@ -29,7 +29,7 @@ K_MAX = 256
 K_ADAPTIVE_TOL = 1e-10  # Stop Neumann recurrence when power norm drops below this
 NUM_RHS = 2
 MANIFEST_PATH = "suitesparse_manifest.json"
-START_INDEX = 0  # Set > 0 to resume from a specific matrix index
+START_INDEX = 500  # Resume from matrix 500 (skip Schenk optimization block)
 
 
 class AdaptiveNeumannPreconditioner:
