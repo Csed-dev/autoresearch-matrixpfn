@@ -5,4 +5,7 @@ description = "Autonomous MatrixPFN research: domain selection, model scaling, h
 requires-python = ">=3.11"
 dependencies = [
     "matrixpfn>=0.1.13",
+    "pyyaml>=6.0",
+    "runpod>=1.7.0",
+    "requests>=2.31.0",
 ]

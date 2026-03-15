@@ -1,0 +1,14 @@
+max_pods: 3
+gpu_type: "NVIDIA RTX A5000"
+image: "runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404"
+container_disk_gb: 20
+repo_url: "https://github.com/Csed-dev/autoresearch-matrixpfn.git"
+workspace_dir: "/workspace/autoresearch-matrixpfn"
+setup_command: "bash {workspace}/setup_pod.sh main"
+sync_command: "cd {workspace} && git fetch origin && git reset --hard origin/main"
+experiment_timeout: 900
+setup_timeout: 600
+pod_ready_timeout: 120
+log_dir: "logs"
+results_dir: "results"
+poll_interval: 10

@@ -34,14 +34,21 @@ class PodInfo:
 
 
 class PodManager:
-    def create_pod(self, name: str, gpu_type: str = GPU_TYPE_DEFAULT) -> str:
+    def create_pod(
+        self,
+        name: str,
+        gpu_type: str = GPU_TYPE_DEFAULT,
+        gpu_count: int = 1,
+        image: str = GPU_IMAGE,
+        container_disk_gb: int = CONTAINER_DISK_GB,
+    ) -> str:
         response = runpod.create_pod(
             name=name,
-            image_name=GPU_IMAGE,
+            image_name=image,
             gpu_type_id=gpu_type,
-            gpu_count=1,
+            gpu_count=gpu_count,
             volume_in_gb=0,
-            container_disk_in_gb=CONTAINER_DISK_GB,
+            container_disk_in_gb=container_disk_gb,
             ports="22/tcp",
             start_ssh=True,
         )

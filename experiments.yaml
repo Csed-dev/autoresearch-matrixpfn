@@ -1,0 +1,27 @@
+templates:
+  spai-default:
+    command: "cd {workspace} && uv run train.py"
+    env:
+      ARCH: SpaiMPNN
+      LAYERS: "4"
+      EMBED: "256"
+      HIDDEN: "512"
+      BILINEAR_RANK: "64"
+      DOMAINS: "DIFFUSION,ELASTICITY,STOKES,DIFFUSION_ADVECTION,VARIABLE_DIFFUSION,SPECTRAL_STRESS,GRAPH_LAPLACIAN,ENHANCED_ADVECTION"
+      LR: "1e-3"
+
+experiments:
+  - name: baseline
+    template: spai-default
+
+  - name: lr-sweep-low
+    template: spai-default
+    env:
+      LR: "5e-4"
+    dependencies: [baseline]
+
+  - name: lr-sweep-high
+    template: spai-default
+    env:
+      LR: "3e-3"
+    dependencies: [baseline]
